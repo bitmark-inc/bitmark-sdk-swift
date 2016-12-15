@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:BitmarkLib.xcodeproj">
+   </FileRef>
+   <Group
+      location = "container:"
+      name = "ExternalLib">
+      <FileRef
+         location = "group:Carthage/Checkouts/BigInt/BigInt.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Carthage/Checkouts/SipHash/SipHash.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>

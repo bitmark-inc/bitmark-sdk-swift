@@ -1,0 +1,2 @@
+github "lorentey/SipHash" "v1.1.0"
+github "lorentey/BigInt" "v2.1.1"
