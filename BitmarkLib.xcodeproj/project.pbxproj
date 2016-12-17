@@ -7,10 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58124E4D1E04E0090044E30F /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58124E4C1E04E0090044E30F /* CryptoSwift.framework */; };
+		58124E4F1E04E00D0044E30F /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58124E4E1E04E00D0044E30F /* BigInt.framework */; };
+		5818FE2B1E0391CF007F082D /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE2A1E0391CF007F082D /* Base58.swift */; };
+		5818FE341E039820007F082D /* Varint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE331E039820007F082D /* Varint.swift */; };
+		5818FE361E03A64B007F082D /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE351E03A64B007F082D /* Address.swift */; };
+		5818FE381E03A840007F082D /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE371E03A840007F082D /* Config.swift */; };
+		5818FE3A1E03BDB6007F082D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE391E03BDB6007F082D /* Common.swift */; };
 		5865BD431E0250C200B25AB3 /* BitmarkLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD391E0250C200B25AB3 /* BitmarkLib.framework */; };
 		5865BD481E0250C200B25AB3 /* BitmarkLibTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5865BD471E0250C200B25AB3 /* BitmarkLibTests.swift */; };
 		5865BD4A1E0250C200B25AB3 /* BitmarkLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5865BD681E02762A00B25AB3 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD671E02762A00B25AB3 /* BigInt.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +30,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		58124E4C1E04E0090044E30F /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Checkouts/CryptoSwift/build/Debug/CryptoSwift.framework; sourceTree = "<group>"; };
+		58124E4E1E04E00D0044E30F /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkLib-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/BigInt.framework"; sourceTree = "<group>"; };
+		5818FE2A1E0391CF007F082D /* Base58.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
+		5818FE2C1E0391F5007F082D /* SwiftBase58.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftBase58.framework; path = Carthage/Checkouts/SwiftBase58/build/Debug/SwiftBase58.framework; sourceTree = "<group>"; };
+		5818FE2D1E0391F5007F082D /* SwiftGMP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftGMP.framework; path = Carthage/Checkouts/SwiftGMP/build/Debug/SwiftGMP.framework; sourceTree = "<group>"; };
+		5818FE331E039820007F082D /* Varint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Varint.swift; sourceTree = "<group>"; };
+		5818FE351E03A64B007F082D /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		5818FE371E03A840007F082D /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		5818FE391E03BDB6007F082D /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		5818FE3B1E03C50D007F082D /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Checkouts/CryptoSwift/build/Debug/CryptoSwift.framework; sourceTree = "<group>"; };
 		5865BD391E0250C200B25AB3 /* BitmarkLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BitmarkLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitmarkLib.h; sourceTree = "<group>"; };
 		5865BD3D1E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -38,7 +54,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5865BD681E02762A00B25AB3 /* BigInt.framework in Frameworks */,
+				58124E4F1E04E00D0044E30F /* BigInt.framework in Frameworks */,
+				58124E4D1E04E0090044E30F /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +70,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5818FE291E0391C0007F082D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5818FE2A1E0391CF007F082D /* Base58.swift */,
+				5818FE331E039820007F082D /* Varint.swift */,
+				5818FE391E03BDB6007F082D /* Common.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		5865BD2F1E0250C200B25AB3 = {
 			isa = PBXGroup;
 			children = (
@@ -76,7 +103,10 @@
 			isa = PBXGroup;
 			children = (
 				5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */,
+				5818FE291E0391C0007F082D /* Utils */,
 				5865BD3D1E0250C200B25AB3 /* Info.plist */,
+				5818FE351E03A64B007F082D /* Address.swift */,
+				5818FE371E03A840007F082D /* Config.swift */,
 			);
 			path = BitmarkLib;
 			sourceTree = "<group>";
@@ -93,6 +123,11 @@
 		5865BD661E02762A00B25AB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58124E4E1E04E00D0044E30F /* BigInt.framework */,
+				58124E4C1E04E0090044E30F /* CryptoSwift.framework */,
+				5818FE3B1E03C50D007F082D /* CryptoSwift.framework */,
+				5818FE2C1E0391F5007F082D /* SwiftBase58.framework */,
+				5818FE2D1E0391F5007F082D /* SwiftGMP.framework */,
 				5865BD671E02762A00B25AB3 /* BigInt.framework */,
 			);
 			name = Frameworks;
@@ -160,6 +195,7 @@
 				TargetAttributes = {
 					5865BD381E0250C200B25AB3 = {
 						CreatedOnToolsVersion = 8.2;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					5865BD411E0250C200B25AB3 = {
@@ -208,6 +244,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5818FE361E03A64B007F082D /* Address.swift in Sources */,
+				5818FE381E03A840007F082D /* Config.swift in Sources */,
+				5818FE2B1E0391CF007F082D /* Base58.swift in Sources */,
+				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
+				5818FE341E039820007F082D /* Varint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,18 +373,25 @@
 		5865BD4E1E0250C200B25AB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftBase58/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftGMP/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/CryptoSwift/build/Debug",
+				);
 				INFOPLIST_FILE = BitmarkLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitmark.BitmarkLib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -351,12 +399,18 @@
 		5865BD4F1E0250C200B25AB3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftBase58/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftGMP/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/CryptoSwift/build/Debug",
+				);
 				INFOPLIST_FILE = BitmarkLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -370,6 +424,7 @@
 		5865BD511E0250C200B25AB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = BitmarkLibTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitmark.BitmarkLibTests;
@@ -381,6 +436,7 @@
 		5865BD521E0250C200B25AB3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = BitmarkLibTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitmark.BitmarkLibTests;

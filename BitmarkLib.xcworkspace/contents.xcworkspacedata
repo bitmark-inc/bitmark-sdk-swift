@@ -4,14 +4,23 @@
    <FileRef
       location = "group:BitmarkLib.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Cartfile">
+   </FileRef>
+   <FileRef
+      location = "group:BitmarkLib.playground">
+   </FileRef>
    <Group
       location = "container:"
       name = "ExternalLib">
       <FileRef
-         location = "group:Carthage/Checkouts/BigInt/BigInt.xcodeproj">
+         location = "group:Carthage/Checkouts/SipHash/SipHash.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:Carthage/Checkouts/SipHash/SipHash.xcodeproj">
+         location = "group:Carthage/Checkouts/CryptoSwift/CryptoSwift.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Carthage/Checkouts/BigInt/BigInt.xcodeproj">
       </FileRef>
    </Group>
 </Workspace>
