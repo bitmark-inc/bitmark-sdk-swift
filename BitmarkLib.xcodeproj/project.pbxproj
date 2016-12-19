@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61901E077DC5008BEBFF /* Data+Extension.swift */; };
+		580B61931E07C917008BEBFF /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61921E07C917008BEBFF /* PrivateKey.swift */; };
+		580B61951E07CF16008BEBFF /* BigInt+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61941E07CF16008BEBFF /* BigInt+Extension.swift */; };
 		58124E4D1E04E0090044E30F /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58124E4C1E04E0090044E30F /* CryptoSwift.framework */; };
 		58124E4F1E04E00D0044E30F /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58124E4E1E04E00D0044E30F /* BigInt.framework */; };
 		5818FE2B1E0391CF007F082D /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE2A1E0391CF007F082D /* Base58.swift */; };
@@ -32,6 +34,8 @@
 
 /* Begin PBXFileReference section */
 		580B61901E077DC5008BEBFF /* Data+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
+		580B61921E07C917008BEBFF /* PrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
+		580B61941E07CF16008BEBFF /* BigInt+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BigInt+Extension.swift"; sourceTree = "<group>"; };
 		58124E4C1E04E0090044E30F /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Checkouts/CryptoSwift/build/Debug/CryptoSwift.framework; sourceTree = "<group>"; };
 		58124E4E1E04E00D0044E30F /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkLib-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/BigInt.framework"; sourceTree = "<group>"; };
 		5818FE2A1E0391CF007F082D /* Base58.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
@@ -76,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				580B61901E077DC5008BEBFF /* Data+Extension.swift */,
+				580B61941E07CF16008BEBFF /* BigInt+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -117,6 +122,7 @@
 				5818FE291E0391C0007F082D /* Utils */,
 				5865BD3D1E0250C200B25AB3 /* Info.plist */,
 				5818FE351E03A64B007F082D /* Address.swift */,
+				580B61921E07C917008BEBFF /* PrivateKey.swift */,
 				5818FE371E03A840007F082D /* Config.swift */,
 			);
 			path = BitmarkLib;
@@ -261,6 +267,8 @@
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
 				5818FE341E039820007F082D /* Varint.swift in Sources */,
 				580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */,
+				580B61951E07CF16008BEBFF /* BigInt+Extension.swift in Sources */,
+				580B61931E07C917008BEBFF /* PrivateKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,11 +14,11 @@ struct Address {
     
     let prefix: Data
     let pubKey: Data
-    let network: Config.Network
+    let network: Network
     let string: String
-    let keyType: Config.KeyType
+    let keyType: KeyType
     
-    init(fromEd25519WithPubKey pubKey: Data, network: Config.Network) {
+    init(fromPubKey pubKey: Data, network: Network, keyType: KeyType = Config.ed25519) {
         self.pubKey = pubKey
         self.network = network
         
@@ -26,7 +26,7 @@ struct Address {
         var keyVariantVal = keyTypeVal << 4
         keyVariantVal.add(BigUInt(Config.KeyPart.publicKey)) // first bit
         keyVariantVal.add(BigUInt(network.addressValue << 1)) // second bit indicates net
-        let keyVariantData = VarInt.encodeVarInt(value: keyVariantVal.toIntMax())
+        let keyVariantData = VarInt.varintEncode(value: keyVariantVal)
         
         let checksumData = keyVariantData.concating(data: pubKey).sha3(.sha256)
         
@@ -34,7 +34,7 @@ struct Address {
         let base58Address = Base58.encode(addressData)
         self.string = base58Address
         self.prefix = keyVariantData
-        self.keyType = Config.ed25519
+        self.keyType = keyType
     }
     
     init?(address: String) {
@@ -47,7 +47,7 @@ struct Address {
         
         self.string = address
         
-        let keyVariant = BigUInt(integerLiteral: VarInt.decodeUVarInt(data: addressData))
+        let keyVariant = VarInt.varintDecode(data: addressData)
         let keyVariantBuffer = [UInt8](keyVariant.serialize())
         
         // check for whether this is an address
@@ -89,4 +89,6 @@ struct Address {
         self.prefix = keyVariant.serialize()
         self.keyType = keyType
     }
+    
+    
 }

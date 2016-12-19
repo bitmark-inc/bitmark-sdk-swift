@@ -8,14 +8,23 @@
 
 import Foundation
 
+struct KeyType {
+    let name: String
+    let value: Int
+    let publicLength: Int
+    let privateLength: Int
+    let seedLength: Int
+}
+
+struct Network {
+    let name: String
+    let addressValue: Int
+    let kifValue: Int
+    let staticHostName: String
+    let staticNodes: [String]
+}
+
 class Config {
-    struct KeyType {
-        let name: String
-        let value: Int
-        let publicLength: Int
-        let privateLength: Int
-        let seedLength: Int
-    }
     
     static let ed25519 = KeyType(name: "ed25519",
                           value: 0x01,
@@ -31,14 +40,6 @@ class Config {
     }
     
     static let checksumLength = 4
-    
-    struct Network {
-        let name: String
-        let addressValue: Int
-        let kifValue: Int
-        let staticHostName: String
-        let staticNodes: [String]
-    }
     
     static let liveNet = Network(name: "livenet",
                           addressValue: 0x00,
