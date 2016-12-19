@@ -7,3 +7,17 @@
 //
 
 import Foundation
+import BigInt
+
+class Common {
+    static func getKey(byValue value: BigUInt) -> Config.KeyType? {
+        
+        for keyType in Config.keyTypes {
+            if BigUInt(keyType.value) == value {
+                return keyType
+            }
+        }
+        
+        return nil
+    }
+}

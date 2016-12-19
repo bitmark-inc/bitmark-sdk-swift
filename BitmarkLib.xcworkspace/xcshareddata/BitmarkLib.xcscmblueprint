@@ -15,7 +15,7 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "8AF2BCC7-A485-4F30-8D86-23D74702C6C1",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "FB48966E443D25259D3CA0BE6E56D2D7343B7F97" : "bitmark-lib-swift\/Carthage\/Checkouts\/BigInt\/Carthage\/Checkouts\/SipHash\/",
+    "FB48966E443D25259D3CA0BE6E56D2D7343B7F97" : "bitmark-lib-swift\/Carthage\/Checkouts\/SipHash\/",
     "C94093055AB34F2B6EE459C72F98B00A39A2BBDC" : "bitmark-lib-swift\/Carthage\/Checkouts\/SwiftGMP\/",
     "ECA267D448041864B7D0CE0B76E5771B80C644F3" : "bitmark-lib-swift\/Carthage\/Checkouts\/SwiftBase58\/",
     "2430A10903CE38C4801F436AA509C37F8F128B9F" : "bitmark-lib-swift\/Carthage\/Checkouts\/SwiftHex\/",
