@@ -52,4 +52,6 @@ class Config {
                           kifValue: 0x01,
                           staticHostName: "nodes.test.bitmark.com",
                           staticNodes: ["118.163.120.178:3566", "118.163.120.176:3130"])
+    
+    static let networks = [liveNet, testNet]
 }

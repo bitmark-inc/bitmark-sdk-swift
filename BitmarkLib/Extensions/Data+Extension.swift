@@ -23,7 +23,16 @@ extension Data {
         return Data(bytes: buffer)
     }
     
+    func slice(start: Int, length: Int) -> Data {
+        return self.subdata(in: start..<(start + length))
+    }
+    
     static func +(data1: Data, data2: Data) -> Data {
         return data1.concating(data: data2)
+    }
+    
+    // NSData bridging
+    var nsdata: NSData {
+        return NSData(data: self)
     }
 }

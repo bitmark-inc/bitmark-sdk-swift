@@ -20,4 +20,15 @@ class Common {
         
         return nil
     }
+    
+    static func getNetwork(byAddressValue value: BigUInt) -> Network? {
+        
+        for network in Config.networks {
+            if BigUInt(network.addressValue) == value {
+                return network
+            }
+        }
+        
+        return nil
+    }
 }
