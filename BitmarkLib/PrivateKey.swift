@@ -11,22 +11,21 @@ import BigInt
 import CryptoSwift
 import TweetNaclSwift_iOS
 
-struct PrivateKey {
+public struct PrivateKey {
     
-    let address: Address
-    let privateKey: Data
-    let type: KeyType
-    let network: Network
-    let kif: String
+    public let address: Address
+    public let privateKey: Data
+    public let type: KeyType
+    public let network: Network
+    public let kif: String
     
-    init?(fromKIF kifString: String) {
+    init(fromKIF kifString: String) throws {
         guard let kifBuffer = Base58.decode(kifString) else {
-            assertionFailure("Can not convert base58")
-            return nil
+            throw("Can not convert base58")
         }
         self.kif = kifString
         
-        let keyVariant = VarInt.varintDecode(data: kifBuffer)
+        let keyVariant = VarInt.decode(data: kifBuffer)
         let keyVariantBufferLength = keyVariant.buffer.count
         
         // check for whether this is a kif
@@ -36,22 +35,22 @@ struct PrivateKey {
         // detect network
         let networkVal = (keyVariant << 1) & BigUInt(0x01)
         guard let network = Common.getNetwork(byAddressValue: networkVal) else {
-            assertionFailure("Unknow network")
-            return nil
+            throw("Unknow network")
         }
         self.network = network
         
         // key type
         let keyTypeVal = (keyVariant << 4) & BigUInt(0x07)
         guard let keyType = Common.getKey(byValue: keyTypeVal) else {
-            assertionFailure("Unknow key type")
-            return nil
+            throw("Unknow key type")
         }
         self.type = keyType
         
         // check the length of kif
         let kifLength = keyVariantBufferLength + keyType.seedLength + Config.checksumLength
-        assert(kifLength == kifBuffer.count, "Private key error: KIF for"  + keyType.name + " must be " + String(kifLength) + " bytes")
+        if kifLength == kifBuffer.count {
+            throw("Private key error: KIF for"  + keyType.name + " must be " + String(kifLength) + " bytes")
+        }
         
         // get private key
         let seed = kifBuffer.slice(start: keyVariantBufferLength, length: kifLength - Config.checksumLength)
@@ -59,41 +58,36 @@ struct PrivateKey {
         // check checksum
         let checksumData = kifBuffer.subdata(in: 0..<Config.checksumLength)
         let checksum = checksumData.sha3(.sha256).slice(start: 0, length: Config.checksumLength)
-        assert(checksum == kifBuffer.slice(start: kifLength - Config.checksumLength, length: kifLength), "Private key error: checksum mismatch")
+        if checksum == kifBuffer.slice(start: kifLength - Config.checksumLength, length: kifLength) {
+            throw("Private key error: checksum mismatch")
+        }
         
         // get address
-        guard let keyPair = Ed25519.generateKeyPair(fromSeed: seed) else {
-            return nil
-        }
+        let keyPair = try Ed25519.generateKeyPair(fromSeed: seed)
         self.privateKey = keyPair.privateKey
-        
-        return nil
+        self.address = Address(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
-    init?(fromKeyPair keyPairData: Data, network: Network, type: KeyType) {
+    init(fromKeyPair keyPairData: Data, network: Network, type: KeyType) throws {
         // Check length to determine the keypair
         
         var keyPair: (publicKey: Data, privateKey: Data)
         var seed: Data
         
         if keyPairData.count == type.privateLength {
-            guard let keyPairResult = Ed25519.generateKeyPair(fromPrivateKey: keyPairData) else {
-                return nil
-            }
+            let keyPairResult = try Ed25519.generateKeyPair(fromPrivateKey: keyPairData)
             
             keyPair = keyPairResult
-            seed = Ed25519.getSeed(fromPrivateKey: keyPair.privateKey)
+            seed = try Ed25519.getSeed(fromPrivateKey: keyPair.privateKey)
         }
         else if keyPairData.count == type.seedLength {
             seed = keyPairData
             
-            guard let keyPairResult = Ed25519.generateKeyPair(fromSeed: seed) else {
-                return nil
-            }
+            let keyPairResult = try Ed25519.generateKeyPair(fromSeed: seed)
             keyPair = keyPairResult
         }
         else {
-            return nil
+            throw("Unknown cases")
         }
         
         let keyPartVal = BigUInt(Config.KeyPart.privateKey)

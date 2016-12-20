@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct KeyType {
+public struct KeyType {
     let name: String
     let value: Int
     let publicLength: Int
@@ -16,7 +16,7 @@ struct KeyType {
     let seedLength: Int
 }
 
-struct Network {
+public struct Network {
     let name: String
     let addressValue: Int
     let kifValue: Int
@@ -24,7 +24,7 @@ struct Network {
     let staticNodes: [String]
 }
 
-class Config {
+public class Config {
     
     static let ed25519 = KeyType(name: "ed25519",
                           value: 0x01,

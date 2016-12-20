@@ -1,9 +1,9 @@
 import Foundation
 import BigInt
 
-class VarInt {
+public class VarInt {
     
-    public static func varintDecode(data: Data) -> BigUInt {
+    public static func decode(data: Data) -> BigUInt {
         let encodedBuffer = [UInt8](data)
         var currentByte: UInt8 = 0x00
         var result = BigUInt(0)
@@ -31,7 +31,7 @@ class VarInt {
         return result
     }
     
-    public static func varintEncode(value: BigUInt) -> Data {
+    public static func encode(value: BigUInt) -> Data {
         var result = [UInt8](repeating: 0, count: 9)
         var offsetCount = 0
         var valueBuffer: [UInt8]
