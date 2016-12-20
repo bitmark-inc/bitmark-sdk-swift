@@ -10,8 +10,9 @@
 		580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61901E077DC5008BEBFF /* Data+Extension.swift */; };
 		580B61931E07C917008BEBFF /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61921E07C917008BEBFF /* PrivateKey.swift */; };
 		580B61951E07CF16008BEBFF /* BigInt+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61941E07CF16008BEBFF /* BigInt+Extension.swift */; };
+		580B88E41E08D5DE0018F6A5 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580B88E31E08D5DE0018F6A5 /* BigInt.framework */; };
+		580B88E61E08D5F50018F6A5 /* TweetNaclSwift_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580B88E51E08D5F50018F6A5 /* TweetNaclSwift_iOS.framework */; };
 		58124E4D1E04E0090044E30F /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58124E4C1E04E0090044E30F /* CryptoSwift.framework */; };
-		58124E4F1E04E00D0044E30F /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58124E4E1E04E00D0044E30F /* BigInt.framework */; };
 		5818FE2B1E0391CF007F082D /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE2A1E0391CF007F082D /* Base58.swift */; };
 		5818FE341E039820007F082D /* Varint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE331E039820007F082D /* Varint.swift */; };
 		5818FE361E03A64B007F082D /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE351E03A64B007F082D /* Address.swift */; };
@@ -36,6 +37,11 @@
 		580B61901E077DC5008BEBFF /* Data+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		580B61921E07C917008BEBFF /* PrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
 		580B61941E07CF16008BEBFF /* BigInt+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BigInt+Extension.swift"; sourceTree = "<group>"; };
+		580B88DD1E08D5560018F6A5 /* TweetNaclSwift_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TweetNaclSwift_iOS.framework; path = "Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug-iphoneos/TweetNaclSwift_iOS.framework"; sourceTree = "<group>"; };
+		580B88DF1E08D5AB0018F6A5 /* TweetnaclSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TweetnaclSwift.framework; path = "Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug/TweetnaclSwift.framework"; sourceTree = "<group>"; };
+		580B88E11E08D5C90018F6A5 /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkLib-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphonesimulator/SipHash.framework"; sourceTree = "<group>"; };
+		580B88E31E08D5DE0018F6A5 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkLib-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphonesimulator/BigInt.framework"; sourceTree = "<group>"; };
+		580B88E51E08D5F50018F6A5 /* TweetNaclSwift_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TweetNaclSwift_iOS.framework; path = "Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug-iphoneos/TweetNaclSwift_iOS.framework"; sourceTree = "<group>"; };
 		58124E4C1E04E0090044E30F /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Checkouts/CryptoSwift/build/Debug/CryptoSwift.framework; sourceTree = "<group>"; };
 		58124E4E1E04E00D0044E30F /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkLib-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/BigInt.framework"; sourceTree = "<group>"; };
 		5818FE2A1E0391CF007F082D /* Base58.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
@@ -60,7 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58124E4F1E04E00D0044E30F /* BigInt.framework in Frameworks */,
+				580B88E61E08D5F50018F6A5 /* TweetNaclSwift_iOS.framework in Frameworks */,
+				580B88E41E08D5DE0018F6A5 /* BigInt.framework in Frameworks */,
 				58124E4D1E04E0090044E30F /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,6 +147,11 @@
 		5865BD661E02762A00B25AB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				580B88E51E08D5F50018F6A5 /* TweetNaclSwift_iOS.framework */,
+				580B88E31E08D5DE0018F6A5 /* BigInt.framework */,
+				580B88E11E08D5C90018F6A5 /* SipHash.framework */,
+				580B88DF1E08D5AB0018F6A5 /* TweetnaclSwift.framework */,
+				580B88DD1E08D5560018F6A5 /* TweetNaclSwift_iOS.framework */,
 				58124E4E1E04E00D0044E30F /* BigInt.framework */,
 				58124E4C1E04E0090044E30F /* CryptoSwift.framework */,
 				5818FE3B1E03C50D007F082D /* CryptoSwift.framework */,
@@ -404,6 +416,8 @@
 					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftBase58/build/Debug",
 					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftGMP/build/Debug",
 					"$(PROJECT_DIR)/Carthage/Checkouts/CryptoSwift/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug",
 				);
 				INFOPLIST_FILE = BitmarkLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -430,6 +444,8 @@
 					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftBase58/build/Debug",
 					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftGMP/build/Debug",
 					"$(PROJECT_DIR)/Carthage/Checkouts/CryptoSwift/build/Debug",
+					"$(PROJECT_DIR)/Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug",
 				);
 				INFOPLIST_FILE = BitmarkLib/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

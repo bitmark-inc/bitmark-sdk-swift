@@ -1,3 +1,4 @@
 github "krzyzanowskim/CryptoSwift" "0.6.7"
 github "lorentey/SipHash" "v1.1.0"
+github "bitmark-inc/tweetnacl-swiftwrap" "0.0.1"
 github "lorentey/BigInt" "v2.1.1"

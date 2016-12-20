@@ -14,6 +14,9 @@
       location = "container:"
       name = "ExternalLib">
       <FileRef
+         location = "group:Carthage/Checkouts/tweetnacl-swiftwrap/TweetnaclSwift.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:Carthage/Checkouts/SipHash/SipHash.xcodeproj">
       </FileRef>
       <FileRef
