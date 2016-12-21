@@ -2,5 +2,12 @@ language: objective-c
 xcode_workspace: BitmarkLib.xcworkspace # path to your xcodeproj folder
 xcode_scheme: BitmarkLib
 osx_image: xcode8.2
+
 before_install:
   - bin/setup
+
+script:
+  - xctool -workspace BitmarkLib.xcworkspace -scheme BitmarkLib run-tests -test-sdk iphonesimulator -parallelize
+
+after_success:
+- bash <(curl -s https://codecov.io/bash)
