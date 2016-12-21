@@ -32,12 +32,55 @@ class Address_Tests: XCTestCase {
                           "2B55A7Avk7GGXSGtW5cUnyTPXZX4D8d7Ba3aqkAdo66wBSkQ9ry" // unrecognize key type
     ]
     
-    func testBadKeyLength() {
-        XCTAssertThrowsError(try Address(address: invalidAddress[0]))
-    }
+    // MARK:- Init address tests
     
     func testAbleToCreateAddressLiveNet() {
         let address = Address(fromPubKey: validData[0].pubKey.hexDecodedData)
         XCTAssertEqual(address.string, validData[0].address)
+    }
+    
+    func testAbleToCreateAddressTestNet() {
+        let address = Address(fromPubKey: validData[1].pubKey.hexDecodedData, network: validData[1].network)
+        XCTAssertEqual(address.string, validData[1].address)
+    }
+    
+    // MARK:- Bad cases tests
+    
+    func testBadBase58String() {
+        XCTAssertThrowsError(try Address(address: invalidAddress[0]))
+    }
+    
+    func testBadPublicKeyString() {
+        XCTAssertThrowsError(try Address(address: invalidAddress[1]))
+    }
+    
+    func testBadUnknowKeyType() {
+        XCTAssertThrowsError(try Address(address: invalidAddress[2]))
+    }
+    
+    // MARK:- Parse live net correctly tests
+    
+    func testParseAddressLiveNet() {
+        do {
+            let address = try Address(address: validData[0].address)
+            XCTAssertEqual(address.pubKey.hexEncodedString, validData[0].pubKey)
+            XCTAssertEqual(address.network, validData[0].network)
+            XCTAssertEqual(address.keyType, validData[0].type)
+        }
+        catch {
+            XCTFail()
+        }
+    }
+    
+    func testParseAddressTestNet() {
+        do {
+            let address = try Address(address: validData[1].address)
+            XCTAssertEqual(address.pubKey.hexEncodedString, validData[1].pubKey)
+            XCTAssertEqual(address.network, validData[1].network)
+            XCTAssertEqual(address.keyType, validData[1].type)
+        }
+        catch {
+            XCTFail()
+        }
     }
 }

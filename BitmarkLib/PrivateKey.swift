@@ -53,12 +53,12 @@ public struct PrivateKey {
         }
         
         // get private key
-        let seed = kifBuffer.slice(start: keyVariantBufferLength, length: kifLength - Config.checksumLength)
+        let seed = kifBuffer.slice(start: keyVariantBufferLength, end: kifLength - Config.checksumLength)
         
         // check checksum
         let checksumData = kifBuffer.subdata(in: 0..<Config.checksumLength)
-        let checksum = checksumData.sha3(.sha256).slice(start: 0, length: Config.checksumLength)
-        if checksum == kifBuffer.slice(start: kifLength - Config.checksumLength, length: kifLength) {
+        let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
+        if checksum == kifBuffer.slice(start: kifLength - Config.checksumLength, end: kifLength) {
             throw("Private key error: checksum mismatch")
         }
         
@@ -99,7 +99,7 @@ public struct PrivateKey {
         let keyVariantData = keyVariantVal.serialize()
         
         var checksum = keyVariantData.concating(data: seed).sha3(.sha256)
-        checksum = checksum.slice(start: 0, length: Config.checksumLength)
+        checksum = checksum.slice(start: 0, end: Config.checksumLength)
         let kifData = keyVariantData + seed + checksum
         
         // Set data

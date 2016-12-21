@@ -45,6 +45,6 @@ public class VarInt {
             buffer.append(UInt8(truncatingBitPattern: val.toIntMax()))
         }
         
-        return Data(bytes: buffer).slice(start: 0, length: (offsetCount + 1))
+        return Data(bytes: buffer).slice(start: 0, end: (offsetCount + 1))
     }
 }

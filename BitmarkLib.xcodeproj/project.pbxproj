@@ -23,6 +23,7 @@
 		5818FE3A1E03BDB6007F082D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE391E03BDB6007F082D /* Common.swift */; };
 		5865BD431E0250C200B25AB3 /* BitmarkLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD391E0250C200B25AB3 /* BitmarkLib.framework */; };
 		5865BD4A1E0250C200B25AB3 /* BitmarkLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		58E2D5B91E0A39AD0014F011 /* ModelEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E2D5B81E0A39AD0014F011 /* ModelEquatable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		5865BD421E0250C200B25AB3 /* BitmarkLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BitmarkLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5865BD491E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5865BD671E02762A00B25AB3 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = "Carthage/Checkouts/BigInt/build/Debug-iphoneos/BigInt.framework"; sourceTree = "<group>"; };
+		58E2D5B81E0A39AD0014F011 /* ModelEquatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelEquatable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 				580B61901E077DC5008BEBFF /* Data+Extension.swift */,
 				580B61941E07CF16008BEBFF /* BigInt+Extension.swift */,
 				580B88EB1E090FA80018F6A5 /* BitmarkDataError.swift */,
+				58E2D5B81E0A39AD0014F011 /* ModelEquatable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				5818FE361E03A64B007F082D /* Address.swift in Sources */,
 				5818FE381E03A840007F082D /* Config.swift in Sources */,
 				580B88E81E08DFBB0018F6A5 /* Ed25519.swift in Sources */,
+				58E2D5B91E0A39AD0014F011 /* ModelEquatable.swift in Sources */,
 				5818FE2B1E0391CF007F082D /* Base58.swift in Sources */,
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
 				5818FE341E039820007F082D /* Varint.swift in Sources */,

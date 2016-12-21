@@ -22,7 +22,7 @@ class Ed25519 {
     }
     
     static func getSeed(fromPrivateKey privateKey: Data) throws -> Data {
-        return privateKey.slice(start: 0, length: Config.ed25519.seedLength)
+        return privateKey.slice(start: 0, end: Config.ed25519.seedLength)
     }
     
     static func generateKeyPair(fromPrivateKey privateKey: Data) throws -> (publicKey: Data, privateKey: Data) {

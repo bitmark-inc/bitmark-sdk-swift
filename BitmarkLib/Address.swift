@@ -28,7 +28,7 @@ public struct Address {
         keyVariantVal |= (BigUInt(network.addressValue) << 1) // second bit indicates net
         let keyVariantData = VarInt.encode(value: keyVariantVal)
         
-        let checksumData = keyVariantData.concating(data: pubKey).sha3(.sha256).slice(start: 0, length: Config.checksumLength)
+        let checksumData = keyVariantData.concating(data: pubKey).sha3(.sha256).slice(start: 0, end: Config.checksumLength)
         
         let addressData = keyVariantData + pubKey + checksumData
         let base58Address = Base58.encode(addressData)
@@ -51,12 +51,12 @@ public struct Address {
         
         // check for whether this is an address
         let keyPartVal = BigUInt(Config.KeyPart.publicKey)
-        if (keyVariant & BigUInt(1)) ==  keyPartVal {
+        if (keyVariant & BigUInt(1)) !=  keyPartVal {
             throw("Address error: this is not an address")
         }
         
         // detect network
-        let networkVal = (keyVariant << 1) & BigUInt(0x01)
+        let networkVal = (keyVariant >> 1) & BigUInt(0x01)
         
         if networkVal == BigUInt(Config.liveNet.addressValue) {
             self.network = Config.liveNet
@@ -66,7 +66,7 @@ public struct Address {
         }
         
         // key type
-        let keyTypeVal = (keyVariant << 4) & BigUInt(0x07)
+        let keyTypeVal = (keyVariant >> 4) & BigUInt(0x07)
         
         guard let keyType = Common.getKey(byValue: keyTypeVal) else {
             throw("Address error: unknow key type")
@@ -74,17 +74,17 @@ public struct Address {
         
         let addressLength = keyVariantBuffer.count + keyType.publicLength + Config.checksumLength
         
-        if addressLength == addressBuffer.count{
+        if addressLength != addressBuffer.count{
             throw("Address error: key type " + keyType.name + " must be " +  String(addressLength) + " bytes")
         }
         
         // public key
-        self.pubKey = addressData.subdata(in: keyVariantBuffer.count..<(keyVariantBuffer.count + addressLength - Config.checksumLength))
+        self.pubKey = addressData.slice(start: keyVariantBuffer.count, end: (addressLength - Config.checksumLength))
         
         // check checksum
-        let checksumData = addressData.subdata(in: 0..<(keyVariantBuffer.count + keyType.publicLength))
-        let checksum = checksumData.sha3(.sha256).subdata(in: 0..<Config.checksumLength)
-        let checksumFromAddress = addressData.subdata(in: Config.checksumLength..<addressLength)
+        let checksumData = addressData.slice(start: 0, end: keyVariantBuffer.count + keyType.publicLength)
+        let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
+        let checksumFromAddress = addressData.slice(start: addressLength - Config.checksumLength, end: addressLength)
         
         if checksum != checksumFromAddress {
             throw("Address error: checksum mismatchs")

@@ -23,8 +23,9 @@ extension Data {
         return Data(bytes: buffer)
     }
     
-    func slice(start: Int, length: Int) -> Data {
-        return self.subdata(in: start..<(start + length))
+    func slice(start: Int, end: Int) -> Data {
+        let trueEnd = Swift.min(end, self.count)
+        return self.subdata(in: start..<trueEnd)
     }
     
     static func +(data1: Data, data2: Data) -> Data {
