@@ -4,11 +4,10 @@ xcode_scheme: BitmarkLib
 osx_image: xcode8.2
 
 before_install:
-  - brew update
-  - brew install xctool
+  - gem install xcpretty
 
 script:
-  - xctool -workspace BitmarkLib.xcworkspace -scheme BitmarkLib run-tests -test-sdk iphonesimulator -parallelize
+  - xcodebuild -scheme BitmarkLib -workspace BitmarkLib.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6S,OS=9.1' build test | xcpretty
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
