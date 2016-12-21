@@ -28,7 +28,7 @@ public struct Address {
         keyVariantVal |= (BigUInt(network.addressValue) << 1) // second bit indicates net
         let keyVariantData = VarInt.encode(value: keyVariantVal)
         
-        let checksumData = keyVariantData.concating(data: pubKey).sha3(.sha256)
+        let checksumData = keyVariantData.concating(data: pubKey).sha3(.sha256).slice(start: 0, length: Config.checksumLength)
         
         let addressData = keyVariantData + pubKey + checksumData
         let base58Address = Base58.encode(addressData)
@@ -93,6 +93,4 @@ public struct Address {
         self.prefix = keyVariant.serialize()
         self.keyType = keyType
     }
-    
-    
 }

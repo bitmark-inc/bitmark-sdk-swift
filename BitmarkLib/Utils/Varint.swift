@@ -4,55 +4,47 @@ import BigInt
 public class VarInt {
     
     public static func decode(data: Data) -> BigUInt {
-        let encodedBuffer = [UInt8](data)
-        var currentByte: UInt8 = 0x00
-        var result = BigUInt(0)
-        let maxLength = encodedBuffer.count > 9 ? 9 : encodedBuffer.count
+        var output: UInt64 = 0
+        var counter = 0
+        var shifter: UInt64 = 0
+        let buffer = [UInt8](data)
         
-        var i = 0
-        var currentValue: UInt8 = 0
-        
-        while i < maxLength && (currentByte & 0x80) == 0x80 {
-            currentByte = encodedBuffer[i]
-            currentValue = encodedBuffer[i]
-            
-            if i < 8 {
-                currentValue = currentValue * 0x7f
+        for byte in buffer {
+            if byte < 0x80 {
+                if counter >= 9 && byte > 1 {
+                    return BigUInt(0)
+                }
+                
+                return BigUInt(output | UInt64(byte) << shifter)
             }
             
-            var currentValueBig = BigUInt(currentValue)
-            currentValueBig = currentValueBig << (i * 7)
-            
-            result.add(currentValueBig)
-            
-            i += 1
+            output |= UInt64(byte & 0x7f) << shifter
+            shifter += 7
+            counter += 1
         }
         
-        return result
+        return BigUInt(0)
     }
     
     public static func encode(value: BigUInt) -> Data {
-        var result = [UInt8](repeating: 0, count: 9)
+        var buffer = [UInt8]()
+        var val = value
         var offsetCount = 0
-        var valueBuffer: [UInt8]
-        let valueCompared = BigUInt(128)
-        var valueClone = value
         
-        while valueClone >= valueCompared {
-            valueBuffer = value.buffer
-            let lastByte = valueBuffer[valueBuffer.count - 1] | 0x80
-            result[offsetCount] = lastByte
-            valueClone = valueClone >> 7
+        while val >= 0x80 {
+            buffer.append(UInt8(truncatingBitPattern: val.toIntMax() | 0x80))
+            val >>= 7
             offsetCount += 1
         }
         
-        if offsetCount == 9 {
-            result[8] = result[8] | 0x80
-            offsetCount = 0
-        } else {
-            result[offsetCount] = UInt8(value.toIntMax())
+        // Append last byte
+        if offsetCount >= 9 {
+            buffer[8] = UInt8(truncatingBitPattern: val.toIntMax() | 0x80)
+        }
+        else {
+            buffer.append(UInt8(truncatingBitPattern: val.toIntMax()))
         }
         
-        return Data(bytes: result).subdata(in: 0..<offsetCount+1)
+        return Data(bytes: buffer).slice(start: 0, length: (offsetCount + 1))
     }
 }
