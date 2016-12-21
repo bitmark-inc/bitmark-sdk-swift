@@ -4,7 +4,8 @@ xcode_scheme: BitmarkLib
 osx_image: xcode8.2
 
 before_install:
-  - bin/setup
+  - brew update
+  - brew install xctool
 
 script:
   - xctool -workspace BitmarkLib.xcworkspace -scheme BitmarkLib run-tests -test-sdk iphonesimulator -parallelize
