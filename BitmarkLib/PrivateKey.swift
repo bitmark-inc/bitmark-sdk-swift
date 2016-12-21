@@ -61,9 +61,6 @@ public struct PrivateKey {
         let checksumData = kifBuffer.slice(start: 0, end: kifLength - Config.checksumLength)
         let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
         
-        print("checksum = " + checksum.hexEncodedString)
-        print("kifBuffer.slice = " + (kifBuffer.slice(start: kifLength - Config.checksumLength, end: kifLength)).hexEncodedString)
-        
         if checksum != kifBuffer.slice(start: kifLength - Config.checksumLength, end: kifLength) {
             throw("Private key error: checksum mismatch")
         }
