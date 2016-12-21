@@ -8,6 +8,9 @@
       location = "group:Cartfile">
    </FileRef>
    <FileRef
+      location = "group:BitmarkLib.podspec">
+   </FileRef>
+   <FileRef
       location = "group:BitmarkLib.playground">
    </FileRef>
    <Group

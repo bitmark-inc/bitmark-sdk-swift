@@ -13,4 +13,5 @@ Pod::Spec.new do |spec|
   spec.source_files = "BitmarkLib/**/*.{h,swift}"
 
   spec.dependency "BigInt", "~> 2.1"
+  spec.dependency "CryptoSwift"
 end
