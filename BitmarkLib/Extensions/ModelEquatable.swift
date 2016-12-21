@@ -19,3 +19,9 @@ extension Network: Equatable {
         return lhs.addressValue == rhs.addressValue
     }
 }
+
+extension Address: Equatable {
+    public static func ==(lhs: Address, rhs: Address) -> Bool {
+        return lhs.pubKey == rhs.pubKey && lhs.network == rhs.network && lhs.string == rhs.string
+    }
+}

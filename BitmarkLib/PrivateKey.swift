@@ -30,17 +30,19 @@ public struct PrivateKey {
         
         // check for whether this is a kif
         let keyPartVal = BigUInt(Config.KeyPart.privateKey)
-        assert(keyVariant & BigUInt(1) == keyPartVal, "Private key error: can not parse the kif string")
+        if keyVariant & BigUInt(1) != keyPartVal {
+            throw("Private key error: can not parse the kif string")
+        }
         
         // detect network
-        let networkVal = (keyVariant << 1) & BigUInt(0x01)
+        let networkVal = (keyVariant >> 1) & BigUInt(0x01)
         guard let network = Common.getNetwork(byAddressValue: networkVal) else {
             throw("Unknow network")
         }
         self.network = network
         
         // key type
-        let keyTypeVal = (keyVariant << 4) & BigUInt(0x07)
+        let keyTypeVal = (keyVariant >> 4) & BigUInt(0x07)
         guard let keyType = Common.getKey(byValue: keyTypeVal) else {
             throw("Unknow key type")
         }
@@ -48,7 +50,7 @@ public struct PrivateKey {
         
         // check the length of kif
         let kifLength = keyVariantBufferLength + keyType.seedLength + Config.checksumLength
-        if kifLength == kifBuffer.count {
+        if kifLength != kifBuffer.count {
             throw("Private key error: KIF for"  + keyType.name + " must be " + String(kifLength) + " bytes")
         }
         
@@ -56,9 +58,13 @@ public struct PrivateKey {
         let seed = kifBuffer.slice(start: keyVariantBufferLength, end: kifLength - Config.checksumLength)
         
         // check checksum
-        let checksumData = kifBuffer.subdata(in: 0..<Config.checksumLength)
+        let checksumData = kifBuffer.slice(start: 0, end: kifLength - Config.checksumLength)
         let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
-        if checksum == kifBuffer.slice(start: kifLength - Config.checksumLength, end: kifLength) {
+        
+        print("checksum = " + checksum.hexEncodedString)
+        print("kifBuffer.slice = " + (kifBuffer.slice(start: kifLength - Config.checksumLength, end: kifLength)).hexEncodedString)
+        
+        if checksum != kifBuffer.slice(start: kifLength - Config.checksumLength, end: kifLength) {
             throw("Private key error: checksum mismatch")
         }
         
@@ -68,7 +74,7 @@ public struct PrivateKey {
         self.address = Address(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
-    init(fromKeyPair keyPairData: Data, network: Network, type: KeyType) throws {
+    init(fromKeyPair keyPairData: Data, network: Network = Config.liveNet, type: KeyType = Config.ed25519) throws {
         // Check length to determine the keypair
         
         var keyPair: (publicKey: Data, privateKey: Data)
@@ -108,5 +114,10 @@ public struct PrivateKey {
         self.type = type
         self.privateKey = keyPair.privateKey
         self.address = Address(fromPubKey: keyPair.publicKey, network: network, keyType: type)
+    }
+    
+    init(fromKeyPairString keyPairString: String, network: Network = Config.liveNet, type: KeyType = Config.ed25519) throws {
+        let keyPairData = keyPairString.hexDecodedData
+        try self.init(fromKeyPair: keyPairData, network: network, type: type)
     }
 }
