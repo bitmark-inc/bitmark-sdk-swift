@@ -26,6 +26,7 @@ public struct Network {
 
 public class Config {
     
+    // MARK:- Key
     static let ed25519 = KeyType(name: "ed25519",
                           value: 0x01,
                           publicLength: 32,
@@ -41,6 +42,7 @@ public class Config {
     
     static let checksumLength = 4
     
+    // MARK:- Networks
     static let liveNet = Network(name: "livenet",
                           addressValue: 0x00,
                           kifValue: 0x00,
@@ -54,4 +56,20 @@ public class Config {
                           staticNodes: ["118.163.120.178:3566", "118.163.120.176:3130"])
     
     static let networks = [liveNet, testNet]
+    
+    // MARK:- Record
+    struct AssetConfig {
+        static let value = 0x02
+        static let maxName = 64
+        static let maxMetadata = 2048
+        static let maxFingerprint = 1024
+    }
+    
+    struct IssueConfig {
+        static let value = 0x03
+    }
+    
+    struct Transfer {
+        static let value = 0x04
+    }
 }

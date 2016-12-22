@@ -16,6 +16,9 @@
 		580B88EA1E090A120018F6A5 /* Address_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E91E090A120018F6A5 /* Address_Tests.swift */; };
 		580B88EC1E090FA80018F6A5 /* BitmarkDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88EB1E090FA80018F6A5 /* BitmarkDataError.swift */; };
 		58124E4D1E04E0090044E30F /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58124E4C1E04E0090044E30F /* CryptoSwift.framework */; };
+		5812655A1E0B704800D6DF32 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581265591E0B704800D6DF32 /* Asset.swift */; };
+		5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */; };
+		5812655E1E0BC1BC00D6DF32 /* Asset_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */; };
 		5818FE2B1E0391CF007F082D /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE2A1E0391CF007F082D /* Base58.swift */; };
 		5818FE341E039820007F082D /* Varint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE331E039820007F082D /* Varint.swift */; };
 		5818FE361E03A64B007F082D /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE351E03A64B007F082D /* Address.swift */; };
@@ -51,6 +54,9 @@
 		580B88EB1E090FA80018F6A5 /* BitmarkDataError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitmarkDataError.swift; sourceTree = "<group>"; };
 		58124E4C1E04E0090044E30F /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Checkouts/CryptoSwift/build/Debug/CryptoSwift.framework; sourceTree = "<group>"; };
 		58124E4E1E04E00D0044E30F /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkLib-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/BigInt.framework"; sourceTree = "<group>"; };
+		581265591E0B704800D6DF32 /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+		5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryPacking.swift; sourceTree = "<group>"; };
+		5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset_Tests.swift; sourceTree = "<group>"; };
 		5818FE2A1E0391CF007F082D /* Base58.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
 		5818FE2C1E0391F5007F082D /* SwiftBase58.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftBase58.framework; path = Carthage/Checkouts/SwiftBase58/build/Debug/SwiftBase58.framework; sourceTree = "<group>"; };
 		5818FE2D1E0391F5007F082D /* SwiftGMP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftGMP.framework; path = Carthage/Checkouts/SwiftGMP/build/Debug/SwiftGMP.framework; sourceTree = "<group>"; };
@@ -102,6 +108,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		581265581E0B703400D6DF32 /* Records */ = {
+			isa = PBXGroup;
+			children = (
+				581265591E0B704800D6DF32 /* Asset.swift */,
+			);
+			path = Records;
+			sourceTree = "<group>";
+		};
 		5818FE291E0391C0007F082D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +123,7 @@
 				5818FE331E039820007F082D /* Varint.swift */,
 				5818FE391E03BDB6007F082D /* Common.swift */,
 				580B88E71E08DFBB0018F6A5 /* Ed25519.swift */,
+				5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -138,6 +153,7 @@
 				5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */,
 				580B618F1E077DB4008BEBFF /* Extensions */,
 				5818FE291E0391C0007F082D /* Utils */,
+				581265581E0B703400D6DF32 /* Records */,
 				5865BD3D1E0250C200B25AB3 /* Info.plist */,
 				5818FE351E03A64B007F082D /* Address.swift */,
 				580B61921E07C917008BEBFF /* PrivateKey.swift */,
@@ -152,6 +168,7 @@
 				5865BD491E0250C200B25AB3 /* Info.plist */,
 				580B88E91E090A120018F6A5 /* Address_Tests.swift */,
 				58E2D5BA1E0A60300014F011 /* PrivateKey_Tests.swift */,
+				5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */,
 			);
 			path = BitmarkLibTests;
 			sourceTree = "<group>";
@@ -291,6 +308,8 @@
 				58E2D5B91E0A39AD0014F011 /* ModelEquatable.swift in Sources */,
 				5818FE2B1E0391CF007F082D /* Base58.swift in Sources */,
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
+				5812655A1E0B704800D6DF32 /* Asset.swift in Sources */,
+				5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */,
 				5818FE341E039820007F082D /* Varint.swift in Sources */,
 				580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */,
 				580B61951E07CF16008BEBFF /* BigInt+Extension.swift in Sources */,
@@ -304,6 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				580B88EA1E090A120018F6A5 /* Address_Tests.swift in Sources */,
+				5812655E1E0BC1BC00D6DF32 /* Asset_Tests.swift in Sources */,
 				58E2D5BB1E0A60300014F011 /* PrivateKey_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

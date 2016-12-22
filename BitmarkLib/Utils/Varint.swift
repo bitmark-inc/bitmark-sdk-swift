@@ -47,4 +47,8 @@ public class VarInt {
         
         return Data(bytes: buffer).slice(start: 0, end: (offsetCount + 1))
     }
+    
+    public static func encode(value: Int) -> Data {
+        return encode(value: BigUInt(value))
+    }
 }

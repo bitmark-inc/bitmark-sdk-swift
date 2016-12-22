@@ -93,4 +93,8 @@ public struct Address {
         self.prefix = keyVariant.serialize()
         self.keyType = keyType
     }
+    
+    public func pack() -> Data {
+        return prefix + pubKey
+    }
 }
