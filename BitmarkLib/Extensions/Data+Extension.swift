@@ -32,6 +32,10 @@ extension Data {
         return data1.concating(data: data2)
     }
     
+    static func +=(data1: inout Data, data2: Data) {
+        data1.concat(data: data2)
+    }
+    
     // NSData bridging
     var nsdata: NSData {
         return NSData(data: self)

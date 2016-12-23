@@ -74,9 +74,7 @@ public struct Asset {
         return fingerprintData.sha3(.sha512).hexEncodedString
     }
     
-    // MARK:- Public methods
-    
-    public func packRecord() -> Data {
+    internal func packRecord() -> Data {
         var txData: Data
         txData = VarInt.encode(value: Config.AssetConfig.value)
         txData = BinaryPacking.append(toData: txData, withString: self.name)
@@ -86,6 +84,8 @@ public struct Asset {
         
         return txData
     }
+    
+    // MARK:- Public methods
     
     public mutating func set(metadata: [String: String]) {
         let metaDataString = Asset.convertString(fromMetadata: metadata)

@@ -1,0 +1,86 @@
+//
+//  Issue.swift
+//  BitmarkLib
+//
+//  Created by Anh Nguyen on 12/23/16.
+//  Copyright © 2016 Bitmark. All rights reserved.
+//
+
+import CryptoSwift
+import BigInt
+
+public struct Issue {
+    
+    private(set) var asset: Asset?
+    private(set) var nonce: Data?
+    private(set) var signature: Data?
+    private(set) var isSigned = false
+    private(set) var txId: String?
+    private(set) var owner: Address?
+    
+    // MARK:- Internal methods
+    
+    internal mutating func resetSignState() {
+        self.txId = nil
+        self.isSigned = false
+    }
+    
+    internal func packRecord() -> Data {
+        var txData: Data
+        txData = VarInt.encode(value: Config.IssueConfig.value)
+        txData = BinaryPacking.append(toData: txData, withData: self.asset?.id?.hexDecodedData)
+        txData = BinaryPacking.append(toData: txData, withData: self.owner?.pack())
+        
+        if let nonce = self.nonce {
+            return txData + nonce
+        }
+        else {
+            return txData
+        }
+    }
+    
+    // MARK:- Public methods
+    
+    public mutating func set(asset: Asset) {
+        self.asset = asset
+        resetSignState()
+    }
+    
+    public mutating func set(nonce: Data) {
+        self.nonce = nonce
+        resetSignState()
+    }
+    
+    public mutating func set(nonce: BigUInt) {
+        self.nonce = VarInt.encode(value: nonce)
+        resetSignState()
+    }
+    
+    public mutating func sign(privateKey: PrivateKey) {
+        precondition(self.asset != nil, "Issue error: missing asset")
+        precondition(self.nonce != nil, "Issue error: missing nonce")
+        
+        self.owner = privateKey.address
+        
+        var recordPacked = packRecord()
+        do {
+            self.signature = try Ed25519.getSignature(message: recordPacked, privateKey: privateKey.privateKey)
+            self.isSigned = true
+            
+            recordPacked = BinaryPacking.append(toData: recordPacked, withData: self.signature)
+            self.txId = recordPacked.sha3(.sha256).hexEncodedString
+        }
+        catch {
+            resetSignState()
+        }
+    }
+    
+    public func getRPCParam() -> [String: String] {
+        precondition(self.isSigned, "Issue error: need to sign the record before getting RPC param")
+        
+        return ["owner": self.owner!.string,
+        "signature": self.signature!.toHexString(),
+        "asset": self.asset!.id!,
+        "nonce": self.nonce!.hexEncodedString]
+    }
+}

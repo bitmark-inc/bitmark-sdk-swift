@@ -69,7 +69,12 @@ public class Config {
         static let value = 0x03
     }
     
-    struct Transfer {
+    struct TransferConfig {
         static let value = 0x04
+    }
+    
+    // MARK:- Currency
+    struct CurrencyConfig {
+        static let bitcoin = 0x01
     }
 }

@@ -26,6 +26,10 @@
 		5818FE3A1E03BDB6007F082D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE391E03BDB6007F082D /* Common.swift */; };
 		5865BD431E0250C200B25AB3 /* BitmarkLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD391E0250C200B25AB3 /* BitmarkLib.framework */; };
 		5865BD4A1E0250C200B25AB3 /* BitmarkLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		58E1631E1E0CB93400DEED99 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E1631D1E0CB93400DEED99 /* Issue.swift */; };
+		58E163201E0CC66000DEED99 /* Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E1631F1E0CC66000DEED99 /* Transfer.swift */; };
+		58E163221E0CDD9A00DEED99 /* Issue_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E163211E0CDD9A00DEED99 /* Issue_Tests.swift */; };
+		58E163241E0CF96C00DEED99 /* Transfer_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E163231E0CF96C00DEED99 /* Transfer_Tests.swift */; };
 		58E2D5B91E0A39AD0014F011 /* ModelEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E2D5B81E0A39AD0014F011 /* ModelEquatable.swift */; };
 		58E2D5BB1E0A60300014F011 /* PrivateKey_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E2D5BA1E0A60300014F011 /* PrivateKey_Tests.swift */; };
 /* End PBXBuildFile section */
@@ -71,6 +75,10 @@
 		5865BD421E0250C200B25AB3 /* BitmarkLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BitmarkLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5865BD491E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5865BD671E02762A00B25AB3 /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = "Carthage/Checkouts/BigInt/build/Debug-iphoneos/BigInt.framework"; sourceTree = "<group>"; };
+		58E1631D1E0CB93400DEED99 /* Issue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
+		58E1631F1E0CC66000DEED99 /* Transfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transfer.swift; sourceTree = "<group>"; };
+		58E163211E0CDD9A00DEED99 /* Issue_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Issue_Tests.swift; sourceTree = "<group>"; };
+		58E163231E0CF96C00DEED99 /* Transfer_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transfer_Tests.swift; sourceTree = "<group>"; };
 		58E2D5B81E0A39AD0014F011 /* ModelEquatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelEquatable.swift; sourceTree = "<group>"; };
 		58E2D5BA1E0A60300014F011 /* PrivateKey_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKey_Tests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,6 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				581265591E0B704800D6DF32 /* Asset.swift */,
+				58E1631D1E0CB93400DEED99 /* Issue.swift */,
+				58E1631F1E0CC66000DEED99 /* Transfer.swift */,
 			);
 			path = Records;
 			sourceTree = "<group>";
@@ -169,6 +179,8 @@
 				580B88E91E090A120018F6A5 /* Address_Tests.swift */,
 				58E2D5BA1E0A60300014F011 /* PrivateKey_Tests.swift */,
 				5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */,
+				58E163211E0CDD9A00DEED99 /* Issue_Tests.swift */,
+				58E163231E0CF96C00DEED99 /* Transfer_Tests.swift */,
 			);
 			path = BitmarkLibTests;
 			sourceTree = "<group>";
@@ -303,6 +315,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5818FE361E03A64B007F082D /* Address.swift in Sources */,
+				58E163201E0CC66000DEED99 /* Transfer.swift in Sources */,
+				58E1631E1E0CB93400DEED99 /* Issue.swift in Sources */,
 				5818FE381E03A840007F082D /* Config.swift in Sources */,
 				580B88E81E08DFBB0018F6A5 /* Ed25519.swift in Sources */,
 				58E2D5B91E0A39AD0014F011 /* ModelEquatable.swift in Sources */,
@@ -325,6 +339,8 @@
 				580B88EA1E090A120018F6A5 /* Address_Tests.swift in Sources */,
 				5812655E1E0BC1BC00D6DF32 /* Asset_Tests.swift in Sources */,
 				58E2D5BB1E0A60300014F011 /* PrivateKey_Tests.swift in Sources */,
+				58E163241E0CF96C00DEED99 /* Transfer_Tests.swift in Sources */,
+				58E163221E0CDD9A00DEED99 /* Issue_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
