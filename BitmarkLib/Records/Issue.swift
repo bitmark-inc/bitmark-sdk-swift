@@ -56,9 +56,13 @@ public struct Issue {
         resetSignState()
     }
     
-    public mutating func sign(privateKey: PrivateKey) {
-        precondition(self.asset != nil, "Issue error: missing asset")
-        precondition(self.nonce != nil, "Issue error: missing nonce")
+    public mutating func sign(privateKey: PrivateKey) throws {
+        if self.asset == nil {
+            throw(BMError("Issue error: missing asset"))
+        }
+        if self.nonce == nil {
+            throw(BMError("Issue error: missing nonce"))
+        }
         
         self.owner = privateKey.address
         
@@ -75,8 +79,10 @@ public struct Issue {
         }
     }
     
-    public func getRPCParam() -> [String: String] {
-        precondition(self.isSigned, "Issue error: need to sign the record before getting RPC param")
+    public func getRPCParam() throws -> [String: String] {
+        if !self.isSigned {
+            throw(BMError("Issue error: need to sign the record before getting RPC param"))
+        }
         
         return ["owner": self.owner!.string,
         "signature": self.signature!.toHexString(),

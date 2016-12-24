@@ -65,9 +65,11 @@ public struct Transfer {
         resetSignState()
     }
     
-    public mutating func set(to address: Address) {
+    public mutating func set(to address: Address) throws {
         if let preOwner = self.preOwner {
-            precondition(address.network == preOwner.network, "Transfer error: trying to transfer bitmark to different network")
+            if address.network != preOwner.network {
+                throw(BMError("Transfer error: trying to transfer bitmark to different network"))
+            }
         }
         
         self.owner = address
@@ -79,18 +81,26 @@ public struct Transfer {
         resetSignState()
     }
     
-    public mutating func sign(privateKey: PrivateKey) {
-        precondition(self.preTxId != nil, "Transfer error: missing previous transaction")
-        precondition(self.owner != nil, "Transfer error: missing new owner")
+    public mutating func sign(privateKey: PrivateKey) throws {
+        if self.preTxId == nil {
+            throw(BMError("Transfer error: missing previous transaction"))
+        }
+        if self.owner == nil {
+            throw(BMError( "Transfer error: missing new owner"))
+        }
         
         let preOwnerFromPrivateKey = privateKey.address
         
         if let preOwner = preOwner {
-            precondition(preOwner == preOwnerFromPrivateKey, "Transfer error: wrong key")
+            if preOwner != preOwnerFromPrivateKey {
+                throw(BMError("Transfer error: wrong key"))
+            }
         } else {
             self.preOwner = preOwnerFromPrivateKey
         }
-        precondition(self.owner?.network == self.preOwner?.network, "Transfer error: trying to transfer bitmark to different network")
+        if self.owner?.network != self.preOwner?.network {
+            throw(BMError("Transfer error: trying to transfer bitmark to different network"))
+        }
         
         
         var recordPacked = packRecord()
@@ -106,8 +116,10 @@ public struct Transfer {
         }
     }
     
-    public func getRPCParam() -> [String: String] {
-        precondition(self.isSigned, "Transfer error: need to sign the record before getting RPC param")
+    public func getRPCParam() throws -> [String: String] {
+        if !self.isSigned {
+            throw(BMError("Transfer error: need to sign the record before getting RPC param"))
+        }
         
         return ["owner": self.owner!.string,
                 "signature": self.signature!.toHexString(),

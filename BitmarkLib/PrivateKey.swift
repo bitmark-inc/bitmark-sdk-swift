@@ -21,7 +21,7 @@ public struct PrivateKey {
     
     init(fromKIF kifString: String) throws {
         guard let kifBuffer = Base58.decode(kifString) else {
-            throw("Can not convert base58")
+            throw(BMError("Can not convert base58"))
         }
         self.kif = kifString
         
@@ -31,27 +31,27 @@ public struct PrivateKey {
         // check for whether this is a kif
         let keyPartVal = BigUInt(Config.KeyPart.privateKey)
         if keyVariant & BigUInt(1) != keyPartVal {
-            throw("Private key error: can not parse the kif string")
+            throw(BMError("Private key error: can not parse the kif string"))
         }
         
         // detect network
         let networkVal = (keyVariant >> 1) & BigUInt(0x01)
         guard let network = Common.getNetwork(byAddressValue: networkVal) else {
-            throw("Unknow network")
+            throw(BMError("Unknow network"))
         }
         self.network = network
         
         // key type
         let keyTypeVal = (keyVariant >> 4) & BigUInt(0x07)
         guard let keyType = Common.getKey(byValue: keyTypeVal) else {
-            throw("Unknow key type")
+            throw(BMError("Unknow key type"))
         }
         self.type = keyType
         
         // check the length of kif
         let kifLength = keyVariantBufferLength + keyType.seedLength + Config.checksumLength
         if kifLength != kifBuffer.count {
-            throw("Private key error: KIF for"  + keyType.name + " must be " + String(kifLength) + " bytes")
+            throw(BMError("Private key error: KIF for"  + keyType.name + " must be " + String(kifLength) + " bytes"))
         }
         
         // get private key
@@ -62,7 +62,7 @@ public struct PrivateKey {
         let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
         
         if checksum != kifBuffer.slice(start: kifLength - Config.checksumLength, end: kifLength) {
-            throw("Private key error: checksum mismatch")
+            throw(BMError("Private key error: checksum mismatch"))
         }
         
         // get address
@@ -90,7 +90,7 @@ public struct PrivateKey {
             keyPair = keyPairResult
         }
         else {
-            throw("Unknown cases")
+            throw(BMError("Unknown cases"))
         }
         
         let keyPartVal = BigUInt(Config.KeyPart.privateKey)

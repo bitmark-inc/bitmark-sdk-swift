@@ -14,7 +14,7 @@
 		580B88E61E08D5F50018F6A5 /* TweetNaclSwift_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580B88E51E08D5F50018F6A5 /* TweetNaclSwift_iOS.framework */; };
 		580B88E81E08DFBB0018F6A5 /* Ed25519.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E71E08DFBB0018F6A5 /* Ed25519.swift */; };
 		580B88EA1E090A120018F6A5 /* Address_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E91E090A120018F6A5 /* Address_Tests.swift */; };
-		580B88EC1E090FA80018F6A5 /* BitmarkDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88EB1E090FA80018F6A5 /* BitmarkDataError.swift */; };
+		580B88EC1E090FA80018F6A5 /* BitmarkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88EB1E090FA80018F6A5 /* BitmarkError.swift */; };
 		58124E4D1E04E0090044E30F /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58124E4C1E04E0090044E30F /* CryptoSwift.framework */; };
 		5812655A1E0B704800D6DF32 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581265591E0B704800D6DF32 /* Asset.swift */; };
 		5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */; };
@@ -55,7 +55,7 @@
 		580B88E51E08D5F50018F6A5 /* TweetNaclSwift_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TweetNaclSwift_iOS.framework; path = "Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug-iphoneos/TweetNaclSwift_iOS.framework"; sourceTree = "<group>"; };
 		580B88E71E08DFBB0018F6A5 /* Ed25519.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ed25519.swift; sourceTree = "<group>"; };
 		580B88E91E090A120018F6A5 /* Address_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address_Tests.swift; sourceTree = "<group>"; };
-		580B88EB1E090FA80018F6A5 /* BitmarkDataError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitmarkDataError.swift; sourceTree = "<group>"; };
+		580B88EB1E090FA80018F6A5 /* BitmarkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitmarkError.swift; sourceTree = "<group>"; };
 		58124E4C1E04E0090044E30F /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Checkouts/CryptoSwift/build/Debug/CryptoSwift.framework; sourceTree = "<group>"; };
 		58124E4E1E04E00D0044E30F /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkLib-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/BigInt.framework"; sourceTree = "<group>"; };
 		581265591E0B704800D6DF32 /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
@@ -110,7 +110,7 @@
 			children = (
 				580B61901E077DC5008BEBFF /* Data+Extension.swift */,
 				580B61941E07CF16008BEBFF /* BigInt+Extension.swift */,
-				580B88EB1E090FA80018F6A5 /* BitmarkDataError.swift */,
+				580B88EB1E090FA80018F6A5 /* BitmarkError.swift */,
 				58E2D5B81E0A39AD0014F011 /* ModelEquatable.swift */,
 			);
 			path = Extensions;
@@ -328,7 +328,7 @@
 				580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */,
 				580B61951E07CF16008BEBFF /* BigInt+Extension.swift in Sources */,
 				580B61931E07C917008BEBFF /* PrivateKey.swift in Sources */,
-				580B88EC1E090FA80018F6A5 /* BitmarkDataError.swift in Sources */,
+				580B88EC1E090FA80018F6A5 /* BitmarkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

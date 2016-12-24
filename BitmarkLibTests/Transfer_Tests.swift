@@ -24,26 +24,31 @@ class Transfer_Tests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        asset.set(name: "Test Bitmark Lib")
-        asset.set(metadata: ["description": "this is description"])
-        asset.set(fingerPrint: "Test Bitmark Lib 11")
-        asset.sign(withPrivateKey: assetPk)
+        try! asset.set(name: "Test Bitmark Lib")
+        try! asset.set(metadata: ["description": "this is description"])
+        try! asset.set(fingerPrint: "Test Bitmark Lib 11")
+        try! asset.sign(withPrivateKey: assetPk)
         
         issue.set(asset: asset)
         issue.set(nonce: BigUInt(1475482198529))
-        issue.sign(privateKey: issuePk)
+        try! issue.sign(privateKey: issuePk)
     }
     
     // MARK:- Asset
     
     func testTransfer() {
         var transfer = Transfer()
-        transfer.set(from: issue)
-        transfer.set(to: transferPk.address)
-        transfer.sign(privateKey: issuePk)
-        
-        XCTAssert(transfer.isSigned)
-        XCTAssertEqual(transfer.owner?.string, transferPk.address.string)
-        XCTAssertEqual(transfer.preTxId, issue.txId)
+        do {
+            transfer.set(from: issue)
+            try transfer.set(to: transferPk.address)
+            try transfer.sign(privateKey: issuePk)
+            
+            XCTAssert(transfer.isSigned)
+            XCTAssertEqual(transfer.owner?.string, transferPk.address.string)
+            XCTAssertEqual(transfer.preTxId, issue.txId)
+        }
+        catch {
+            XCTFail()
+        }
     }
 }

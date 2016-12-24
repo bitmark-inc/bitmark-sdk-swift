@@ -8,14 +8,6 @@
 
 import CryptoSwift
 
-public struct RPCParam {
-    public let metadata: String
-    public let name: String
-    public let fingerprint: String
-    public let registrant: String
-    public let signature: String
-}
-
 public struct Asset {
     
     private(set) var id: String?
@@ -41,9 +33,11 @@ public struct Asset {
         return tmp.joined(separator: metadataSeparator)
     }
     
-    static func convertMetadata(fromString string: String) -> [String: String] {
+    static func convertMetadata(fromString string: String) throws -> [String: String] {
         let tmp = string.components(separatedBy: metadataSeparator)
-        precondition(tmp.count % 2 == 0, "can not parse string to metadata")
+        if tmp.count % 2 != 0 {
+            throw(BMError("can not parse string to metadata"))
+        }
         
         var result = [String: String]()
         let count = tmp.count / 2
@@ -87,65 +81,71 @@ public struct Asset {
     
     // MARK:- Public methods
     
-    public mutating func set(metadata: [String: String]) {
+    public mutating func set(metadata: [String: String]) throws {
         let metaDataString = Asset.convertString(fromMetadata: metadata)
-        precondition(Asset.isValidLength(metadata: metaDataString), "meta data's length must be in correct length")
+        if !Asset.isValidLength(metadata: metaDataString) {
+            throw(BMError("meta data's length must be in correct length"))
+        }
         self.metadata = metaDataString
         resetSignState()
     }
     
-    public mutating func set(fingerPrint: String) {
-        precondition(fingerPrint.characters.count <= Config.AssetConfig.maxFingerprint, "fingerprint's length must be in correct length")
+    public mutating func set(fingerPrint: String) throws {
+        if !(fingerPrint.characters.count <= Config.AssetConfig.maxFingerprint) {
+            throw(BMError("fingerprint's length must be in correct length"))
+        }
         self.fingerprint = fingerPrint
         resetSignState()
     }
     
-    public mutating func set(name: String) {
-        precondition(name.characters.count <= Config.AssetConfig.maxName, "name's length must be in corrent length")
+    public mutating func set(name: String) throws {
+        if !(name.characters.count <= Config.AssetConfig.maxName) {
+            throw(BMError("name's length must be in corrent length"))
+        }
         self.name = name
         resetSignState()
     }
     
-    public mutating func set(metadata: String) {
-        let meta = Asset.convertMetadata(fromString: metadata)
-        set(metadata: meta)
+    public mutating func set(metadata: String) throws {
+        let meta = try Asset.convertMetadata(fromString: metadata)
+        try set(metadata: meta)
     }
     
-    public mutating func sign(withPrivateKey privateKey: PrivateKey) {
-        precondition(self.name != nil, "Asset error: missing name")
-        precondition(self.fingerprint != nil, "Asset error: missing fingerprint")
-        
+    public mutating func sign(withPrivateKey privateKey: PrivateKey) throws {
+        if self.name == nil {
+            throw(BMError("Asset error: missing name"))
+        }
+        if self.fingerprint == nil {
+            throw(BMError("Asset error: missing fingerprint"))
+        }
         self.registrant = privateKey.address
-        do {
-            self.signature = try Ed25519.getSignature(message: self.packRecord(), privateKey: privateKey.privateKey)
-            guard let id = computeAssetId(fingerprint: self.fingerprint) else {
-                resetSignState()
-                return
-            }
-            self.id = id
-            self.isSigned = true
-        }
-        catch {
+        self.signature = try Ed25519.getSignature(message: self.packRecord(), privateKey: privateKey.privateKey)
+        guard let id = computeAssetId(fingerprint: self.fingerprint) else {
             resetSignState()
+            return
         }
+        self.id = id
+        self.isSigned = true
     }
     
-    public func getRPCParam() -> RPCParam {
-        precondition(self.isSigned, "Asset error: need to sign the record before getting RPC message")
+    public func getRPCParam() throws -> [String: String] {
+        if !self.isSigned {
+            throw(BMError("Asset error: need to sign the record before getting RPC message"))
+        }
         
         guard let metadata = metadata,
             let fingerprint = fingerprint,
             let name = name,
             let registrant = registrant,
             let signature = signature
-            else {
-            precondition(false, "Asset error: some field is missing")
+        else {
+            throw(BMError("Asset error: some field is missing"))
         }
         
-        return RPCParam(metadata: metadata,
-                        name: name,
-                        fingerprint: fingerprint,
-                        registrant: registrant.string,
-                        signature: signature.hexEncodedString)
+        return ["metadata": metadata,
+                "name": name,
+                "fingerprint": fingerprint,
+                "registrant": registrant.string,
+                "signature": signature.hexEncodedString]
     }
 }

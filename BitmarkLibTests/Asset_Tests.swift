@@ -37,17 +37,22 @@ class Asset_Tests: XCTestCase {
     
     func testAsset() {
         var asset = Asset()
-        asset.set(name: TestData.name)
-        asset.set(metadata: TestData.metadata)
-        asset.set(fingerPrint: TestData.fingerprint)
-        
-        asset.sign(withPrivateKey: TestData.privateKey)
-        
-        XCTAssert(asset.isSigned)
-        XCTAssertEqual(asset.name, TestData.name)
-        XCTAssertEqual(asset.metadata, TestData.metadata)
-        XCTAssertEqual(asset.fingerprint, TestData.fingerprint)
-        XCTAssertEqual(asset.registrant, TestData.privateKey.address)
-        XCTAssertEqual(asset.signature?.hexEncodedString, TestData.signature)
+        do {
+            try asset.set(name: TestData.name)
+            try asset.set(metadata: TestData.metadata)
+            try asset.set(fingerPrint: TestData.fingerprint)
+            
+            try asset.sign(withPrivateKey: TestData.privateKey)
+            
+            XCTAssert(asset.isSigned)
+            XCTAssertEqual(asset.name, TestData.name)
+            XCTAssertEqual(asset.metadata, TestData.metadata)
+            XCTAssertEqual(asset.fingerprint, TestData.fingerprint)
+            XCTAssertEqual(asset.registrant, TestData.privateKey.address)
+            XCTAssertEqual(asset.signature?.hexEncodedString, TestData.signature)
+        }
+        catch {
+            XCTFail()
+        }
     }
 }

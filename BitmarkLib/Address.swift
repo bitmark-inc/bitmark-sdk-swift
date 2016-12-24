@@ -39,7 +39,7 @@ public struct Address {
     
     public init(address: String) throws {
         guard let addressData = Base58.decode(address) else {
-            throw("Address error: unknow address")
+            throw(BMError("Address error: unknow address"))
         }
         
         let addressBuffer = [UInt8](addressData)
@@ -52,7 +52,7 @@ public struct Address {
         // check for whether this is an address
         let keyPartVal = BigUInt(Config.KeyPart.publicKey)
         if (keyVariant & BigUInt(1)) !=  keyPartVal {
-            throw("Address error: this is not an address")
+            throw(BMError("Address error: this is not an address"))
         }
         
         // detect network
@@ -69,13 +69,13 @@ public struct Address {
         let keyTypeVal = (keyVariant >> 4) & BigUInt(0x07)
         
         guard let keyType = Common.getKey(byValue: keyTypeVal) else {
-            throw("Address error: unknow key type")
+            throw(BMError("Address error: unknow key type"))
         }
         
         let addressLength = keyVariantBuffer.count + keyType.publicLength + Config.checksumLength
         
         if addressLength != addressBuffer.count{
-            throw("Address error: key type " + keyType.name + " must be " +  String(addressLength) + " bytes")
+            throw(BMError("Address error: key type " + keyType.name + " must be " +  String(addressLength) + " bytes"))
         }
         
         // public key
@@ -87,7 +87,7 @@ public struct Address {
         let checksumFromAddress = addressData.slice(start: addressLength - Config.checksumLength, end: addressLength)
         
         if checksum != checksumFromAddress {
-            throw("Address error: checksum mismatchs")
+            throw(BMError("Address error: checksum mismatchs"))
         }
         
         self.prefix = keyVariant.serialize()
