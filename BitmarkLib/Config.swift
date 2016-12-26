@@ -9,25 +9,25 @@
 import Foundation
 
 public struct KeyType {
-    let name: String
-    let value: Int
-    let publicLength: Int
-    let privateLength: Int
-    let seedLength: Int
+    public let name: String
+    public let value: Int
+    public let publicLength: Int
+    public let privateLength: Int
+    public let seedLength: Int
 }
 
 public struct Network {
-    let name: String
-    let addressValue: Int
-    let kifValue: Int
-    let staticHostName: String
-    let staticNodes: [String]
+    public let name: String
+    public let addressValue: Int
+    public let kifValue: Int
+    public let staticHostName: String
+    public let staticNodes: [String]
 }
 
 public class Config {
     
     // MARK:- Key
-    static let ed25519 = KeyType(name: "ed25519",
+    public static let ed25519 = KeyType(name: "ed25519",
                           value: 0x01,
                           publicLength: 32,
                           privateLength: 64,
@@ -43,13 +43,13 @@ public class Config {
     static let checksumLength = 4
     
     // MARK:- Networks
-    static let liveNet = Network(name: "livenet",
+    public static let liveNet = Network(name: "livenet",
                           addressValue: 0x00,
                           kifValue: 0x00,
                           staticHostName: "nodes.live.bitmark.com",
                           staticNodes: ["118.163.122.206:3130", "118.163.122.207:3130"])
     
-    static let testNet = Network(name: "testnet",
+    public static let testNet = Network(name: "testnet",
                           addressValue: 0x01,
                           kifValue: 0x01,
                           staticHostName: "nodes.test.bitmark.com",
