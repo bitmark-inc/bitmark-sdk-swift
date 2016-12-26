@@ -9,8 +9,6 @@
 
 import DNSServiceDiscovery
 
-private let timeoutDuration = 60.0 // seconds
-
 private struct QueryInfo {
     var service: DNSServiceRef?
     var socket: CFSocket!
@@ -98,7 +96,7 @@ private func querySocketCallback(
     let status = DNSServiceProcessResult(queryContext.pointee.service)
     
     queryContext.pointee.records.mutate { _ in
-        if let errorCode = DNSServiceErrorCode(rawValue: Int(status)) {
+        if Int(status) != kDNSServiceErr_NoError {
             throw BMError("query failed")
         }
     }
@@ -135,7 +133,7 @@ private func timerCallback(timer: CFRunLoopTimer?, info: UnsafeMutableRawPointer
 public class DNSResolver {
     private init() { }
     
-    public static func resolveTXT(_ domain: String, handler: @escaping (Result<[TXTRecord]>) -> ()) throws {
+    public static func resolveTXT(_ domain: String, timeout: Double = 60, handler: @escaping (Result<[TXTRecord]>) -> ()) throws {
         print("Will resolve domain `\(domain)`")
         
         // Create space on the heap for the context
@@ -165,7 +163,7 @@ public class DNSResolver {
                 queryContext /* context: */
             )
         }
-        if let errorCode = DNSServiceErrorCode(rawValue: Int(status)) {
+        if Int(status) != kDNSServiceErr_NoError {
             throw BMError("query failed")
         }
         
@@ -215,7 +213,7 @@ public class DNSResolver {
         )
         let timer = CFRunLoopTimerCreate(
             nil, /* allocator: */
-            CFAbsoluteTimeGetCurrent() + timeoutDuration, /* fireDate: */
+            CFAbsoluteTimeGetCurrent() + timeout, /* fireDate: */
             0,  /* interval: */
             0, /* flags: */
             0,  /* order: */

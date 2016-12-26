@@ -13,7 +13,7 @@ class DNSResolve_Tests: XCTestCase {
     
     // MARK:- Asset
     
-    func testTransfer() {
+    func testWithoutTimeout() {
         do {
             let expectation = self.expectation(description: "DNSResolver")
             
@@ -31,7 +31,30 @@ class DNSResolve_Tests: XCTestCase {
             XCTFail()
         }
         
-        self.waitForExpectations(timeout: 60) { (error) in
+        self.waitForExpectations(timeout: 61) { (error) in
+            print("Time out")
+        }
+    }
+    
+    func testTimeout() {
+        do {
+            let expectation = self.expectation(description: "DNSResolver")
+            
+            try DNSResolver.resolveTXT("www.google.com", timeout: 5, handler: { (result) in
+                switch result {
+                case .success(_):
+                    XCTFail()
+                case .failure(_):
+                    XCTAssert(true)
+                }
+                expectation.fulfill()
+            })
+        }
+        catch {
+            XCTFail()
+        }
+        
+        self.waitForExpectations(timeout: 61) { (error) in
             print("Time out")
         }
     }

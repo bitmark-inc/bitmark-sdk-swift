@@ -25,7 +25,6 @@
 		5818FE381E03A840007F082D /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE371E03A840007F082D /* Config.swift */; };
 		5818FE3A1E03BDB6007F082D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE391E03BDB6007F082D /* Common.swift */; };
 		582D59D11E0EB86600144ED5 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D59D01E0EB86600144ED5 /* Result.swift */; };
-		582D59D31E0EB90A00144ED5 /* DNSServiceErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D59D21E0EB90A00144ED5 /* DNSServiceErrorCode.swift */; };
 		5865BD431E0250C200B25AB3 /* BitmarkLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD391E0250C200B25AB3 /* BitmarkLib.framework */; };
 		5865BD4A1E0250C200B25AB3 /* BitmarkLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5869EC361E0F63E400DFE230 /* DNSResolve_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5869EC351E0F63E400DFE230 /* DNSResolve_Tests.swift */; };
@@ -77,7 +76,6 @@
 		5818FE391E03BDB6007F082D /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		5818FE3B1E03C50D007F082D /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Checkouts/CryptoSwift/build/Debug/CryptoSwift.framework; sourceTree = "<group>"; };
 		582D59D01E0EB86600144ED5 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		582D59D21E0EB90A00144ED5 /* DNSServiceErrorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSServiceErrorCode.swift; sourceTree = "<group>"; };
 		5865BD391E0250C200B25AB3 /* BitmarkLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BitmarkLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitmarkLib.h; sourceTree = "<group>"; };
 		5865BD3D1E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -236,7 +234,6 @@
 		58C04F5D1E0E53470021A7D1 /* DNSResolver */ = {
 			isa = PBXGroup;
 			children = (
-				582D59D21E0EB90A00144ED5 /* DNSServiceErrorCode.swift */,
 				582D59D01E0EB86600144ED5 /* Result.swift */,
 				58C04F771E0E70110021A7D1 /* DNSResolver.swift */,
 				58C04F791E0E70E00021A7D1 /* TxtRecord.swift */,
@@ -416,7 +413,6 @@
 				5818FE2B1E0391CF007F082D /* Base58.swift in Sources */,
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
 				5812655A1E0B704800D6DF32 /* Asset.swift in Sources */,
-				582D59D31E0EB90A00144ED5 /* DNSServiceErrorCode.swift in Sources */,
 				5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */,
 				5818FE341E039820007F082D /* Varint.swift in Sources */,
 				580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */,
