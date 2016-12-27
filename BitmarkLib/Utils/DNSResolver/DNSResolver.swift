@@ -21,8 +21,6 @@ private struct QueryInfo {
 
 extension QueryInfo {
     func performCleanUp() {
-        print("Cleaning up resources for query with socket: \(socket)")
-        
         // Remove socket listener from run look, destory socket, and deallocate service
         CFRunLoopSourceInvalidate(socketSource)
         CFRunLoopTimerInvalidate(timer)
@@ -45,7 +43,6 @@ private func queryCallback(
     context: UnsafeMutableRawPointer?
     ) {
     
-    print("Callback for query \(sdref)")
     guard let queryContext = context?.assumingMemoryBound(to: QueryInfo.self) else {
         return
     }
@@ -59,10 +56,6 @@ private func queryCallback(
         let txtBuffer = UnsafeBufferPointer<UInt8>(start: rdata?.assumingMemoryBound(to: UInt8.self), count: Int(rdlen))
         guard let txtRecord = TXTRecord(buffer: txtBuffer) else {
             throw BMError("query failed")
-        }
-        
-        if let fullname = fullname {
-            print("Received TXT record \(txtRecord) from domain \(String(cString: fullname))")
         }
         
         queryContext.pointee.records.mutate { array in
@@ -81,19 +74,14 @@ private func querySocketCallback(
     data: UnsafeRawPointer?,
     info: UnsafeMutableRawPointer?
     ) {
-    print("Socket callback for context with address \(info)")
     
     precondition(callbackType == .readCallBack)
-    print("Callback of type \(callbackType) on socket: \(socket)")
     guard let queryContext = info?.assumingMemoryBound(to: QueryInfo.self) else {
-        print("info null")
         return
     }
-    print("Current context is \(queryContext.pointee)")
     precondition(socket === queryContext.pointee.socket)
     
     // Process the result
-    print("Processing result for socket: \(socket)")
     let status = DNSServiceProcessResult(queryContext.pointee.service)
     
     queryContext.pointee.records.mutate { _ in
@@ -109,7 +97,6 @@ private func querySocketCallback(
 //        queryContext.pointee.performCleanUp()
 //    }
     queryContext.pointee.performCleanUp()
-    print("Freeing context with address \(info)")
     queryContext.pointee.responseHandler(queryContext.pointee.records)
     queryContext.deinitialize()
     queryContext.deallocate(capacity: 1)
@@ -117,13 +104,10 @@ private func querySocketCallback(
 }
 
 private func timerCallback(timer: CFRunLoopTimer?, info: UnsafeMutableRawPointer?) {
-    print("Timer callback for context with address \(info)")
     guard let queryContext = info?.assumingMemoryBound(to: QueryInfo.self) else {
-        print("info nil")
         return
     }
     
-    print("Freeing context with address \(info)")
     queryContext.pointee.responseHandler(Result {
         throw BMError("time out")
     })
@@ -136,7 +120,6 @@ public class DNSResolver {
     private init() { }
     
     public static func resolveTXT(_ domain: String, timeout: Double = 60, handler: @escaping (Result<[TXTRecord]>) -> ()) {
-        print("Will resolve domain `\(domain)`")
         
         // Create space on the heap for the context
         let queryContext = UnsafeMutablePointer<QueryInfo>.allocate(capacity: 1)
@@ -171,7 +154,6 @@ public class DNSResolver {
         
         precondition(service != nil)
         queryContext.pointee.service = service!
-        print("Created DNS query \(service) to domain `\(domain)`")
         
         // Create socket to query
         var socketContext = CFSocketContext(
@@ -192,7 +174,6 @@ public class DNSResolver {
         )
         
         queryContext.pointee.socket = socket
-        print("Created socket for query to domain `\(domain)`: \(socket)")
         
         // Add socket listener to run loop
         let socketSource = CFSocketCreateRunLoopSource(
@@ -203,7 +184,6 @@ public class DNSResolver {
         
         queryContext.pointee.socketSource = socketSource
         CFRunLoopAddSource(CFRunLoopGetMain(), socketSource, CFRunLoopMode.defaultMode)
-        print("Added run loop source \(socketSource) for query to domain `\(domain)`")
         
         // Add timeout timer to run loop
         var timerContext = CFRunLoopTimerContext(
