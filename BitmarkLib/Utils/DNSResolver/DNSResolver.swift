@@ -19,6 +19,18 @@ private struct QueryInfo {
     var timer: CFRunLoopTimer!
 }
 
+extension QueryInfo {
+    func performCleanUp() {
+        print("Cleaning up resources for query with socket: \(socket)")
+        
+        // Remove socket listener from run look, destory socket, and deallocate service
+        CFRunLoopSourceInvalidate(socketSource)
+        CFRunLoopTimerInvalidate(timer)
+        CFSocketInvalidate(socket)
+        DNSServiceRefDeallocate(service)
+    }
+}
+
 private func queryCallback(
     sdref: DNSServiceRef?,
     flags: DNSServiceFlags,
@@ -53,23 +65,12 @@ private func queryCallback(
             print("Received TXT record \(txtRecord) from domain \(String(cString: fullname))")
         }
         
-        // Check if this is a special "count" TXT record that indicates the total number of records
-        // that we ought to receive for this query. Note that this is a workaround due to the limitations
-        // of the DNS Service Discovery library, and it would be better if the library exposed the count
-        // itself as this is in the answer.
-        if case ("$count", let value)? = txtRecord.attribute {
-            if let count = Int(value) {
-                queryContext.pointee.totalPacketCount = count
-            } else {
-                throw BMError("query failed")
-            }
-        } else {
-            queryContext.pointee.records.mutate { array in
-                array.append(txtRecord)
-            }
+        queryContext.pointee.records.mutate { array in
+            array.append(txtRecord)
         }
     } catch {
         queryContext.pointee.records = .failure(error)
+        queryContext.pointee.performCleanUp()
     }
 }
 
@@ -97,6 +98,7 @@ private func querySocketCallback(
     
     queryContext.pointee.records.mutate { _ in
         if Int(status) != kDNSServiceErr_NoError {
+            queryContext.pointee.performCleanUp()
             throw BMError("query failed")
         }
     }
@@ -106,7 +108,7 @@ private func querySocketCallback(
 //        guard records.count == queryContext.pointee.totalPacketCount else { return }
 //        queryContext.pointee.performCleanUp()
 //    }
-    
+    queryContext.pointee.performCleanUp()
     print("Freeing context with address \(info)")
     queryContext.pointee.responseHandler(queryContext.pointee.records)
     queryContext.deinitialize()
@@ -125,7 +127,7 @@ private func timerCallback(timer: CFRunLoopTimer?, info: UnsafeMutableRawPointer
     queryContext.pointee.responseHandler(Result {
         throw BMError("time out")
     })
-//    queryContext.pointee.performCleanUp()
+    queryContext.pointee.performCleanUp()
     queryContext.deinitialize()
     queryContext.deallocate(capacity: 1)
 }
@@ -133,7 +135,7 @@ private func timerCallback(timer: CFRunLoopTimer?, info: UnsafeMutableRawPointer
 public class DNSResolver {
     private init() { }
     
-    public static func resolveTXT(_ domain: String, timeout: Double = 60, handler: @escaping (Result<[TXTRecord]>) -> ()) throws {
+    public static func resolveTXT(_ domain: String, timeout: Double = 60, handler: @escaping (Result<[TXTRecord]>) -> ()) {
         print("Will resolve domain `\(domain)`")
         
         // Create space on the heap for the context
@@ -164,7 +166,7 @@ public class DNSResolver {
             )
         }
         if Int(status) != kDNSServiceErr_NoError {
-            throw BMError("query failed")
+            handler(.failure(BMError("query failed")))
         }
         
         precondition(service != nil)
