@@ -1,4 +1,6 @@
+github "robbiehanson/CocoaAsyncSocket" "8ce941d5d3df4b9c4e8034f50c1e0d49d786a221"
 github "krzyzanowskim/CryptoSwift" "0.6.7"
 github "lorentey/SipHash" "v1.1.0"
+github "swiftsocket/SwiftSocket" "2.0.1"
 github "bitmark-inc/tweetnacl-swiftwrap" "0.0.1"
 github "lorentey/BigInt" "v2.1.1"

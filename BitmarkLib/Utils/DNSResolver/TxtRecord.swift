@@ -14,23 +14,17 @@ public struct TXTRecord {
 }
 
 extension TXTRecord {
-    var attribute: (key: String, value: String)? {
-        let components = contents.characters.split(separator: "=", maxSplits: 1)
-        guard components.count == 2 else { return nil }
-        return (key: String(components[0]), value: String(components[1]))
-    }
-}
-
-extension TXTRecord {
-    static func parse(attributes records: [TXTRecord]) throws -> [String : String] {
-        var result: [String : String] = [:]
-        for record in records {
-            guard let (key, value) = record.attribute else {
-                throw(BMError("Expected RFC 1464 format.", type: .system))
+    var keyValue: [String: Any] {
+        return contents.components(separatedBy: " ")
+        .reduce([String: Any]()) { (result, item) -> [String: Any] in
+            var returnResult = result
+            let components = item.components(separatedBy: "=")
+            if components.count == 2 {
+                returnResult[components[0]] = components[1]
             }
-            result[key] = value
+            
+            return returnResult
         }
-        return result
     }
 }
 

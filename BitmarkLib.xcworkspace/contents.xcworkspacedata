@@ -17,6 +17,12 @@
       location = "container:"
       name = "ExternalLib">
       <FileRef
+         location = "group:Carthage/Checkouts/CocoaAsyncSocket/CocoaAsyncSocket.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Carthage/Checkouts/SwiftSocket/SwiftSocket.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:Carthage/Checkouts/tweetnacl-swiftwrap/TweetnaclSwift.xcodeproj">
       </FileRef>
       <FileRef
@@ -27,6 +33,13 @@
       </FileRef>
       <FileRef
          location = "group:Carthage/Checkouts/BigInt/BigInt.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Example">
+      <FileRef
+         location = "group:Example/BitmarkLibExample.xcodeproj">
       </FileRef>
    </Group>
 </Workspace>
