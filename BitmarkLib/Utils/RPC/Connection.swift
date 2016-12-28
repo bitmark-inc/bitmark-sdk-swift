@@ -8,63 +8,81 @@
 
 import CocoaAsyncSocket
 
-public class Connection: NSObject {
+fileprivate struct SocketInfo {
+    var connected = false
+    let socket: GCDAsyncSocket
+}
+
+public class Node: NSObject {
+    fileprivate var callbackDic = [String: ([String: Any]) -> Void]()
+    fileprivate var socket: GCDAsyncSocket?
+    private let queue = DispatchQueue(label: "com.bitmark.nodeconnection", qos: .background)
     
-    public static let shared = Connection()
-    var sockets = [GCDAsyncSocket]()
+    var connected = false
+    let finishConnectionHandler: (() -> Void)
     
-    
-    public func startConnection(from urls: [URL]) {
-        for url in urls {
-            let host = url.host!
-            let port = url.port!
-            
-            let socket = GCDAsyncSocket(delegate: self, delegateQueue: DispatchQueue.main)
-            
-            do {
-                
-                try socket.connect(toHost: url.host!, onPort: UInt16(url.port!))
-                sockets.append(socket)
-            }
-            catch let e {
-                print(e)
-            }
+    init(url: URL, finishConnectionHandler handler: @escaping () -> Void) {
+        finishConnectionHandler = handler
+        
+        super.init()
+        
+        socket = GCDAsyncSocket(delegate: self, delegateQueue: queue)
+        
+        do {
+            try socket?.connect(toHost: url.host!, onPort: UInt16(url.port!))
+        }
+        catch let e {
+            print(e)
         }
     }
     
-    
-    
-    public func call(method: String, params: [String: String]?, timeout: Int = 10) {
-        var dataDic = [String: Any]()
-        dataDic["id"] = 1
-        dataDic["method"] = method
-        dataDic["params"] = params != nil ? [params!] : []
-        
-        do {
-            let data = try JSONSerialization.data(withJSONObject: dataDic, options: .prettyPrinted)
-            for socket in sockets {
-                socket.write(data, withTimeout:-1, tag: 0)
+    public func call(id: String,
+                     method: String,
+                     params: [String: String]?,
+                     timeout: Int = 10,
+                     callbackHandler handler:@escaping ([String: Any]) -> Void) {
+        DispatchQueue.global(qos: .utility).async {
+            var dataDic = [String: Any]()
+            dataDic["id"] = id
+            dataDic["method"] = method
+            dataDic["params"] = params != nil ? [params!] : []
+            
+            do {
+                let data = try JSONSerialization.data(withJSONObject: dataDic, options: .prettyPrinted)
+                self.socket?.write(data, withTimeout:-1, tag: 0)
                 
-                socket.readData(withTimeout: -1, tag: 0)
+                // Add to callback dictionary
+                self.callbackDic[id] = handler
+                
+                // Start reading data
+                self.socket?.readData(withTimeout: -1, tag: 0)
             }
-        }
-        catch {
-            print("Convert to json data failed")
+            catch {
+                print("Convert to json data failed")
+            }
         }
     }
 }
 
-extension Connection: GCDAsyncSocketDelegate {
-    public func socket(_ sock: GCDAsyncSocket, didConnectTo url: URL) {
-        print("Socket did connect to url")
-    }
+extension Node: GCDAsyncSocketDelegate {
     
     public func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
-        if let string = String(data: data, encoding: .utf8) {
-            
-            print("Received data: " + string)
+
+        do {
+            if let jsonResult = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] {
+                if let id = jsonResult["id"] as? String,
+                let result = jsonResult["result"] as? [String: Any] {
+                    // Trigger the callback
+                    callbackDic[id]?(result)
+                }
+                else {
+                    print("Cannot get id and result from received json")
+                }
+            }
         }
-        
+        catch let e {
+            print("Error when parsing received data")
+        }
     }
     
     public func socket(_ sock: GCDAsyncSocket, didAcceptNewSocket newSocket: GCDAsyncSocket) {
@@ -81,5 +99,50 @@ extension Connection: GCDAsyncSocketDelegate {
     
     public func socket(_ sock: GCDAsyncSocket, didReceive trust: SecTrust, completionHandler: @escaping (Bool) -> Void) {
         completionHandler(true)
+    }
+    
+    public func socketDidSecure(_ sock: GCDAsyncSocket) {
+        self.connected = true
+        finishConnectionHandler()
+    }
+    
+    public func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?) {
+        finishConnectionHandler()
+    }
+}
+
+
+
+public class Connection {
+    public static let shared = Connection()
+    fileprivate var nodes = [Node]()
+    
+    
+    public func startConnection(from urls: [URL], completionHandler:@escaping (() -> Void)) {
+        
+        let dispatchGroup = DispatchGroup()
+        
+        for url in urls {
+            dispatchGroup.enter()
+            let node = Node(url: url, finishConnectionHandler: { 
+                dispatchGroup.leave()
+            })
+            nodes.append(node)
+        }
+        
+        dispatchGroup.notify(queue: DispatchQueue.main, execute: completionHandler)
+    }
+    
+    
+    
+    public func call(method: String, params: [String: String]?, timeout: Int = 10, callbackHandler handler:([String: Any]) -> Void) {
+        for node in nodes {
+            if node.connected {
+                let id = UUID().uuidString
+                node.call(id: id, method: method, params: params, callbackHandler: { (result) in
+                    print(result)
+                })
+            }
+        }
     }
 }

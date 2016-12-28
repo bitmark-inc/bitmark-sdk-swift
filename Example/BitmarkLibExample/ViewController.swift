@@ -18,7 +18,11 @@ class ViewController: UIViewController {
         Pool.getNodeURLs(fromNetwork: Config.testNet) { (urls) in
             print(urls)
             
-            Connection.shared.startConnection(from: urls)
+            Connection.shared.startConnection(from: urls, completionHandler: { 
+                Connection.shared.nodeInfo(callbackHandler: { (info) in
+                    print(info)
+                })
+            })
         }
     }
 
