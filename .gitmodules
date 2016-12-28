@@ -10,9 +10,6 @@
 [submodule "Carthage/Checkouts/tweetnacl-swiftwrap"]
 	path = Carthage/Checkouts/tweetnacl-swiftwrap
 	url = https://github.com/bitmark-inc/tweetnacl-swiftwrap.git
-[submodule "Carthage/Checkouts/SwiftSocket"]
-	path = Carthage/Checkouts/SwiftSocket
-	url = https://github.com/swiftsocket/SwiftSocket.git
 [submodule "Carthage/Checkouts/CocoaAsyncSocket"]
 	path = Carthage/Checkouts/CocoaAsyncSocket
 	url = https://github.com/robbiehanson/CocoaAsyncSocket.git

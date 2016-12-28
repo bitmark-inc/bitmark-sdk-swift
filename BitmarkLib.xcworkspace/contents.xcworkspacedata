@@ -20,9 +20,6 @@
          location = "group:Carthage/Checkouts/CocoaAsyncSocket/CocoaAsyncSocket.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:Carthage/Checkouts/SwiftSocket/SwiftSocket.xcodeproj">
-      </FileRef>
-      <FileRef
          location = "group:Carthage/Checkouts/tweetnacl-swiftwrap/TweetnaclSwift.xcodeproj">
       </FileRef>
       <FileRef

@@ -1,5 +1,4 @@
 github "lorentey/BigInt"
 github "krzyzanowskim/CryptoSwift"
 github "bitmark-inc/tweetnacl-swiftwrap"
-github "swiftsocket/SwiftSocket"
 github "robbiehanson/CocoaAsyncSocket" "master"
