@@ -115,8 +115,10 @@ public struct Transfer {
             resetSignState()
         }
     }
-    
-    public func getRPCParam() throws -> [String: String] {
+}
+
+extension Transfer: RPCTransformable {
+    public func getRPCParam() throws -> [String : String] {
         if !self.isSigned {
             throw(BMError("Transfer error: need to sign the record before getting RPC param"))
         }

@@ -19,7 +19,7 @@ public struct PrivateKey {
     public let network: Network
     public let kif: String
     
-    init(fromKIF kifString: String) throws {
+    public init(fromKIF kifString: String) throws {
         guard let kifBuffer = Base58.decode(kifString) else {
             throw(BMError("Can not convert base58"))
         }
@@ -71,7 +71,7 @@ public struct PrivateKey {
         self.address = Address(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
-    init(fromKeyPair keyPairData: Data, network: Network = Config.liveNet, type: KeyType = Config.ed25519) throws {
+    public init(fromKeyPair keyPairData: Data, network: Network = Config.liveNet, type: KeyType = Config.ed25519) throws {
         // Check length to determine the keypair
         
         var keyPair: (publicKey: Data, privateKey: Data)
@@ -113,7 +113,7 @@ public struct PrivateKey {
         self.address = Address(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
-    init(fromKeyPairString keyPairString: String, network: Network = Config.liveNet, type: KeyType = Config.ed25519) throws {
+    public init(fromKeyPairString keyPairString: String, network: Network = Config.liveNet, type: KeyType = Config.ed25519) throws {
         let keyPairData = keyPairString.hexDecodedData
         try self.init(fromKeyPair: keyPairData, network: network, type: type)
     }

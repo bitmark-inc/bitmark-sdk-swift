@@ -25,6 +25,7 @@
 		5818FE381E03A840007F082D /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE371E03A840007F082D /* Config.swift */; };
 		5818FE3A1E03BDB6007F082D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE391E03BDB6007F082D /* Common.swift */; };
 		582D59D11E0EB86600144ED5 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D59D01E0EB86600144ED5 /* Result.swift */; };
+		584C23701E13B46D0047AC97 /* RPCTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C236F1E13B46D0047AC97 /* RPCTransformable.swift */; };
 		585591591E1226270090D3C0 /* Connection+SupportedMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585591581E1226270090D3C0 /* Connection+SupportedMethods.swift */; };
 		5855915D1E12532F0090D3C0 /* SwiftSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5855915C1E12532F0090D3C0 /* SwiftSocket.framework */; };
 		5855915F1E125A760090D3C0 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5855915E1E125A760090D3C0 /* CocoaAsyncSocket.framework */; };
@@ -82,6 +83,7 @@
 		5818FE391E03BDB6007F082D /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		5818FE3B1E03C50D007F082D /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Checkouts/CryptoSwift/build/Debug/CryptoSwift.framework; sourceTree = "<group>"; };
 		582D59D01E0EB86600144ED5 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		584C236F1E13B46D0047AC97 /* RPCTransformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCTransformable.swift; sourceTree = "<group>"; };
 		585591581E1226270090D3C0 /* Connection+SupportedMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Connection+SupportedMethods.swift"; sourceTree = "<group>"; };
 		5855915A1E1244030090D3C0 /* SwiftWebSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftWebSocket.framework; path = "Carthage/Checkouts/SwiftWebSocket/build/Debug-iphoneos/SwiftWebSocket.framework"; sourceTree = "<group>"; };
 		5855915C1E12532F0090D3C0 /* SwiftSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftSocket.framework; path = "Carthage/Checkouts/SwiftSocket/build/Debug-iphoneos/SwiftSocket.framework"; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 		581265581E0B703400D6DF32 /* Records */ = {
 			isa = PBXGroup;
 			children = (
+				584C236F1E13B46D0047AC97 /* RPCTransformable.swift */,
 				581265591E0B704800D6DF32 /* Asset.swift */,
 				58E1631D1E0CB93400DEED99 /* Issue.swift */,
 				58E1631F1E0CC66000DEED99 /* Transfer.swift */,
@@ -443,6 +446,7 @@
 				5818FE381E03A840007F082D /* Config.swift in Sources */,
 				580B88E81E08DFBB0018F6A5 /* Ed25519.swift in Sources */,
 				58C20BF31E1102360084B246 /* Connection.swift in Sources */,
+				584C23701E13B46D0047AC97 /* RPCTransformable.swift in Sources */,
 				58E2D5B91E0A39AD0014F011 /* ModelEquatable.swift in Sources */,
 				5818FE2B1E0391CF007F082D /* Base58.swift in Sources */,
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,

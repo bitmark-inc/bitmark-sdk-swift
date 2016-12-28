@@ -13,8 +13,13 @@ fileprivate struct SocketInfo {
     let socket: GCDAsyncSocket
 }
 
+public struct NodeResult {
+    let result: [String: Any]?
+    let error: String?
+}
+
 public class Node: NSObject {
-    fileprivate var callbackDic = [String: ([String: Any]) -> Void]()
+    fileprivate var callbackDic = [String: (NodeResult) -> Void]()
     fileprivate var socket: GCDAsyncSocket?
     private let queue = DispatchQueue(label: "com.bitmark.nodeconnection", qos: .background)
     
@@ -40,7 +45,7 @@ public class Node: NSObject {
                      method: String,
                      params: [String: String]?,
                      timeout: Int = 10,
-                     callbackHandler handler:@escaping ([String: Any]) -> Void) {
+                     callbackHandler handler:@escaping (NodeResult) -> Void) {
         DispatchQueue.global(qos: .utility).async {
             var dataDic = [String: Any]()
             dataDic["id"] = id
@@ -70,13 +75,19 @@ extension Node: GCDAsyncSocketDelegate {
 
         do {
             if let jsonResult = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any] {
-                if let id = jsonResult["id"] as? String,
-                let result = jsonResult["result"] as? [String: Any] {
+                if let id = jsonResult["id"] as? String {
+                    
+                    let result = jsonResult["result"] as? [String: Any]
+                    let error = jsonResult["error"] as? String
+                    
                     // Trigger the callback
-                    callbackDic[id]?(result)
+                    callbackDic[id]?(NodeResult(result: result, error: error))
                 }
                 else {
                     print("Cannot get id and result from received json")
+                    if let errorMessage = jsonResult["error"] as? String {
+                        print(errorMessage)
+                    }
                 }
             }
         }
@@ -135,14 +146,22 @@ public class Connection {
     
     
     
-    public func call(method: String, params: [String: String]?, timeout: Int = 10, callbackHandler handler:([String: Any]) -> Void) {
+    public func call(method: String, params: [String: String]?, timeout: Int = 10, callbackHandler handler:@escaping ([NodeResult]) -> Void) {
+        let dispatchGroup = DispatchGroup()
+        var results = [NodeResult]()
         for node in nodes {
             if node.connected {
+                dispatchGroup.enter()
                 let id = UUID().uuidString
                 node.call(id: id, method: method, params: params, callbackHandler: { (result) in
-                    print(result)
+                    results.append(result)
+                    dispatchGroup.leave()
                 })
             }
+        }
+        
+        dispatchGroup.notify(queue: DispatchQueue.global()) { 
+            handler(results)
         }
     }
 }

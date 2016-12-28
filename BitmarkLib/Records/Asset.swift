@@ -81,6 +81,8 @@ public struct Asset {
     
     // MARK:- Public methods
     
+    public init() {}
+    
     public mutating func set(metadata: [String: String]) throws {
         let metaDataString = Asset.convertString(fromMetadata: metadata)
         if !Asset.isValidLength(metadata: metaDataString) {
@@ -128,7 +130,11 @@ public struct Asset {
         self.isSigned = true
     }
     
-    public func getRPCParam() throws -> [String: String] {
+
+}
+
+extension Asset: RPCTransformable {
+    public func getRPCParam() throws -> [String : String] {
         if !self.isSigned {
             throw(BMError("Asset error: need to sign the record before getting RPC message"))
         }
@@ -138,8 +144,8 @@ public struct Asset {
             let name = name,
             let registrant = registrant,
             let signature = signature
-        else {
-            throw(BMError("Asset error: some field is missing"))
+            else {
+                throw(BMError("Asset error: some field is missing"))
         }
         
         return ["metadata": metadata,
