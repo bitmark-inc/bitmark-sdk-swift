@@ -10,65 +10,10 @@ import Foundation
 
 public class Pool {
     
-    internal static func getURL(of txtRecord: TXTRecord) -> URL? {
-        let values = txtRecord.keyValue
-        
-        var address: (ip: String, port: Int)?
-        
-        guard let bitmarkVersion = values["bitmark"] as? String else {
-            return nil
-        }
-        
-        switch bitmarkVersion {
-        case "v1":
-            address = (values["ip4"] as? String ?? values["ip6"] as! String,
-                    Int(values["rpc"] as! String)!)
-            break
-        case "v2":
-            address = (values["a"] as! String,
-                       Int(values["r"] as! String)!)
-            break
-        default:
-            break
-        }
-        
-        if let address = address {
-            var urlComponent = URLComponents()
-            urlComponent.host = address.ip
-            urlComponent.port = address.port
-            return urlComponent.url
-        }
-        
-        return nil
-    }
-    
-    public static func getNodeURLs(fromNetwork network: Network, handler: @escaping (([URL]) -> Void)) {
-        let queue = DispatchQueue(label: "com.bitmark")
-        queue.async {
-            DNSResolver.resolveTXT(network.staticHostName, handler: { (result) in
-                switch result {
-                case .success(let records):
-                    var result = [URL]()
-                    for record in records {
-                        if let url = getURL(of: record) {
-                            result.append(url)
-                        }
-                    }
-                    handler(result)
-                    
-                    break
-                case .failure(_):
-                    handler([])
-                    break
-                }
-            })
-        }
-    }
-    
-    // MARK:- Public methods
-    
     let network: Network
-    fileprivate var nodes = [Node]()
+    internal var nodes = [Node]()
+    fileprivate var availableURLs = [URL]()
+    fileprivate var discoverCompletedHandler: (() -> Void)?
     
     init(network: Network) {
         self.network = network
@@ -80,7 +25,7 @@ public class Pool {
     
     public func refreshPool(completionHandler: (() -> Void)?) {
         // Get url from txt records
-        Pool.getNodeURLs(fromNetwork: network) { (urls) in
+        PoolHelper.getNodeURLs(fromNetwork: network) { (urls) in
             
             // Connect to urls
             var nodes = [Node]()
@@ -101,21 +46,89 @@ public class Pool {
             })
         }
     }
-}
-
-extension Pool {
-    internal static func convertRPCParams(from rpctransformables: [RPCTransformable]) -> [[String: String]] {
-        var result = [[String: String]]()
-        for rpctransformable in rpctransformables {
-            do {
-                let rpcParam = try rpctransformable.getRPCParam()
-                result.append(rpcParam)
-            }
-            catch {
-                
+    
+    internal func discover(_ handler: (() -> Void)?) {
+        // Assign callback for later using
+        discoverCompletedHandler = handler
+        
+        // Wake up nodes
+        
+        let dispatchGroup = DispatchGroup()
+        for node in nodes {
+            if node.connected == false {
+                dispatchGroup.enter()
+                node.connect({ (success) in
+                    dispatchGroup.leave()
+                })
             }
         }
         
-        return result
+        dispatchGroup.notify(queue: DispatchQueue.global()) { [unowned self] in
+            // When finished on reconnecting, check and remove dead nodes
+            self.removeDeadNodes()
+            
+            // Get url from txt records
+            PoolHelper.getNodeURLs(fromNetwork: self.network, handler: { (urls) in
+                // Filter url with existing nodes
+                let existingUrls = self.nodes.map({ (node) -> URL in
+                    return node.url
+                })
+                
+                let newUrls = urls.filter({ (url) -> Bool in
+                    return !existingUrls.contains(url)
+                })
+                
+                self.availableURLs = newUrls
+                
+                // Check and try to connect to more node if needed
+                self.connectToMoreNodes()
+            })
+        }
+        
+    }
+}
+
+extension Pool {
+    fileprivate func removeDeadNodes() {
+        nodes = nodes.filter { (node) -> Bool in
+            return node.connected
+        }
+    }
+    
+    fileprivate func connectToMoreNodes() {
+        if self.nodes.count < Config.RPCConfig.enoughRequiredNode && self.availableURLs.count > 0 {
+            // Get every 5 url and try to connect
+            let countToGet = min(Config.RPCConfig.enoughRequiredNode, self.availableURLs.count)
+            
+            var urlPack = [URL]()
+            for _ in 0..<countToGet {
+                urlPack.append(availableURLs.popLast()!)
+            }
+            
+            tryConnect(urlPack: urlPack) { [weak self] in
+                // After trying, recheck the nodes
+                self?.connectToMoreNodes()
+            }
+        }
+        else {
+            discoverCompletedHandler?()
+        }
+    }
+    
+    fileprivate func tryConnect(urlPack: [URL], completionHandler: (() -> Void)?) {
+        let dispatchGroup = DispatchGroup()
+        
+        for url in urlPack {
+            dispatchGroup.enter()
+            let node = Node(url: url, finishConnectionHandler: { _ in
+                
+                dispatchGroup.leave()
+            })
+            nodes.append(node)
+        }
+        
+        dispatchGroup.notify(queue: DispatchQueue.global(), execute: {
+            completionHandler?()
+        })
     }
 }

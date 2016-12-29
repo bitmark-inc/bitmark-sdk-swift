@@ -24,40 +24,36 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        Pool.getNodeURLs(fromNetwork: Config.testNet) { (urls) in
-            print(urls)
-            
-            Connection.shared.startConnection(from: urls, completionHandler: {
-                
-                var asset = Asset()
-                var issue = Issue()
-                let issueNonce = BigUInt(1475482198529)
-                do {
-                    try asset.set(name: TestData.name)
-                    try asset.set(metadata: TestData.metadata)
-                    try asset.set(fingerPrint: TestData.fingerprint)
-                    
-                    try asset.sign(withPrivateKey: TestData.privateKey)
-                    
-                    let issuePk = try PrivateKey.init(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
-                    
-                    issue.set(asset: asset)
-                    issue.set(nonce: issueNonce)
-                    try issue.sign(privateKey: issuePk)
-                    
-                    Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
-                        print(results)
-                    })
-                }
-                catch {
-                    
-                }
-            })
-            
-
-        }
+        print("Connecting to livenet")
+        Connection.shared.setNetwork(Config.liveNet)
         
-
+        Connection.shared.onReady {
+            print("Ready for the connection")
+            
+            var asset = Asset()
+            var issue = Issue()
+            let issueNonce = BigUInt(1475482198529)
+            do {
+                try asset.set(name: TestData.name)
+                try asset.set(metadata: TestData.metadata)
+                try asset.set(fingerPrint: TestData.fingerprint)
+                
+                try asset.sign(withPrivateKey: TestData.privateKey)
+                
+                let issuePk = try PrivateKey.init(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
+                
+                issue.set(asset: asset)
+                issue.set(nonce: issueNonce)
+                try issue.sign(privateKey: issuePk)
+                
+                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
+                    print(results)
+                })
+            }
+            catch {
+                
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {

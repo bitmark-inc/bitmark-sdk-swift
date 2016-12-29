@@ -77,4 +77,27 @@ public class Config {
     struct CurrencyConfig {
         static let bitcoin = 0x01
     }
+    
+    // RPC
+    struct RPCConfig {
+        static let timeout = 10
+        static let minimumRequiredNode = 1
+        static let enoughRequiredNode = 5
+        
+        struct Broadcast {
+            static let minimum = 1
+            static let enough = 3
+        }
+        
+        struct Discover {
+            static let enoughAliveNode = 3
+            static let enoughNodeRecord = 5
+        }
+        
+        static let renewalTooFew = 5 // interval for checking the database when the number of nodes is less than minimum
+        static let renewalFew = 60 // interval for checking the database when the number of nodes is higher than minimum but less than enough
+        
+        static let aliveNodeExpiry = 24 * 60 * 60 // time an alive node will need to be rechecked
+        static let deadNodeKeeping = 7 * 24 * 60 * 60 // if the client can't connect to the node for an amount of time, the node will be removed from the database
+    }
 }

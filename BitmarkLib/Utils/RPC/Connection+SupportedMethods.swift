@@ -9,8 +9,8 @@
 extension Connection {
     
     public func createBitmarks(assets: [Asset], issues: [Issue], callbackHandler handler:@escaping (NodeResult) -> Void) {
-        let rpcParams = ["assets": Pool.convertRPCParams(from: assets),
-                         "issues": Pool.convertRPCParams(from: issues)]
+        let rpcParams = ["assets": PoolHelper.convertRPCParams(from: assets),
+                         "issues": PoolHelper.convertRPCParams(from: issues)]
         
         self.call(method: "Bitmarks.Create", params: rpcParams) { (results) in
             print(results)
