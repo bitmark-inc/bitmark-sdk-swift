@@ -24,12 +24,12 @@ public class Node: NSObject {
     private let queue = DispatchQueue(label: "com.bitmark.nodeconnection", qos: .background)
     
     var connected = false
-    let finishConnectionHandler: (() -> Void)
+    var finishConnectionHandler: ((Bool) -> Void)?
     
-    init(url: URL, finishConnectionHandler handler: @escaping () -> Void) {
-        finishConnectionHandler = handler
-        
+    init(url: URL, finishConnectionHandler handler: @escaping (Bool) -> Void) {
         super.init()
+        
+        finishConnectionHandler = handler
         
         socket = GCDAsyncSocket(delegate: self, delegateQueue: queue)
         
@@ -60,11 +60,18 @@ public class Node: NSObject {
                 self.callbackDic[id] = handler
                 
                 // Start reading data
-                self.socket?.readData(withTimeout: -1, tag: 0)
+                self.socket?.readData(withTimeout: TimeInterval(timeout), tag: 0)
             }
             catch {
                 print("Convert to json data failed")
             }
+        }
+    }
+    
+    // Query info from node to ensure node is alive
+    public func getInfo(_ handler: ((Bool) -> Void)?) {
+        call(id: UUID().uuidString, method: "Node.Info", params: nil, timeout: 10) { (nodeResult) in
+            handler?(nodeResult.result != nil && nodeResult.error == nil)
         }
     }
 }
@@ -114,11 +121,16 @@ extension Node: GCDAsyncSocketDelegate {
     
     public func socketDidSecure(_ sock: GCDAsyncSocket) {
         self.connected = true
-        finishConnectionHandler()
+        
+        // When entered to TLS mode, try to get node info to ensure node is alive
+        getInfo { [unowned self] (success) in
+            self.connected = success
+            self.finishConnectionHandler?(success)
+        }
     }
     
     public func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?) {
-        finishConnectionHandler()
+        finishConnectionHandler?(false)
     }
 }
 
@@ -135,7 +147,7 @@ public class Connection {
         
         for url in urls {
             dispatchGroup.enter()
-            let node = Node(url: url, finishConnectionHandler: { 
+            let node = Node(url: url, finishConnectionHandler: { _ in
                 dispatchGroup.leave()
             })
             nodes.append(node)

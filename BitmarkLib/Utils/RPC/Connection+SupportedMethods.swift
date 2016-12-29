@@ -43,12 +43,4 @@ extension Connection {
             handler(result)
         }
     }
-    
-    public func nodeInfo(callbackHandler handler:@escaping (NodeResult) -> Void) {
-        self.call(method: "Node.Info", params: nil) { (results) in
-            print(results)
-            let result = Common.getMostAppearedValue(nodeResults: results, keys: ["chain", "version"])
-            handler(result)
-        }
-    }
 }

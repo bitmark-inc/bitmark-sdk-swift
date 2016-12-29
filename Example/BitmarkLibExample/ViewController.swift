@@ -27,10 +27,7 @@ class ViewController: UIViewController {
         Pool.getNodeURLs(fromNetwork: Config.testNet) { (urls) in
             print(urls)
             
-            Connection.shared.startConnection(from: urls, completionHandler: { 
-                Connection.shared.nodeInfo(callbackHandler: { (info) in
-                    print(info)
-                })
+            Connection.shared.startConnection(from: urls, completionHandler: {
                 
                 var asset = Asset()
                 var issue = Issue()

@@ -34,7 +34,6 @@ public class Pool {
         
         if let address = address {
             var urlComponent = URLComponents()
-//            urlComponent.scheme = "https"
             urlComponent.host = address.ip
             urlComponent.port = address.port
             return urlComponent.url
@@ -62,6 +61,43 @@ public class Pool {
                     handler([])
                     break
                 }
+            })
+        }
+    }
+    
+    // MARK:- Public methods
+    
+    let network: Network
+    fileprivate var nodes = [Node]()
+    
+    init(network: Network) {
+        self.network = network
+    }
+    
+    public func replacePool(withNodes nodes: [Node]) {
+        self.nodes = nodes
+    }
+    
+    public func refreshPool(completionHandler: (() -> Void)?) {
+        // Get url from txt records
+        Pool.getNodeURLs(fromNetwork: network) { (urls) in
+            
+            // Connect to urls
+            var nodes = [Node]()
+            let dispatchGroup = DispatchGroup()
+            
+            for url in urls {
+                dispatchGroup.enter()
+                let node = Node(url: url, finishConnectionHandler: { _ in
+                    
+                    dispatchGroup.leave()
+                })
+                nodes.append(node)
+            }
+            
+            dispatchGroup.notify(queue: DispatchQueue.global(), execute: { 
+                self.nodes = nodes
+                completionHandler?()
             })
         }
     }
