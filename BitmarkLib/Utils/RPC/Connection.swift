@@ -43,7 +43,7 @@ public class Node: NSObject {
     
     public func call(id: String,
                      method: String,
-                     params: [String: String]?,
+                     params: [String: Any]?,
                      timeout: Int = 10,
                      callbackHandler handler:@escaping (NodeResult) -> Void) {
         DispatchQueue.global(qos: .utility).async {
@@ -146,7 +146,7 @@ public class Connection {
     
     
     
-    public func call(method: String, params: [String: String]?, timeout: Int = 10, callbackHandler handler:@escaping ([NodeResult]) -> Void) {
+    public func call(method: String, params: [String: Any]?, timeout: Int = 10, callbackHandler handler:@escaping ([NodeResult]) -> Void) {
         let dispatchGroup = DispatchGroup()
         var results = [NodeResult]()
         for node in nodes {

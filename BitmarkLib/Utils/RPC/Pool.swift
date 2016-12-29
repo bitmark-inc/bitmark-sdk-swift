@@ -66,3 +66,20 @@ public class Pool {
         }
     }
 }
+
+extension Pool {
+    internal static func convertRPCParams(from rpctransformables: [RPCTransformable]) -> [[String: String]] {
+        var result = [[String: String]]()
+        for rpctransformable in rpctransformables {
+            do {
+                let rpcParam = try rpctransformable.getRPCParam()
+                result.append(rpcParam)
+            }
+            catch {
+                
+            }
+        }
+        
+        return result
+    }
+}

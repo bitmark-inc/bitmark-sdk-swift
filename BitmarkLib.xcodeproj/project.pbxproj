@@ -26,6 +26,7 @@
 		5818FE3A1E03BDB6007F082D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE391E03BDB6007F082D /* Common.swift */; };
 		582D59D11E0EB86600144ED5 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D59D01E0EB86600144ED5 /* Result.swift */; };
 		584C23701E13B46D0047AC97 /* RPCTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C236F1E13B46D0047AC97 /* RPCTransformable.swift */; };
+		584C23721E13C4B00047AC97 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C23711E13C4B00047AC97 /* Array+Extension.swift */; };
 		585591591E1226270090D3C0 /* Connection+SupportedMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585591581E1226270090D3C0 /* Connection+SupportedMethods.swift */; };
 		5855915D1E12532F0090D3C0 /* SwiftSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5855915C1E12532F0090D3C0 /* SwiftSocket.framework */; };
 		5855915F1E125A760090D3C0 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5855915E1E125A760090D3C0 /* CocoaAsyncSocket.framework */; };
@@ -36,7 +37,6 @@
 		58C04F741E0E69AD0021A7D1 /* DNSServiceDiscovery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58C04F671E0E69170021A7D1 /* DNSServiceDiscovery.framework */; };
 		58C04F781E0E70110021A7D1 /* DNSResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C04F771E0E70110021A7D1 /* DNSResolver.swift */; };
 		58C04F7A1E0E70E00021A7D1 /* TxtRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C04F791E0E70E00021A7D1 /* TxtRecord.swift */; };
-		58C20BF11E1102260084B246 /* JSONRPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C20BF01E1102260084B246 /* JSONRPC.swift */; };
 		58C20BF31E1102360084B246 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C20BF21E1102360084B246 /* Connection.swift */; };
 		58C20C161E1104620084B246 /* Pool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C20C151E1104620084B246 /* Pool.swift */; };
 		58E1631E1E0CB93400DEED99 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E1631D1E0CB93400DEED99 /* Issue.swift */; };
@@ -84,6 +84,7 @@
 		5818FE3B1E03C50D007F082D /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Checkouts/CryptoSwift/build/Debug/CryptoSwift.framework; sourceTree = "<group>"; };
 		582D59D01E0EB86600144ED5 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		584C236F1E13B46D0047AC97 /* RPCTransformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCTransformable.swift; sourceTree = "<group>"; };
+		584C23711E13C4B00047AC97 /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		585591581E1226270090D3C0 /* Connection+SupportedMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Connection+SupportedMethods.swift"; sourceTree = "<group>"; };
 		5855915A1E1244030090D3C0 /* SwiftWebSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftWebSocket.framework; path = "Carthage/Checkouts/SwiftWebSocket/build/Debug-iphoneos/SwiftWebSocket.framework"; sourceTree = "<group>"; };
 		5855915C1E12532F0090D3C0 /* SwiftSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftSocket.framework; path = "Carthage/Checkouts/SwiftSocket/build/Debug-iphoneos/SwiftSocket.framework"; sourceTree = "<group>"; };
@@ -104,7 +105,6 @@
 		58C04F771E0E70110021A7D1 /* DNSResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSResolver.swift; sourceTree = "<group>"; };
 		58C04F791E0E70E00021A7D1 /* TxtRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxtRecord.swift; sourceTree = "<group>"; };
 		58C20BED1E1101F70084B246 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = "Carthage/Checkouts/Starscream/build/Debug-iphoneos/Starscream.framework"; sourceTree = "<group>"; };
-		58C20BF01E1102260084B246 /* JSONRPC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRPC.swift; sourceTree = "<group>"; };
 		58C20BF21E1102360084B246 /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		58C20C151E1104620084B246 /* Pool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pool.swift; sourceTree = "<group>"; };
 		58E1631D1E0CB93400DEED99 /* Issue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
@@ -154,6 +154,7 @@
 				580B61941E07CF16008BEBFF /* BigInt+Extension.swift */,
 				580B88EB1E090FA80018F6A5 /* BitmarkError.swift */,
 				58E2D5B81E0A39AD0014F011 /* ModelEquatable.swift */,
+				584C23711E13C4B00047AC97 /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -280,7 +281,6 @@
 		58C20BEF1E1102260084B246 /* RPC */ = {
 			isa = PBXGroup;
 			children = (
-				58C20BF01E1102260084B246 /* JSONRPC.swift */,
 				58C20BF21E1102360084B246 /* Connection.swift */,
 				585591581E1226270090D3C0 /* Connection+SupportedMethods.swift */,
 				58C20C151E1104620084B246 /* Pool.swift */,
@@ -452,7 +452,7 @@
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
 				5812655A1E0B704800D6DF32 /* Asset.swift in Sources */,
 				58C20C161E1104620084B246 /* Pool.swift in Sources */,
-				58C20BF11E1102260084B246 /* JSONRPC.swift in Sources */,
+				584C23721E13C4B00047AC97 /* Array+Extension.swift in Sources */,
 				5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */,
 				5818FE341E039820007F082D /* Varint.swift in Sources */,
 				580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */,

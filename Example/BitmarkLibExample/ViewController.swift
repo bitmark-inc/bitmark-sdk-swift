@@ -8,6 +8,7 @@
 
 import UIKit
 import BitmarkLib
+import BigInt
 
 class ViewController: UIViewController {
     
@@ -27,11 +28,13 @@ class ViewController: UIViewController {
             print(urls)
             
             Connection.shared.startConnection(from: urls, completionHandler: { 
-//                Connection.shared.nodeInfo(callbackHandler: { (info) in
-//                    print(info)
-//                })
+                Connection.shared.nodeInfo(callbackHandler: { (info) in
+                    print(info)
+                })
                 
                 var asset = Asset()
+                var issue = Issue()
+                let issueNonce = BigUInt(1475482198529)
                 do {
                     try asset.set(name: TestData.name)
                     try asset.set(metadata: TestData.metadata)
@@ -39,10 +42,14 @@ class ViewController: UIViewController {
                     
                     try asset.sign(withPrivateKey: TestData.privateKey)
                     
-                    let rpcParams = try asset.getRPCParam()
+                    let issuePk = try PrivateKey.init(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
                     
-                    Connection.shared.createBitmarks(params: rpcParams, callbackHandler: { (result) in
-                        
+                    issue.set(asset: asset)
+                    issue.set(nonce: issueNonce)
+                    try issue.sign(privateKey: issuePk)
+                    
+                    Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
+                        print(results)
                     })
                 }
                 catch {

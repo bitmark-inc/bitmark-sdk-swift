@@ -41,6 +41,8 @@ public struct Issue {
     
     // MARK:- Public methods
     
+    public init() {}
+    
     public mutating func set(asset: Asset) {
         self.asset = asset
         resetSignState()
