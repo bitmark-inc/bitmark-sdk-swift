@@ -14,16 +14,21 @@ public class Pool {
     internal var nodes = [Node]()
     fileprivate var availableURLs = [URL]()
     fileprivate var discoverCompletedHandler: (() -> Void)?
+    fileprivate var jobQueue = JobQueue()
     
     init(network: Network) {
         self.network = network
+        
+        jobQueue.jobStartHandler = { [weak self] finishHandler in
+            self?.discover(finishHandler)
+        }
     }
     
-    public func replacePool(withNodes nodes: [Node]) {
+    internal func replacePool(withNodes nodes: [Node]) {
         self.nodes = nodes
     }
     
-    public func refreshPool(completionHandler: (() -> Void)?) {
+    internal func refreshPool(completionHandler: (() -> Void)?) {
         // Get url from txt records
         PoolHelper.getNodeURLs(fromNetwork: network) { (urls) in
             
@@ -53,6 +58,7 @@ public class Pool {
         
         // Wake up nodes
         
+        print("Wake up nodes")
         let dispatchGroup = DispatchGroup()
         for node in nodes {
             if node.connected == false {
@@ -67,8 +73,18 @@ public class Pool {
             // When finished on reconnecting, check and remove dead nodes
             self.removeDeadNodes()
             
+            if self.nodes.count >= Config.RPCConfig.enoughRequiredNode {
+                // Wakeup enough nodes for connection
+                print("Wakeup enough nodes for connection")
+                handler?()
+                return
+            }
+            
+            print("Going to get more url from txt records")
+            
             // Get url from txt records
             PoolHelper.getNodeURLs(fromNetwork: self.network, handler: { (urls) in
+                print("Filter url with existing nodes")
                 // Filter url with existing nodes
                 let existingUrls = self.nodes.map({ (node) -> URL in
                     return node.url
@@ -81,9 +97,37 @@ public class Pool {
                 self.availableURLs = newUrls
                 
                 // Check and try to connect to more node if needed
+                print("Check and try to connect to more node if needed")
                 self.connectToMoreNodes()
             })
         }
+        
+    }
+    
+    internal func call(method: String, params: [String: Any]?, timeout: Int = 10, callbackHandler handler:@escaping ([NodeResult]) -> Void) {
+        print("Enqueue request: " + method)
+        
+        let job = Job { [unowned self] (completionHandler) in
+            let dispatchGroup = DispatchGroup()
+            var results = [NodeResult]()
+            for node in self.nodes {
+                if node.connected {
+                    dispatchGroup.enter()
+                    let id = UUID().uuidString
+                    node.call(id: id, method: method, params: params, callbackHandler: { (result) in
+                        results.append(result)
+                        dispatchGroup.leave()
+                    })
+                }
+            }
+            
+            dispatchGroup.notify(queue: DispatchQueue.global()) {
+                handler(results)
+                completionHandler?()
+            }
+        }
+        
+        self.jobQueue.enqueue(job: job)
         
     }
 }
@@ -96,8 +140,17 @@ extension Pool {
     }
     
     fileprivate func connectToMoreNodes() {
+        
         if self.nodes.count < Config.RPCConfig.enoughRequiredNode && self.availableURLs.count > 0 {
-            // Get every 5 url and try to connect
+            // Check for available urls
+            if self.availableURLs.count < Config.RPCConfig.enoughRequiredNode - self.nodes.count
+            && self.nodes.count >= Config.RPCConfig.minimumRequiredNode {
+                // Incase remain available nodes are less than required, we should accept
+                discoverCompletedHandler?()
+            }
+            
+            
+            // Get every 5 urls and try to connect
             let countToGet = min(Config.RPCConfig.enoughRequiredNode, self.availableURLs.count)
             
             var urlPack = [URL]()
@@ -130,5 +183,14 @@ extension Pool {
         dispatchGroup.notify(queue: DispatchQueue.global(), execute: {
             completionHandler?()
         })
+    }
+    
+    private func closeNodesConnection() {
+        print("Close all socket connnection")
+        for node in nodes {
+            if node.connected {
+                node.disconnect()
+            }
+        }
     }
 }

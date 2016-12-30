@@ -27,6 +27,7 @@
 		5818FE381E03A840007F082D /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE371E03A840007F082D /* Config.swift */; };
 		5818FE3A1E03BDB6007F082D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE391E03BDB6007F082D /* Common.swift */; };
 		582D59D11E0EB86600144ED5 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D59D01E0EB86600144ED5 /* Result.swift */; };
+		5837980D1E15FD4100D136CF /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5837980C1E15FD4100D136CF /* Job.swift */; };
 		584C23701E13B46D0047AC97 /* RPCTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C236F1E13B46D0047AC97 /* RPCTransformable.swift */; };
 		584C23721E13C4B00047AC97 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C23711E13C4B00047AC97 /* Array+Extension.swift */; };
 		585591591E1226270090D3C0 /* Connection+SupportedMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585591581E1226270090D3C0 /* Connection+SupportedMethods.swift */; };
@@ -87,6 +88,7 @@
 		5818FE391E03BDB6007F082D /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		5818FE3B1E03C50D007F082D /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Checkouts/CryptoSwift/build/Debug/CryptoSwift.framework; sourceTree = "<group>"; };
 		582D59D01E0EB86600144ED5 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		5837980C1E15FD4100D136CF /* Job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		584C236F1E13B46D0047AC97 /* RPCTransformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCTransformable.swift; sourceTree = "<group>"; };
 		584C23711E13C4B00047AC97 /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		585591581E1226270090D3C0 /* Connection+SupportedMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Connection+SupportedMethods.swift"; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				5818FE391E03BDB6007F082D /* Common.swift */,
 				580B88E71E08DFBB0018F6A5 /* Ed25519.swift */,
 				5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */,
+				5837980C1E15FD4100D136CF /* Job.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -460,6 +463,7 @@
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
 				5812655A1E0B704800D6DF32 /* Asset.swift in Sources */,
 				58C20C161E1104620084B246 /* Pool.swift in Sources */,
+				5837980D1E15FD4100D136CF /* Job.swift in Sources */,
 				584C23721E13C4B00047AC97 /* Array+Extension.swift in Sources */,
 				5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */,
 				5818FE341E039820007F082D /* Varint.swift in Sources */,
@@ -543,7 +547,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -590,7 +594,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

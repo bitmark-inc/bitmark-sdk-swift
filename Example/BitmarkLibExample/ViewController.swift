@@ -49,6 +49,21 @@ class ViewController: UIViewController {
                 Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
                     print(results)
                 })
+                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
+                    print(results)
+                })
+                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
+                    print(results)
+                })
+                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
+                    print(results)
+                })
+                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
+                    print(results)
+                })
+                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
+                    print(results)
+                })
             }
             catch {
                 

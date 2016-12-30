@@ -32,44 +32,7 @@ public class Connection {
         }
     }
     
-//    public func startConnection(from urls: [URL], completionHandler:@escaping (() -> Void)) {
-//        
-//        let dispatchGroup = DispatchGroup()
-//        
-//        for url in urls {
-//            dispatchGroup.enter()
-//            let node = Node(url: url, finishConnectionHandler: { _ in
-//                dispatchGroup.leave()
-//            })
-//            nodes.append(node)
-//        }
-//        
-//        dispatchGroup.notify(queue: DispatchQueue.main, execute: completionHandler)
-//    }
-    
-    
-    
     public func call(method: String, params: [String: Any]?, timeout: Int = 10, callbackHandler handler:@escaping ([NodeResult]) -> Void) {
-        if pool == nil {
-            handler([])
-            print("No pool was assigned")
-        }
-        
-        let dispatchGroup = DispatchGroup()
-        var results = [NodeResult]()
-        for node in pool!.nodes {
-            if node.connected {
-                dispatchGroup.enter()
-                let id = UUID().uuidString
-                node.call(id: id, method: method, params: params, callbackHandler: { (result) in
-                    results.append(result)
-                    dispatchGroup.leave()
-                })
-            }
-        }
-        
-        dispatchGroup.notify(queue: DispatchQueue.global()) { 
-            handler(results)
-        }
+        pool?.call(method: method, params: params, timeout: timeout, callbackHandler: handler)
     }
 }

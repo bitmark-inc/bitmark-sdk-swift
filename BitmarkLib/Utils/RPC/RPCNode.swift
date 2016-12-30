@@ -30,12 +30,12 @@ public class Node: NSObject {
         
         super.init()
         
-        finishConnectionHandler = handler
-        
         connect(handler)
     }
     
     public func connect(_ handler: @escaping (Bool) -> Void) {
+        
+        finishConnectionHandler = handler
         socket = GCDAsyncSocket(delegate: self, delegateQueue: queue)
         
         do {
@@ -44,6 +44,10 @@ public class Node: NSObject {
         catch let e {
             print(e)
         }
+    }
+    
+    public func disconnect() {
+        socket?.disconnect()
     }
     
     public func call(id: String,
@@ -135,6 +139,7 @@ extension Node: GCDAsyncSocketDelegate {
     }
     
     public func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?) {
+        print("Socket didconnected: " + url.absoluteString)
         finishConnectionHandler?(false)
     }
 }
