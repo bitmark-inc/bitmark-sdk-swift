@@ -19,55 +19,53 @@ class ViewController: UIViewController {
         static let fingerprint = "5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c"
         static let signature = "2028900a6ddebce59e29fb41c27b45be57a07177927b24e46662e007ecad066399e87f4dec4eecb45599e9e9186497374978595a36f908b4fed9a51145b6e803"
     }
+    
+    let pk1 = try! PrivateKey(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
+    let pk2 = try! PrivateKey(fromKIF: "ddZdMwNbSoAKV72w5EHAfhJMShN9JphvSgpdAhWu7JYmEAeiQm")
+    
+    var asset1 = Asset()
+    var asset2 = Asset()
+    var issue1 = Issue()
+    var issue2 = Issue()
+    
+    let transfer1 = Transfer()
+    let transfer2 = Transfer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        print("Connecting to livenet")
-        Connection.shared.setNetwork(Config.liveNet)
-        
-        Connection.shared.onReady {
-            print("Ready for the connection")
+        do {
+            try asset1.set(name: "Test Bitmark Lib")
+            try asset1.set(metadata: ["description": "Asset description"])
+            try asset1.set(fingerPrint: "Test Bitmark Lib 11")
+            try asset1.sign(withPrivateKey: pk1)
             
-            var asset = Asset()
-            var issue = Issue()
-            let issueNonce = BigUInt(1475482198529)
-            do {
-                try asset.set(name: TestData.name)
-                try asset.set(metadata: TestData.metadata)
-                try asset.set(fingerPrint: TestData.fingerprint)
-                
-                try asset.sign(withPrivateKey: TestData.privateKey)
-                
-                let issuePk = try PrivateKey.init(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
-                
-                issue.set(asset: asset)
-                issue.set(nonce: issueNonce)
-                try issue.sign(privateKey: issuePk)
-                
-                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
-                    print(results)
-                })
-                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
-                    print(results)
-                })
-                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
-                    print(results)
-                })
-                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
-                    print(results)
-                })
-                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
-                    print(results)
-                })
-                Connection.shared.createBitmarks(assets: [asset], issues: [issue], callbackHandler: { (results) in
-                    print(results)
-                })
-            }
-            catch {
-                
-            }
+            try asset2.set(name: "Test Bitmark Lib")
+            try asset2.set(metadata: ["description": "Asset description"])
+            try asset2.set(fingerPrint: "Test Bitmark Lib 12")
+            try asset2.sign(withPrivateKey: pk2)
+            
+            issue1.set(asset: asset1)
+            issue1.set(nonce: BigUInt(1475482198529))
+            try issue1.sign(privateKey: pk1)
+            
+            issue2.set(asset: asset1)
+            issue2.set(nonce: BigUInt(1475482198530))
+            try issue2.sign(privateKey: pk2)
+            
+        }
+        catch {
+            
+        }
+        
+        
+        print("Connecting to livenet")
+        Connection.shared.setNetwork(Config.testNet)
+        
+        
+        createBitmarks {
+            
         }
     }
 
@@ -79,3 +77,14 @@ class ViewController: UIViewController {
 
 }
 
+extension ViewController {
+    func createBitmarks(_ completionHandler: () -> Void) {
+        print("================= CREATE BITMARK ======================================================================");
+        
+        Connection.shared.onReady {
+            Connection.shared.createBitmarks(assets: [self.asset1, self.asset2], issues: [self.issue1, self.issue2], callbackHandler: { (results) in
+                print(results)
+            })
+        }
+    }
+}

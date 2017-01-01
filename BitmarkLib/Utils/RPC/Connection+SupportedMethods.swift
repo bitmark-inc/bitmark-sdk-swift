@@ -13,7 +13,6 @@ extension Connection {
                          "issues": PoolHelper.convertRPCParams(from: issues)]
         
         self.call(method: "Bitmarks.Create", params: rpcParams) { (results) in
-            print(results)
             
             let result = Common.getMostAppearedValue(nodeResults: results, keys: ["payId", "payNonce", "difficulty"])
             handler(result)
@@ -22,7 +21,6 @@ extension Connection {
     
     public func transferBitmarks(params: [String: String], callbackHandler handler:@escaping (NodeResult) -> Void) {
         self.call(method: "Bitmark.Transfer", params: params) { (results) in
-            print(results)
             let result = Common.getMostAppearedValue(nodeResults: results, keys: ["payId", "payments"])
             handler(result)
         }
@@ -30,7 +28,6 @@ extension Connection {
     
     public func payByHashCash(params: [String: String], callbackHandler handler:@escaping (NodeResult) -> Void) {
         self.call(method: "Bitmarks.Proof", params: params) { (results) in
-            print(results)
             let result = Common.getMostAppearedValue(nodeResults: results, keys: nil)
             handler(result)
         }
@@ -38,7 +35,6 @@ extension Connection {
     
     public func payBitmark(params: [String: String], callbackHandler handler:@escaping (NodeResult) -> Void) {
         self.call(method: "Bitmarks.Pay", params: params) { (results) in
-            print(results)
             let result = Common.getMostAppearedValue(nodeResults: results, keys: nil)
             handler(result)
         }

@@ -134,7 +134,7 @@ public struct Asset {
 }
 
 extension Asset: RPCTransformable {
-    public func getRPCParam() throws -> [String : String] {
+    public func getRPCParam() throws -> [String : Any] {
         if !self.isSigned {
             throw(BMError("Asset error: need to sign the record before getting RPC message"))
         }

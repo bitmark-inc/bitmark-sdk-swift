@@ -48,6 +48,8 @@ public struct Transfer {
     
     // MARK:- Public methods
     
+    public init() {}
+    
     public mutating func set(from preTxId: String) {
         self.preTxId = preTxId
         resetSignState()
@@ -118,7 +120,7 @@ public struct Transfer {
 }
 
 extension Transfer: RPCTransformable {
-    public func getRPCParam() throws -> [String : String] {
+    public func getRPCParam() throws -> [String : Any] {
         if !self.isSigned {
             throw(BMError("Transfer error: need to sign the record before getting RPC param"))
         }

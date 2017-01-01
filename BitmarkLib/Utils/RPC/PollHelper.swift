@@ -41,8 +41,8 @@ class PoolHelper {
         return nil
     }
     
-    internal static func convertRPCParams(from rpctransformables: [RPCTransformable]) -> [[String: String]] {
-        var result = [[String: String]]()
+    internal static func convertRPCParams(from rpctransformables: [RPCTransformable]) -> [[String: Any]] {
+        var result = [[String: Any]]()
         for rpctransformable in rpctransformables {
             do {
                 let rpcParam = try rpctransformable.getRPCParam()

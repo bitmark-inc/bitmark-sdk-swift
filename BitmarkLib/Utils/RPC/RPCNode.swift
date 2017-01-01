@@ -68,6 +68,10 @@ public class Node: NSObject {
                 // Add to callback dictionary
                 self.callbackDic[id] = handler
                 
+                if let jsonString = String(data: data, encoding: .utf8) {
+                    print(" ================ \n" + jsonString + "\n ====================")
+                }
+                
                 // Start reading data
                 self.socket?.readData(withTimeout: TimeInterval(timeout), tag: 0)
             }
@@ -135,11 +139,13 @@ extension Node: GCDAsyncSocketDelegate {
         getInfo { [unowned self] (success) in
             self.connected = success
             self.finishConnectionHandler?(success)
+            self.finishConnectionHandler = nil
         }
     }
     
     public func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?) {
         print("Socket didconnected: " + url.absoluteString)
         finishConnectionHandler?(false)
+        finishConnectionHandler = nil
     }
 }

@@ -9,5 +9,5 @@
 import Foundation
 
 protocol RPCTransformable {
-    func getRPCParam() throws -> [String: String]
+    func getRPCParam() throws -> [String: Any]
 }
