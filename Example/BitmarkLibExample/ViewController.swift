@@ -64,13 +64,13 @@ class ViewController: UIViewController {
         Connection.shared.setNetwork(Config.testNet)
         
         
-        createBitmarks {
-            
+        createBitmarks { [weak self] in
+            self?.transferBitmark {
+                
+            }
+
         }
         
-//        transferBitmark {
-//            
-//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,12 +82,16 @@ class ViewController: UIViewController {
 }
 
 extension ViewController {
-    func createBitmarks(_ completionHandler: () -> Void) {
+    func createBitmarks(_ completionHandler: @escaping () -> Void) {
         print("================= CREATE BITMARK ======================================================================");
         
         Connection.shared.onReady {
             Connection.shared.createBitmarks(assets: [self.asset1, self.asset2], issues: [self.issue1, self.issue2], callbackHandler: { (results) in
-                let result = results.result!
+                guard let result = results.result else {
+                    print("\(results.error)")
+                    completionHandler()
+                    return
+                }
                 let issuePayId = result["payId"] as! String
                 let issuePayNonce = result["payNonce"] as! String
                 let issueDifficulty = result["difficulty"] as! String
@@ -101,6 +105,7 @@ extension ViewController {
                     
                     Connection.shared.payByHashCash(params: ["payId": issuePayId, "nonce": nonce.hexEncodedString], callbackHandler: { (nodeResult) in
                         print(nodeResult)
+                        completionHandler()
                     })
                 })
             })
