@@ -9,7 +9,7 @@
 import Foundation
 import BigInt
 
-class Common {
+public class Common {
     static func getKey(byValue value: BigUInt) -> KeyType? {
         
         for keyType in Config.keyTypes {
@@ -128,5 +128,54 @@ class Common {
         }
         
         return resultValue!                 // Always not nil because we have two above case assigning value to resultValue
+    }
+    
+    static func increaseOne(baseLength: Int, data: Data) -> Data {
+        var nonce = data.slice(start: baseLength, end: data.count)
+        var buffer = [UInt8](data)
+        
+        var value: UInt8 = 0
+        
+        for i in baseLength..<buffer.count {
+            let j = buffer.count - i - 1 + baseLength
+            value = buffer[j]
+            
+            if value == 0xff {
+                buffer[j] = 0x00
+            }
+            else {
+                buffer[j] = value + 1
+                return Data(bytes: buffer)
+            }
+        }
+        
+        buffer.append(0x01)
+        
+        return Data(bytes: buffer)
+    }
+    
+    public static func findNonce(base: Data, difficulty: Data) -> Data {
+        var nonce = BigUInt("8000000000000000", radix: 16)!
+        var combine = base + nonce.serialize()
+        let baseLength = base.count
+        
+        var notFoundYet = true
+        var count = 0
+        
+        while notFoundYet {
+            combine = increaseOne(baseLength: baseLength, data: combine)
+            let hash = combine.sha3(.sha256)
+            let hashBN = BigUInt(hash)
+            let difficultyBN = BigUInt(difficulty)
+            
+            if hashBN < difficultyBN {
+                notFoundYet = false
+            }
+            
+            count += 1
+            print("trying ... \(count)")
+        }
+        
+        return combine.slice(start: baseLength, end: combine.count)
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Data {
+public extension Data {
     mutating func concat(data: Data) {
         let buffer1 = [UInt8](self)
         let buffer2 = [UInt8](data)
@@ -47,8 +47,8 @@ extension Data {
     }
 }
 
-extension String {
-    var hexDecodedData: Data {
+public extension String {
+    public var hexDecodedData: Data {
         var hex = self
         var data = Data()
         while(hex.characters.count > 0) {

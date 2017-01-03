@@ -19,21 +19,21 @@ extension Connection {
         }
     }
     
-    public func transferBitmarks(params: [String: String], callbackHandler handler:@escaping (NodeResult) -> Void) {
+    public func transferBitmarks(params: [String: Any], callbackHandler handler:@escaping (NodeResult) -> Void) {
         self.call(method: "Bitmark.Transfer", params: params) { (results) in
             let result = Common.getMostAppearedValue(nodeResults: results, keys: ["payId", "payments"])
             handler(result)
         }
     }
     
-    public func payByHashCash(params: [String: String], callbackHandler handler:@escaping (NodeResult) -> Void) {
+    public func payByHashCash(params: [String: Any], callbackHandler handler:@escaping (NodeResult) -> Void) {
         self.call(method: "Bitmarks.Proof", params: params) { (results) in
             let result = Common.getMostAppearedValue(nodeResults: results, keys: nil)
             handler(result)
         }
     }
     
-    public func payBitmark(params: [String: String], callbackHandler handler:@escaping (NodeResult) -> Void) {
+    public func payBitmark(params: [String: Any], callbackHandler handler:@escaping (NodeResult) -> Void) {
         self.call(method: "Bitmarks.Pay", params: params) { (results) in
             let result = Common.getMostAppearedValue(nodeResults: results, keys: nil)
             handler(result)

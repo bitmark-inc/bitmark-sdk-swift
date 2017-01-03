@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     var issue1 = Issue()
     var issue2 = Issue()
     
-    let transfer1 = Transfer()
+    var transfer1 = Transfer()
     let transfer2 = Transfer()
 
     override func viewDidLoad() {
@@ -67,6 +67,10 @@ class ViewController: UIViewController {
         createBitmarks {
             
         }
+        
+//        transferBitmark {
+//            
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,7 +87,38 @@ extension ViewController {
         
         Connection.shared.onReady {
             Connection.shared.createBitmarks(assets: [self.asset1, self.asset2], issues: [self.issue1, self.issue2], callbackHandler: { (results) in
-                print(results)
+                let result = results.result!
+                let issuePayId = result["payId"] as! String
+                let issuePayNonce = result["payNonce"] as! String
+                let issueDifficulty = result["difficulty"] as! String
+                
+                let issuePayIdData = issuePayId.hexDecodedData
+                let issuePayNonceData = issuePayNonce.hexDecodedData
+                let issueDifficultyData = issueDifficulty.hexDecodedData
+                let nonce = Common.findNonce(base: (issuePayIdData + issuePayNonceData), difficulty: issueDifficultyData)
+                
+                DispatchQueue.global().asyncAfter(deadline: .now() + 4, execute: {
+                    
+                    Connection.shared.payByHashCash(params: ["payId": issuePayId, "nonce": nonce.hexEncodedString], callbackHandler: { (nodeResult) in
+                        print(nodeResult)
+                    })
+                })
+            })
+        }
+    }
+    
+    func transferBitmark(_ completionHandler: () -> Void) {
+        print("================= PAY FOR ISSUE ======================================================================");
+        
+        transfer1.set(from: issue1)
+        try! transfer1.set(to: pk2.address)
+        try! transfer1.sign(privateKey: pk1)
+        
+        let params = try! transfer1.getRPCParam()
+        
+        Connection.shared.onReady {
+            Connection.shared.transferBitmarks(params: params, callbackHandler: { (nodeResult) in
+                print(nodeResult)
             })
         }
     }
