@@ -98,6 +98,7 @@ extension Node: GCDAsyncSocketDelegate {
                     
                     // Trigger the callback
                     callbackDic[id]?(NodeResult(result: result, error: error))
+                    callbackDic.removeValue(forKey: id)
                 }
                 else {
                     print("Cannot get id and result from received json")
@@ -144,5 +145,11 @@ extension Node: GCDAsyncSocketDelegate {
         finishConnectionHandler?(false)
         finishConnectionHandler = nil
         self.connected = false
+        
+        // Callback failed to callback dic
+        for (key, callback) in self.callbackDic {
+            callback(NodeResult(result: nil, error: nil))
+        }
+        self.callbackDic.removeAll()
     }
 }
