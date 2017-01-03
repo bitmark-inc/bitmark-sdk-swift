@@ -56,6 +56,7 @@ internal class JobQueue {
             else {
                 print("No remaining jobs, quiting ...")
                 self.isExcuting = false
+                self.excutedPreHandler = false
                 self.jobFinishHandler?()
             }
         }

@@ -22,6 +22,10 @@ public class Pool {
         jobQueue.jobStartHandler = { [weak self] finishHandler in
             self?.discover(finishHandler)
         }
+        
+        jobQueue.jobFinishHandler = { [weak self] in
+            self?.closeNodesConnection()
+        }
     }
     
     internal func replacePool(withNodes nodes: [Node]) {
@@ -185,7 +189,7 @@ extension Pool {
         })
     }
     
-    private func closeNodesConnection() {
+    fileprivate func closeNodesConnection() {
         print("Close all socket connnection")
         for node in nodes {
             if node.connected {

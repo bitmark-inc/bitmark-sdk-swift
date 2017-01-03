@@ -9,8 +9,8 @@
 import CocoaAsyncSocket
 
 public struct NodeResult {
-    let result: [String: Any]?
-    let error: String?
+    public let result: [String: Any]?
+    public let error: String?
 }
 
 public class Node: NSObject {
@@ -67,10 +67,6 @@ public class Node: NSObject {
                 
                 // Add to callback dictionary
                 self.callbackDic[id] = handler
-                
-                if let jsonString = String(data: data, encoding: .utf8) {
-                    print(" ================ \n" + jsonString + "\n ====================")
-                }
                 
                 // Start reading data
                 self.socket?.readData(withTimeout: TimeInterval(timeout), tag: 0)
@@ -147,5 +143,6 @@ extension Node: GCDAsyncSocketDelegate {
         print("Socket didconnected: " + url.absoluteString)
         finishConnectionHandler?(false)
         finishConnectionHandler = nil
+        self.connected = false
     }
 }
