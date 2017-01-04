@@ -31,7 +31,6 @@
 		584C23701E13B46D0047AC97 /* RPCTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C236F1E13B46D0047AC97 /* RPCTransformable.swift */; };
 		584C23721E13C4B00047AC97 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C23711E13C4B00047AC97 /* Array+Extension.swift */; };
 		585591591E1226270090D3C0 /* Connection+SupportedMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585591581E1226270090D3C0 /* Connection+SupportedMethods.swift */; };
-		5855915D1E12532F0090D3C0 /* SwiftSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5855915C1E12532F0090D3C0 /* SwiftSocket.framework */; };
 		5855915F1E125A760090D3C0 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5855915E1E125A760090D3C0 /* CocoaAsyncSocket.framework */; };
 		5865BD431E0250C200B25AB3 /* BitmarkLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD391E0250C200B25AB3 /* BitmarkLib.framework */; };
 		5865BD4A1E0250C200B25AB3 /* BitmarkLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -127,7 +126,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5855915F1E125A760090D3C0 /* CocoaAsyncSocket.framework in Frameworks */,
-				5855915D1E12532F0090D3C0 /* SwiftSocket.framework in Frameworks */,
 				58C04F741E0E69AD0021A7D1 /* DNSServiceDiscovery.framework in Frameworks */,
 				580B88E61E08D5F50018F6A5 /* TweetNaclSwift_iOS.framework in Frameworks */,
 				580B88E41E08D5DE0018F6A5 /* BigInt.framework in Frameworks */,
