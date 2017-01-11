@@ -108,7 +108,7 @@ extension Node: GCDAsyncSocketDelegate {
                 }
             }
         }
-        catch let e {
+        catch _ {
             print("Error when parsing received data")
         }
     }
@@ -147,7 +147,7 @@ extension Node: GCDAsyncSocketDelegate {
         self.connected = false
         
         // Callback failed to callback dic
-        for (key, callback) in self.callbackDic {
+        for (_, callback) in self.callbackDic {
             callback(NodeResult(result: nil, error: nil))
         }
         self.callbackDic.removeAll()

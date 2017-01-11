@@ -131,7 +131,6 @@ public class Common {
     }
     
     static func increaseOne(baseLength: Int, data: Data) -> Data {
-        var nonce = data.slice(start: baseLength, end: data.count)
         var buffer = [UInt8](data)
         
         var value: UInt8 = 0
@@ -155,7 +154,7 @@ public class Common {
     }
     
     public static func findNonce(base: Data, difficulty: Data) -> Data {
-        var nonce = BigUInt("8000000000000000", radix: 16)!
+        let nonce = BigUInt("8000000000000000", radix: 16)!
         var combine = base + nonce.serialize()
         let baseLength = base.count
         
