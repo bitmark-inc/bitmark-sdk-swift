@@ -9,7 +9,7 @@
 import Foundation
 import BigInt
 
-class Base58 {
+public class Base58 {
     
     static let BTCAlphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
     
