@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
   spec.platform = :ios, "9.1"
   spec.requires_arc = true
   spec.source = { git: "https://github.com/bitmark-inc/bitmark-lib-swift.git", tag: "v#{spec.version}", submodules: true }
-  spec.source_files = "BitmarkLib/**/*.{h,swift}"
+  spec.source_files = "BitmarkLib/**/*.{h,swift}, DNSServiceDiscovery/**/*.{h,swift}"
 
   spec.dependency "BigInt", "~> 2.1"
   spec.dependency "CryptoSwift"
