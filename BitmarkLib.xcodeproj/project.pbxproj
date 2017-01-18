@@ -36,7 +36,6 @@
 		5865BD431E0250C200B25AB3 /* BitmarkLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD391E0250C200B25AB3 /* BitmarkLib.framework */; };
 		5865BD4A1E0250C200B25AB3 /* BitmarkLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5869EC361E0F63E400DFE230 /* DNSResolve_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5869EC351E0F63E400DFE230 /* DNSResolve_Tests.swift */; };
-		58C04F6B1E0E69170021A7D1 /* DNSServiceDiscovery.h in Headers */ = {isa = PBXBuildFile; fileRef = 58C04F691E0E69170021A7D1 /* DNSServiceDiscovery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58C04F781E0E70110021A7D1 /* DNSResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C04F771E0E70110021A7D1 /* DNSResolver.swift */; };
 		58C04F7A1E0E70E00021A7D1 /* TxtRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C04F791E0E70E00021A7D1 /* TxtRecord.swift */; };
 		58C20BF31E1102360084B246 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C20BF21E1102360084B246 /* Connection.swift */; };
@@ -50,13 +49,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		582BECA31E28ABFC00BD511E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5865BD301E0250C200B25AB3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 58C04F661E0E69170021A7D1;
-			remoteInfo = DNSServiceDiscovery;
-		};
 		5865BD441E0250C200B25AB3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5865BD301E0250C200B25AB3 /* Project object */;
@@ -99,12 +91,9 @@
 		5865BD421E0250C200B25AB3 /* BitmarkLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BitmarkLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5865BD491E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5869EC351E0F63E400DFE230 /* DNSResolve_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSResolve_Tests.swift; sourceTree = "<group>"; };
-		58C04F671E0E69170021A7D1 /* DNSServiceDiscovery.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DNSServiceDiscovery.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		58C04F691E0E69170021A7D1 /* DNSServiceDiscovery.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DNSServiceDiscovery.h; sourceTree = "<group>"; };
-		58C04F6A1E0E69170021A7D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		58C04F701E0E692B0021A7D1 /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphoneos.modulemap; sourceTree = "<group>"; };
-		58C04F711E0E692B0021A7D1 /* iphonesimulator.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphonesimulator.modulemap; sourceTree = "<group>"; };
-		58C04F721E0E692B0021A7D1 /* macosx.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = macosx.modulemap; sourceTree = "<group>"; };
+		58B6C5931E2F8192007DE770 /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphoneos.modulemap; sourceTree = "<group>"; };
+		58B6C5941E2F8192007DE770 /* iphonesimulator.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphonesimulator.modulemap; sourceTree = "<group>"; };
+		58B6C5951E2F8192007DE770 /* macosx.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = macosx.modulemap; sourceTree = "<group>"; };
 		58C04F771E0E70110021A7D1 /* DNSResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNSResolver.swift; sourceTree = "<group>"; };
 		58C04F791E0E70E00021A7D1 /* TxtRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TxtRecord.swift; sourceTree = "<group>"; };
 		58C20BF21E1102360084B246 /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
@@ -135,13 +124,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5865BD431E0250C200B25AB3 /* BitmarkLib.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		58C04F631E0E69170021A7D1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,7 +173,6 @@
 			children = (
 				5865BD3B1E0250C200B25AB3 /* BitmarkLib */,
 				5865BD461E0250C200B25AB3 /* BitmarkLibTests */,
-				58C04F681E0E69170021A7D1 /* DNSServiceDiscovery */,
 				5865BD3A1E0250C200B25AB3 /* Products */,
 				5865BD661E02762A00B25AB3 /* Frameworks */,
 			);
@@ -202,7 +183,6 @@
 			children = (
 				5865BD391E0250C200B25AB3 /* BitmarkLib.framework */,
 				5865BD421E0250C200B25AB3 /* BitmarkLibTests.xctest */,
-				58C04F671E0E69170021A7D1 /* DNSServiceDiscovery.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -210,6 +190,7 @@
 		5865BD3B1E0250C200B25AB3 /* BitmarkLib */ = {
 			isa = PBXGroup;
 			children = (
+				58B6C58F1E2F8192007DE770 /* DNSServiceDiscovery */,
 				5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */,
 				580B618F1E077DB4008BEBFF /* Extensions */,
 				5818FE291E0391C0007F082D /* Utils */,
@@ -248,6 +229,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		58B6C58F1E2F8192007DE770 /* DNSServiceDiscovery */ = {
+			isa = PBXGroup;
+			children = (
+				58B6C5931E2F8192007DE770 /* iphoneos.modulemap */,
+				58B6C5941E2F8192007DE770 /* iphonesimulator.modulemap */,
+				58B6C5951E2F8192007DE770 /* macosx.modulemap */,
+			);
+			path = DNSServiceDiscovery;
+			sourceTree = "<group>";
+		};
 		58C04F5D1E0E53470021A7D1 /* DNSResolver */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,18 +247,6 @@
 				58C04F791E0E70E00021A7D1 /* TxtRecord.swift */,
 			);
 			path = DNSResolver;
-			sourceTree = "<group>";
-		};
-		58C04F681E0E69170021A7D1 /* DNSServiceDiscovery */ = {
-			isa = PBXGroup;
-			children = (
-				58C04F701E0E692B0021A7D1 /* iphoneos.modulemap */,
-				58C04F711E0E692B0021A7D1 /* iphonesimulator.modulemap */,
-				58C04F721E0E692B0021A7D1 /* macosx.modulemap */,
-				58C04F691E0E69170021A7D1 /* DNSServiceDiscovery.h */,
-				58C04F6A1E0E69170021A7D1 /* Info.plist */,
-			);
-			path = DNSServiceDiscovery;
 			sourceTree = "<group>";
 		};
 		58C20BEF1E1102260084B246 /* RPC */ = {
@@ -293,14 +272,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		58C04F641E0E69170021A7D1 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				58C04F6B1E0E69170021A7D1 /* DNSServiceDiscovery.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -316,7 +287,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				582BECA41E28ABFC00BD511E /* PBXTargetDependency */,
 			);
 			name = BitmarkLib;
 			productName = BitmarkLib;
@@ -341,24 +311,6 @@
 			productReference = 5865BD421E0250C200B25AB3 /* BitmarkLibTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		58C04F661E0E69170021A7D1 /* DNSServiceDiscovery */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 58C04F6C1E0E69170021A7D1 /* Build configuration list for PBXNativeTarget "DNSServiceDiscovery" */;
-			buildPhases = (
-				58C04F621E0E69170021A7D1 /* Sources */,
-				58C04F631E0E69170021A7D1 /* Frameworks */,
-				58C04F641E0E69170021A7D1 /* Headers */,
-				58C04F651E0E69170021A7D1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = DNSServiceDiscovery;
-			productName = DNSServiceDiscovery;
-			productReference = 58C04F671E0E69170021A7D1 /* DNSServiceDiscovery.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -378,10 +330,6 @@
 						CreatedOnToolsVersion = 8.2;
 						ProvisioningStyle = Automatic;
 					};
-					58C04F661E0E69170021A7D1 = {
-						CreatedOnToolsVersion = 8.2;
-						ProvisioningStyle = Automatic;
-					};
 				};
 			};
 			buildConfigurationList = 5865BD331E0250C200B25AB3 /* Build configuration list for PBXProject "BitmarkLib" */;
@@ -398,7 +346,6 @@
 			targets = (
 				5865BD381E0250C200B25AB3 /* BitmarkLib */,
 				5865BD411E0250C200B25AB3 /* BitmarkLibTests */,
-				58C04F661E0E69170021A7D1 /* DNSServiceDiscovery */,
 			);
 		};
 /* End PBXProject section */
@@ -412,13 +359,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5865BD401E0250C200B25AB3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		58C04F651E0E69170021A7D1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -474,21 +414,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		58C04F621E0E69170021A7D1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		582BECA41E28ABFC00BD511E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 58C04F661E0E69170021A7D1 /* DNSServiceDiscovery */;
-			targetProxy = 582BECA31E28ABFC00BD511E /* PBXContainerItemProxy */;
-		};
 		5865BD451E0250C200B25AB3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5865BD381E0250C200B25AB3 /* BitmarkLib */;
@@ -543,6 +471,9 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				"SWIFT_INCLUDE_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/DNSServiceDiscovery/iphoneos.modulemap";
+				"SWIFT_INCLUDE_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/DNSServiceDiscovery/iphonesimulator.modulemap";
+				"SWIFT_INCLUDE_PATHS[sdk=macosx*]" = "$(SRCROOT)/DNSServiceDiscovery/macos.modulemap";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -588,6 +519,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				"SWIFT_INCLUDE_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/DNSServiceDiscovery/iphoneos.modulemap";
+				"SWIFT_INCLUDE_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/DNSServiceDiscovery/iphonesimulator.modulemap";
+				"SWIFT_INCLUDE_PATHS[sdk=macosx*]" = "$(SRCROOT)/DNSServiceDiscovery/macos.modulemap";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -683,52 +617,6 @@
 			};
 			name = Release;
 		};
-		58C04F6D1E0E69170021A7D1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_IDENTITY = "";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = DNSServiceDiscovery/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				"MODULEMAP_FILE[sdk=iphoneos*]" = "$(SRCROOT)/DNSServiceDiscovery/iphoneos.modulemap";
-				"MODULEMAP_FILE[sdk=iphonesimulator*]" = "$(SRCROOT)/DNSServiceDiscovery/iphonesimulator.modulemap";
-				"MODULEMAP_FILE[sdk=macosx*]" = "$(SRCROOT)/DNSServiceDiscovery/macosx.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bitmark.DNSServiceDiscovery;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		58C04F6E1E0E69170021A7D1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_IDENTITY = "";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = DNSServiceDiscovery/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				"MODULEMAP_FILE[sdk=iphoneos*]" = "$(SRCROOT)/DNSServiceDiscovery/iphoneos.modulemap";
-				"MODULEMAP_FILE[sdk=iphonesimulator*]" = "$(SRCROOT)/DNSServiceDiscovery/iphonesimulator.modulemap";
-				"MODULEMAP_FILE[sdk=macosx*]" = "$(SRCROOT)/DNSServiceDiscovery/macosx.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bitmark.DNSServiceDiscovery;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -755,15 +643,6 @@
 			buildConfigurations = (
 				5865BD511E0250C200B25AB3 /* Debug */,
 				5865BD521E0250C200B25AB3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		58C04F6C1E0E69170021A7D1 /* Build configuration list for PBXNativeTarget "DNSServiceDiscovery" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				58C04F6D1E0E69170021A7D1 /* Debug */,
-				58C04F6E1E0E69170021A7D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
