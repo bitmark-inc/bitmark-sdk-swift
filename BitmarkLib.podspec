@@ -20,5 +20,6 @@ Pod::Spec.new do |spec|
 
   spec.dependency "BigInt", "~> 2.1"
   spec.dependency "CryptoSwift"
+  spec.dependency "CocoaAsyncSocket"
   spec.dependency "TweetNaclSwift"
 end
