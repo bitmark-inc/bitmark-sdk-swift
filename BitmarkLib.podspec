@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
 "SWIFT_INCLUDE_PATHS[sdk=macosx*]" => "$(PODS_ROOT)/BitmarkLib/BitmarkLib/DNSServiceDiscovery/macosx" }
 
 
-  spec.preserve_paths = 'BitmarkLib/DNSServiceDiscovery/iphoneos.modulemap', 'BitmarkLib/DNSServiceDiscovery/iphonesimulator.modulemap', 'BitmarkLib/DNSServiceDiscovery/macosx.modulemap'
+  spec.preserve_paths = 'BitmarkLib/DNSServiceDiscovery/iphoneos/module.map', 'BitmarkLib/DNSServiceDiscovery/iphonesimulator/module.map', 'BitmarkLib/DNSServiceDiscovery/macosx/module.map'
 
   spec.dependency "BigInt", "~> 2.1"
   spec.dependency "CryptoSwift"
