@@ -9,7 +9,7 @@
 import Foundation
 import BigInt
 import CryptoSwift
-import TweetNaclSwift_iOS
+import TweetNaclSwift
 
 public struct PrivateKey {
     

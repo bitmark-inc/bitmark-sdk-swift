@@ -11,9 +11,9 @@ Pod::Spec.new do |spec|
   spec.requires_arc = true
   spec.source = { git: "https://github.com/bitmark-inc/bitmark-lib-swift.git", tag: "v#{spec.version}", submodules: true }
   spec.source_files = 'BitmarkLib/**/*.{h,swift}', 'DNSServiceDiscovery/**/*.{h,swift}'
-  spec.xcconfig = { "SWIFT_INCLUDE_PATHS[sdk=iphoneos*]" => "$(PODS_ROOT)/BitmarkLib/BitmarkLib/DNSServiceDiscovery/iphoneos.modulemap",
-"SWIFT_INCLUDE_PATHS[sdk=iphonesimulator*]" => "$(PODS_ROOT)/BitmarkLib/BitmarkLib/DNSServiceDiscovery/iphonesimulator.modulemap",
-"SWIFT_INCLUDE_PATHS[sdk=macosx*]" => "$(PODS_ROOT)/BitmarkLib/BitmarkLib/DNSServiceDiscovery/macosx.modulemap" }
+  spec.xcconfig = { "SWIFT_INCLUDE_PATHS[sdk=iphoneos*]" => "$(PODS_ROOT)/BitmarkLib/BitmarkLib/DNSServiceDiscovery/iphoneos",
+"SWIFT_INCLUDE_PATHS[sdk=iphonesimulator*]" => "$(PODS_ROOT)/BitmarkLib/BitmarkLib/DNSServiceDiscovery/iphonesimulator",
+"SWIFT_INCLUDE_PATHS[sdk=macosx*]" => "$(PODS_ROOT)/BitmarkLib/BitmarkLib/DNSServiceDiscovery/macosx" }
 
 
   spec.preserve_paths = 'BitmarkLib/DNSServiceDiscovery/iphoneos.modulemap', 'BitmarkLib/DNSServiceDiscovery/iphonesimulator.modulemap', 'BitmarkLib/DNSServiceDiscovery/macosx.modulemap'
