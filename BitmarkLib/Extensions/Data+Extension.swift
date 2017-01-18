@@ -9,40 +9,40 @@
 import Foundation
 
 public extension Data {
-    mutating func concat(data: Data) {
+    public mutating func concat(data: Data) {
         let buffer1 = [UInt8](self)
         let buffer2 = [UInt8](data)
         let buffer = buffer1 + buffer2
         self = Data(bytes: buffer)
     }
     
-    func concating(data: Data) -> Data {
+    public func concating(data: Data) -> Data {
         let buffer1 = [UInt8](self)
         let buffer2 = [UInt8](data)
         let buffer = buffer1 + buffer2
         return Data(bytes: buffer)
     }
     
-    func slice(start: Int, end: Int) -> Data {
+    public func slice(start: Int, end: Int) -> Data {
         let trueEnd = Swift.min(end, self.count)
         return self.subdata(in: start..<trueEnd)
     }
     
-    static func +(data1: Data, data2: Data) -> Data {
+    public static func +(data1: Data, data2: Data) -> Data {
         return data1.concating(data: data2)
     }
     
-    static func +=(data1: inout Data, data2: Data) {
+    public static func +=(data1: inout Data, data2: Data) {
         data1.concat(data: data2)
     }
     
     // NSData bridging
-    var nsdata: NSData {
+    public var nsdata: NSData {
         return NSData(data: self)
     }
     
     // Hex string
-    var hexEncodedString: String {
+    public var hexEncodedString: String {
         return reduce("") {$0 + String(format: "%02x", $1)}
     }
 }

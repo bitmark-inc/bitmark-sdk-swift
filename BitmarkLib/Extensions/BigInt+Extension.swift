@@ -8,8 +8,8 @@
 
 import BigInt
 
-extension BigUInt {
-    var buffer: [UInt8] {
+public extension BigUInt {
+    public var buffer: [UInt8] {
         return [UInt8](self.serialize())
     }
 }
