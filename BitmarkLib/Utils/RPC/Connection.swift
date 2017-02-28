@@ -13,6 +13,7 @@ public class Connection {
     fileprivate var connectionReadyHandler: (() -> Void)?
     
     public func setNetwork(_ network: Network) {
+        self.isReady = false
         self.pool = Pool(network: network)
         self.pool!.discover { [weak self] in
             self?.isReady = true
