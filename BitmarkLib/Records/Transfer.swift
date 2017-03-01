@@ -28,7 +28,7 @@ public struct Transfer {
     
     internal func packRecord() -> Data {
         var txData: Data
-        txData = VarInt.encode(value: Config.IssueConfig.value)
+        txData = VarInt.encode(value: Config.TransferConfig.value)
         txData = BinaryPacking.append(toData: txData, withData: self.preTxId?.hexDecodedData)
         
         if let payment = self.payment {

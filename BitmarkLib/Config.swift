@@ -55,6 +55,12 @@ public class Config {
                           staticHostName: "nodes.test.bitmark.com",
                           staticNodes: ["118.163.120.178:3566", "118.163.120.176:3130"])
     
+    public static let devNet = Network(name: "devnet",
+                                       addressValue: 0x01,
+                                       kifValue: 0x01,
+                                       staticHostName: "nodes.devel.bitmark.com",
+                                       staticNodes: ["128.199.196.67:2136", "139.59.229.5:2136"])
+    
     static let networks = [liveNet, testNet]
     
     // MARK:- Record
