@@ -27,7 +27,7 @@ public class VarInt {
             counter += 1
         }
         
-        return (BigUInt(0), counter)
+        return (BigUInt(0), 0)
     }
     
     public static func encode(value: BigUInt) -> Data {
