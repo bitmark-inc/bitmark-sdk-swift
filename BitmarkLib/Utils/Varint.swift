@@ -4,6 +4,10 @@ import BigInt
 public class VarInt {
     
     public static func decode(data: Data) -> BigUInt {
+        return decodeWithLength(data: data).value
+    }
+    
+    public static func decodeWithLength(data: Data) -> (value: BigUInt, length: Int) {
         var output: UInt64 = 0
         var counter = 0
         var shifter: UInt64 = 0
@@ -12,10 +16,10 @@ public class VarInt {
         for byte in buffer {
             if byte < 0x80 {
                 if counter >= 9 && byte > 1 {
-                    return BigUInt(0)
+                    return (BigUInt(0), counter + 1)
                 }
                 
-                return BigUInt(output | UInt64(byte) << shifter)
+                return (BigUInt(output | UInt64(byte) << shifter), counter + 1)
             }
             
             output |= UInt64(byte & 0x7f) << shifter
@@ -23,7 +27,7 @@ public class VarInt {
             counter += 1
         }
         
-        return BigUInt(0)
+        return (BigUInt(0), counter)
     }
     
     public static func encode(value: BigUInt) -> Data {
