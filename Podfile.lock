@@ -1,0 +1,30 @@
+PODS:
+  - BigInt (3.0.0):
+    - SipHash (~> 1.2)
+  - CryptoSwift (0.7.2)
+  - SipHash (1.2.0)
+  - TweetNaclSwift (1.0.0)
+
+DEPENDENCIES:
+  - BigInt
+  - CryptoSwift
+  - TweetNaclSwift (from `https://github.com/bitmark-inc/tweetnacl-swiftwrap.git`)
+
+EXTERNAL SOURCES:
+  TweetNaclSwift:
+    :git: https://github.com/bitmark-inc/tweetnacl-swiftwrap.git
+
+CHECKOUT OPTIONS:
+  TweetNaclSwift:
+    :commit: 36c57ebb590fafda9b9a476f0974ad43c1640a1a
+    :git: https://github.com/bitmark-inc/tweetnacl-swiftwrap.git
+
+SPEC CHECKSUMS:
+  BigInt: a7864bcecd2976bced91963baef90079dbdcca25
+  CryptoSwift: cd2158be2bf639aabc63ec804707c7137c90157c
+  SipHash: c6e9e43e9c531b5bc6602545130c26194a6d31ce
+  TweetNaclSwift: 88a7dbe8486e09df88767c671d658c0703a765cd
+
+PODFILE CHECKSUM: 5761931d5def6b026b9492d637010ecc0fb7eac2
+
+COCOAPODS: 1.3.1

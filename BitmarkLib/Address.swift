@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import BigInt
 import CryptoSwift
 
 public struct Address {
@@ -22,11 +21,11 @@ public struct Address {
         self.pubKey = pubKey
         self.network = network
         
-        let keyTypeVal = BigUInt(keyType.value)
+        let keyTypeVal = keyType.value
         var keyVariantVal = keyTypeVal << 4
-        keyVariantVal |= BigUInt(Config.KeyPart.publicKey) // first bit
-        keyVariantVal |= (BigUInt(network.addressValue) << 1) // second bit indicates net
-        let keyVariantData = VarInt.encode(value: keyVariantVal)
+        keyVariantVal |= Config.KeyPart.publicKey // first bit
+        keyVariantVal |= (network.addressValue << 1) // second bit indicates net
+        let keyVariantData = Data.varintFrom(keyVariantVal)
         
         let checksumData = keyVariantData.concating(data: pubKey).sha3(.sha256).slice(start: 0, end: Config.checksumLength)
         
@@ -46,19 +45,22 @@ public struct Address {
         
         self.string = address
         
-        let keyVariant = VarInt.decode(data: addressData)
-        let keyVariantBuffer = [UInt8](keyVariant.serialize())
+        let (_keyVariant, _keyVariantLength) = addressData.toVarint64WithLength()
+        guard let keyVariant = _keyVariant,
+            let keyVariantLength = _keyVariantLength else {
+            throw(BMError("Address error: this is not an address"))
+        }
         
         // check for whether this is an address
-        let keyPartVal = BigUInt(Config.KeyPart.publicKey)
-        if (keyVariant & BigUInt(1)) !=  keyPartVal {
+        let keyPartVal = Config.KeyPart.publicKey
+        if (keyVariant & 1) !=  keyPartVal {
             throw(BMError("Address error: this is not an address"))
         }
         
         // detect network
-        let networkVal = (keyVariant >> 1) & BigUInt(0x01)
+        let networkVal = (keyVariant >> 1) & 0x01
         
-        if networkVal == BigUInt(Config.liveNet.addressValue) {
+        if networkVal == UInt64(Config.liveNet.addressValue) {
             self.network = Config.liveNet
         }
         else {
@@ -66,23 +68,23 @@ public struct Address {
         }
         
         // key type
-        let keyTypeVal = (keyVariant >> 4) & BigUInt(0x07)
+        let keyTypeVal = (keyVariant >> 4) & 0x07
         
         guard let keyType = Common.getKey(byValue: keyTypeVal) else {
             throw(BMError("Address error: unknow key type"))
         }
         
-        let addressLength = keyVariantBuffer.count + keyType.publicLength + Config.checksumLength
+        let addressLength = keyVariantLength + keyType.publicLength + Config.checksumLength
         
         if addressLength != addressBuffer.count{
             throw(BMError("Address error: key type " + keyType.name + " must be " +  String(addressLength) + " bytes"))
         }
         
         // public key
-        self.pubKey = addressData.slice(start: keyVariantBuffer.count, end: (addressLength - Config.checksumLength))
+        self.pubKey = addressData.slice(start: keyVariantLength, end: (addressLength - Config.checksumLength))
         
         // check checksum
-        let checksumData = addressData.slice(start: 0, end: keyVariantBuffer.count + keyType.publicLength)
+        let checksumData = addressData.slice(start: 0, end: keyVariantLength + keyType.publicLength)
         let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
         let checksumFromAddress = addressData.slice(start: addressLength - Config.checksumLength, end: addressLength)
         
@@ -90,7 +92,7 @@ public struct Address {
             throw(BMError("Address error: checksum mismatchs"))
         }
         
-        self.prefix = keyVariant.serialize()
+        self.prefix = Data.varintFrom(keyVariant)
         self.keyType = keyType
     }
     

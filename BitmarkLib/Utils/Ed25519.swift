@@ -13,12 +13,12 @@ class Ed25519 {
     
     static func generateKeyPair() throws -> (publicKey: Data, privateKey: Data) {
         let keyPair = try NaclSign.KeyPair.keyPair()
-        return (keyPair.publicKey as Data, keyPair.secretKey as Data)
+        return (keyPair.publicKey, keyPair.secretKey)
     }
     
     static func generateKeyPair(fromSeed seed: Data) throws -> (publicKey: Data, privateKey: Data) {
-        let keyPair = try NaclSign.KeyPair.keyPair(fromSeed: seed.nsdata)
-        return (keyPair.publicKey as Data, keyPair.secretKey as Data)
+        let keyPair = try NaclSign.KeyPair.keyPair(fromSeed: seed)
+        return (keyPair.publicKey, keyPair.secretKey)
     }
     
     static func getSeed(fromPrivateKey privateKey: Data) throws -> Data {
@@ -26,12 +26,12 @@ class Ed25519 {
     }
     
     static func generateKeyPair(fromPrivateKey privateKey: Data) throws -> (publicKey: Data, privateKey: Data) {
-        let keyPair = try NaclSign.KeyPair.keyPair(fromSecretKey: privateKey.nsdata)
-        return (keyPair.publicKey as Data, keyPair.secretKey as Data)
+        let keyPair = try NaclSign.KeyPair.keyPair(fromSecretKey: privateKey)
+        return (keyPair.publicKey, keyPair.secretKey)
     }
     
     static func getSignature(message: Data, privateKey: Data) throws -> Data {
-        let signature = try NaclSign.signDetached(message: message.nsdata, secretKey: privateKey.nsdata)
-        return signature as Data
+        let signature = try NaclSign.signDetached(message: message, secretKey: privateKey)
+        return signature
     }
 }

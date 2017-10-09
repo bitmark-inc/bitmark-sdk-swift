@@ -74,13 +74,12 @@ public class Base58 {
         var answer = [UInt8]()//(count: byteSlice.count*136/100, repeatedValue: 0)
         
         while bytesAsIntBig > bigZero {
-            
-            let (quotient, modulus) = bytesAsIntBig.divided(by: bigRadix)
+            let (quotient, modulus) = bytesAsIntBig.quotientAndRemainder(dividingBy: bigRadix)
             
             bytesAsIntBig = quotient
             
             // Make the String into an array of characters.
-            let intModulus = Int(truncatingBitPattern: modulus.toIntMax())
+            let intModulus = Int(modulus)
             answer.insert(byteAlphabet[intModulus], at: 0)
         }
         

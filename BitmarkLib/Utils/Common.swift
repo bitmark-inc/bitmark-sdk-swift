@@ -7,13 +7,12 @@
 //
 
 import Foundation
-import BigInt
 
 public class Common {
-    static func getKey(byValue value: BigUInt) -> KeyType? {
+    static func getKey(byValue value: UInt64) -> KeyType? {
         
         for keyType in Config.keyTypes {
-            if BigUInt(keyType.value) == value {
+            if keyType.value == value {
                 return keyType
             }
         }
@@ -21,113 +20,15 @@ public class Common {
         return nil
     }
     
-    static func getNetwork(byAddressValue value: BigUInt) -> Network? {
+    static func getNetwork(byAddressValue value: UInt64) -> Network? {
         
         for network in Config.networks {
-            if BigUInt(network.addressValue) == value {
+            if network.addressValue == value {
                 return network
             }
         }
         
         return nil
-    }
-    
-    static func getMostAppearedValue(nodeResults: [NodeResult], keys: [String]? = nil) -> NodeResult {
-        
-        let error = nodeResults.map { (nodeResult) -> String? in    // Get error field only
-                return nodeResult.error
-        }
-        .map { (error) -> String in                                 // Convert nil to "nil" for easily hashing
-            if error == nil {
-                return "nil"
-            }
-            else {
-                return error!
-            }
-        }
-        .mode                                                       // Get most appreared error
-        
-        if let errorMode = error {
-            if errorMode == "nil" {
-                // No error, continue with results
-                // Filter nil
-                let results = nodeResults.filter({ (nodeResult) -> Bool in
-                    return nodeResult.result != nil
-                })
-                    .map { (nodeResult) -> [String: Any] in
-                    return nodeResult.result!
-                }
-                
-                // O(n*n)
-                var result = [String: Any]()
-                if let keys = keys {
-                    for key in keys {
-                        let data = getMostAppearedValue(dataSet: results, key: key)
-                        result[key] = data
-                    }
-                }
-                else {
-                    result = getMostAppearedValue(dataSet: results)
-                }
-                
-                return NodeResult(result: result, error: nil)
-                
-            }
-            else {
-                // If there is error, return error without result
-                return NodeResult(result: nil, error: errorMode)
-            }
-        }
-        
-        // There are many difference errors returned, something to be wrong ...
-        return NodeResult(result: nil, error: nil)
-    }
-    
-    static func getMostAppearedValue(dataSet: [[String: Any]], key: String) -> Any {
-        var valueCount = [String: Int]()
-        var finalValueString: String? = nil
-        var resultValue: Any? = nil
-        
-        for item in dataSet {
-            let value = item[key]
-            let valueString = value.debugDescription
-            valueCount[valueString] = (valueCount[valueString] ?? 0) + 1
-            
-            if let finalValueStringUnwrap = finalValueString,
-                (valueCount[valueString] ?? 0) > (valueCount[finalValueStringUnwrap] ?? 0) {
-                finalValueString = valueString
-                resultValue = value
-            }
-            else {
-                finalValueString = valueString
-                resultValue = value
-            }
-        }
-        
-        return resultValue!                 // Always not nil because we have two above case assigning value to resultValue
-    }
-    
-    static func getMostAppearedValue(dataSet: [[String: Any]]) -> [String: Any] {
-        var valueCount = [String: Int]()
-        var finalValueString: String? = nil
-        var resultValue: [String: Any]? = nil
-        
-        for item in dataSet {
-            let valueString = item.debugDescription
-            valueCount[valueString] = (valueCount[valueString] ?? 0) + 1
-            
-            if let finalValueStringUnwrap = finalValueString,
-                (valueCount[valueString] ?? 0) > (valueCount[finalValueStringUnwrap] ?? 0) {
-                finalValueString = valueString
-                resultValue = item
-            }
-            else {
-                finalValueString = valueString
-                resultValue = item
-            }
-        }
-        
-        return resultValue!                 // Always not nil because we have two above case assigning value to resultValue
     }
     
     static func increaseOne(baseLength: Int, data: Data) -> Data {
@@ -154,8 +55,8 @@ public class Common {
     }
     
     public static func findNonce(base: Data, difficulty: Data) -> Data {
-        let nonce = BigUInt("8000000000000000", radix: 16)!
-        var combine = base + nonce.serialize()
+        let nonce = UInt64("8000000000000000", radix: 16)!
+        var combine = base + Data(bytes: nonce.toUInt8s)
         let baseLength = base.count
         
         var notFoundYet = true
@@ -164,8 +65,8 @@ public class Common {
         while notFoundYet {
             combine = increaseOne(baseLength: baseLength, data: combine)
             let hash = combine.sha3(.sha256)
-            let hashBN = BigUInt(hash)
-            let difficultyBN = BigUInt(difficulty)
+            let hashBN = hash.toUInt64
+            let difficultyBN = difficulty.toUInt64
             
             if hashBN < difficultyBN {
                 notFoundYet = false

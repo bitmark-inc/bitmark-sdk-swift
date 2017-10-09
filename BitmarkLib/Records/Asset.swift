@@ -70,7 +70,7 @@ public struct Asset {
     
     internal func packRecord() -> Data {
         var txData: Data
-        txData = VarInt.encode(value: Config.AssetConfig.value)
+        txData = Data.varintFrom(Config.AssetConfig.value)
         txData = BinaryPacking.append(toData: txData, withString: self.name)
         txData = BinaryPacking.append(toData: txData, withString: self.fingerprint)
         txData = BinaryPacking.append(toData: txData, withString: self.metadata)

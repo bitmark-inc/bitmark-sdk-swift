@@ -7,7 +7,6 @@
 //
 
 import XCTest
-import BigInt
 @testable import BitmarkLib
 
 class Transfer_Tests: XCTestCase {
@@ -15,7 +14,7 @@ class Transfer_Tests: XCTestCase {
     let assetPk = try! PrivateKey(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
     var asset = Asset()
     
-    let issueNonce = BigUInt(1475482198529)
+    let issueNonce = UInt64(1475482198529)
     let issuePk = try! PrivateKey.init(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
     var issue = Issue()
     
@@ -30,7 +29,7 @@ class Transfer_Tests: XCTestCase {
         try! asset.sign(withPrivateKey: assetPk)
         
         issue.set(asset: asset)
-        issue.set(nonce: BigUInt(1475482198529))
+        issue.set(nonce: 1475482198529)
         try! issue.sign(privateKey: issuePk)
     }
     

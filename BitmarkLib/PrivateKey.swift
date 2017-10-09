@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import BigInt
 import CryptoSwift
 import TweetNaclSwift
 
@@ -25,37 +24,40 @@ public struct PrivateKey {
         }
         self.kif = kifString
         
-        let keyVariant = VarInt.decode(data: kifBuffer)
-        let keyVariantBufferLength = keyVariant.buffer.count
+        let (_keyVariant, _keyVariantBufferLength) = kifBuffer.toVarint64WithLength()
+        guard let keyVariant = _keyVariant,
+            let keyVariantLength = _keyVariantBufferLength else {
+                throw(BMError("Private key error: can not parse the kif string"))
+        }
         
         // check for whether this is a kif
-        let keyPartVal = BigUInt(Config.KeyPart.privateKey)
-        if keyVariant & BigUInt(1) != keyPartVal {
+        let keyPartVal = Config.KeyPart.privateKey
+        if keyVariant & 1 != keyPartVal {
             throw(BMError("Private key error: can not parse the kif string"))
         }
         
         // detect network
-        let networkVal = (keyVariant >> 1) & BigUInt(0x01)
+        let networkVal = (keyVariant >> 1) & 0x01
         guard let network = Common.getNetwork(byAddressValue: networkVal) else {
             throw(BMError("Unknow network"))
         }
         self.network = network
         
         // key type
-        let keyTypeVal = (keyVariant >> 4) & BigUInt(0x07)
+        let keyTypeVal = (keyVariant >> 4) & 0x07
         guard let keyType = Common.getKey(byValue: keyTypeVal) else {
             throw(BMError("Unknow key type"))
         }
         self.type = keyType
         
         // check the length of kif
-        let kifLength = keyVariantBufferLength + keyType.seedLength + Config.checksumLength
+        let kifLength = keyVariantLength + keyType.seedLength + Config.checksumLength
         if kifLength != kifBuffer.count {
             throw(BMError("Private key error: KIF for"  + keyType.name + " must be " + String(kifLength) + " bytes"))
         }
         
         // get private key
-        let seed = kifBuffer.slice(start: keyVariantBufferLength, end: kifLength - Config.checksumLength)
+        let seed = kifBuffer.slice(start: keyVariantLength, end: kifLength - Config.checksumLength)
         
         // check checksum
         let checksumData = kifBuffer.slice(start: 0, end: kifLength - Config.checksumLength)
@@ -93,13 +95,13 @@ public struct PrivateKey {
             throw(BMError("Unknown cases"))
         }
         
-        let keyPartVal = BigUInt(Config.KeyPart.privateKey)
-        let networkVal = BigUInt(network.kifValue)
-        let keyTypeVal = BigUInt(type.value)
+        let keyPartVal = UInt8(Config.KeyPart.privateKey)
+        let networkVal = UInt8(network.kifValue)
+        let keyTypeVal = UInt8(type.value)
         
         var keyVariantVal = (keyTypeVal << 3) | networkVal
         keyVariantVal = keyVariantVal << 1 | keyPartVal
-        let keyVariantData = keyVariantVal.serialize()
+        let keyVariantData = Data(bytes: [keyVariantVal])
         
         var checksum = keyVariantData.concating(data: seed).sha3(.sha256)
         checksum = checksum.slice(start: 0, end: Config.checksumLength)

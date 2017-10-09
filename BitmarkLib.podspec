@@ -18,8 +18,7 @@ Pod::Spec.new do |spec|
 
   spec.preserve_paths = 'BitmarkLib/DNSServiceDiscovery/iphoneos/module.map', 'BitmarkLib/DNSServiceDiscovery/iphonesimulator/module.map', 'BitmarkLib/DNSServiceDiscovery/macosx/module.map'
 
-  spec.dependency "BigInt", "~> 2.1"
+  spec.dependency "BigInt"
   spec.dependency "CryptoSwift"
-  spec.dependency "CocoaAsyncSocket"
   spec.dependency "TweetNaclSwift"
 end

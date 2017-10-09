@@ -5,38 +5,12 @@
       location = "group:BitmarkLib.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Cartfile">
-   </FileRef>
-   <FileRef
       location = "group:BitmarkLib.podspec">
    </FileRef>
    <FileRef
       location = "group:BitmarkLib.playground">
    </FileRef>
-   <Group
-      location = "container:"
-      name = "ExternalLib">
-      <FileRef
-         location = "group:Carthage/Checkouts/CocoaAsyncSocket/CocoaAsyncSocket.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Carthage/Checkouts/tweetnacl-swiftwrap/TweetnaclSwift.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Carthage/Checkouts/SipHash/SipHash.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Carthage/Checkouts/CryptoSwift/CryptoSwift.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:Carthage/Checkouts/BigInt/BigInt.xcodeproj">
-      </FileRef>
-   </Group>
-   <Group
-      location = "container:"
-      name = "Example">
-      <FileRef
-         location = "group:Example/BitmarkLibExample.xcodeproj">
-      </FileRef>
-   </Group>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
 </Workspace>

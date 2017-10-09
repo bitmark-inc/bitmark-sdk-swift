@@ -7,12 +7,11 @@
 //
 
 import CryptoSwift
-import BigInt
 
 public struct Issue {
     
     private(set) var asset: Asset?
-    private(set) var nonce: BigUInt?
+    private(set) var nonce: UInt64?
     private(set) var signature: Data?
     private(set) var isSigned = false
     private(set) var txId: String?
@@ -27,12 +26,13 @@ public struct Issue {
     
     internal func packRecord() -> Data {
         var txData: Data
-        txData = VarInt.encode(value: Config.IssueConfig.value)
+        txData = Data.varintFrom(Config.IssueConfig.value)
         txData = BinaryPacking.append(toData: txData, withData: self.asset?.id?.hexDecodedData)
         txData = BinaryPacking.append(toData: txData, withData: self.owner?.pack())
         
         if let nonce = self.nonce {
-            return txData + VarInt.encode(value: nonce)
+            
+            return txData + Data.varintFrom(nonce)
         }
         else {
             return txData
@@ -49,11 +49,11 @@ public struct Issue {
     }
     
     public mutating func set(nonce: Data) {
-        self.nonce = VarInt.decode(data: nonce)
+        self.nonce = nonce.toVarint64()
         resetSignState()
     }
     
-    public mutating func set(nonce: BigUInt) {
+    public mutating func set(nonce: UInt64) {
         self.nonce = nonce
         resetSignState()
     }
@@ -91,6 +91,6 @@ extension Issue: RPCTransformable {
         return ["owner": self.owner!.string,
                 "signature": self.signature!.toHexString(),
                 "asset": self.asset!.id!,
-                "nonce": self.nonce!.toIntMax()]
+                "nonce": self.nonce!]
     }
 }

@@ -7,14 +7,13 @@
 //
 
 import XCTest
-import BigInt
 @testable import BitmarkLib
 
 class Issue_Tests: XCTestCase {
     
     let assetPk = try! PrivateKey(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
     var asset = Asset()
-    let issueNonce = BigUInt(1475482198529)
+    let issueNonce = UInt64(1475482198529)
     let issuePk = try! PrivateKey.init(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
     let issueSignature = "ea32dbdd484159d5dffb37a7d62282e85f83e478594acbdbf2254a81c4efae9f9c869fee52c652d40700b57da09f5a677058a441937976cd0f65b2e32f61cb0a"
     

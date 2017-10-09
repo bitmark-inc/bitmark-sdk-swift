@@ -7,7 +7,6 @@
 //
 
 import CryptoSwift
-import BigInt
 
 public struct Transfer {
     
@@ -28,14 +27,14 @@ public struct Transfer {
     
     internal func packRecord() -> Data {
         var txData: Data
-        txData = VarInt.encode(value: Config.TransferConfig.value)
+        txData = Data.varintFrom(Config.TransferConfig.value)
         txData = BinaryPacking.append(toData: txData, withData: self.preTxId?.hexDecodedData)
         
         if let payment = self.payment {
             txData += Data(bytes: [0x01])
-            txData += VarInt.encode(value: payment.currencyCode)
+            txData += Data.varintFrom(payment.currencyCode)
             txData = BinaryPacking.append(toData: txData, withString: payment.address)
-            txData += VarInt.encode(value: payment.amount)
+            txData += Data.varintFrom(payment.amount)
         }
         else {
             txData += Data(bytes: [0x00])

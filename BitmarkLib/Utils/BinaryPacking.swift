@@ -17,7 +17,7 @@ class BinaryPacking {
     
     static func append(toData data: Data, withData dataAppend: Data?) -> Data {
         if let dataAppend = dataAppend {
-            let lengthBuffer = VarInt.encode(value: dataAppend.count)
+            let lengthBuffer = Data.varintFrom(dataAppend.count)
             
             return data + lengthBuffer + dataAppend
         }
