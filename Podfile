@@ -7,7 +7,7 @@ target 'BitmarkLib' do
 
   # Pods for BitmarkLib
   
-  pod 'BigInt', '~> 3.0'
+  pod 'BigInt'
   pod 'CryptoSwift'
   pod 'TweetNaclSwift' , :git => 'https://github.com/bitmark-inc/tweetnacl-swiftwrap.git'
 
