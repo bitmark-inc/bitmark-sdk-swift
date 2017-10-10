@@ -7,11 +7,6 @@ before_install:
   - gem install xcpretty
   - travis_wait pod repo update --silent
 
-install:
-  - gem install bundler
-  - bundle install --jobs=3 --retry=3 --deployment --without distribution
-  - bundle exec pod repo update
-
 script:
   - xcodebuild -scheme BitmarkLib -workspace BitmarkLib.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6S,OS=10.3' build test | xcpretty
 
