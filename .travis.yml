@@ -6,7 +6,9 @@ branches:
 
 before_install:
   - gem install xcpretty
-  - travis_wait pod repo update --silent
+
+install:
+  - travis_wait pod install --repo-update
 
 script:
   - xcodebuild -scheme BitmarkLib -workspace BitmarkLib.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6s,OS=10.3.1' -enableCodeCoverage YES ENABLE_TESTABILITY=YES build test | xcpretty
