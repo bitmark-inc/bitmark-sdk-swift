@@ -70,9 +70,6 @@
 		5865BD3D1E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5865BD421E0250C200B25AB3 /* BitmarkSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BitmarkSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5865BD491E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		589E6ED41E2FFE1D006F7A06 /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
-		589E6ED61E2FFE1D006F7A06 /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
-		589E6ED81E2FFE1D006F7A06 /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 		58E1631D1E0CB93400DEED99 /* Issue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
 		58E1631F1E0CC66000DEED99 /* Transfer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transfer.swift; sourceTree = "<group>"; };
 		58E163211E0CDD9A00DEED99 /* Issue_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Issue_Tests.swift; sourceTree = "<group>"; };
@@ -173,7 +170,6 @@
 		5865BD3B1E0250C200B25AB3 /* BitmarkSDK */ = {
 			isa = PBXGroup;
 			children = (
-				589E6ED21E2FFE1D006F7A06 /* DNSServiceDiscovery */,
 				5865BD3C1E0250C200B25AB3 /* BitmarkSDK.h */,
 				580B618F1E077DB4008BEBFF /* Extensions */,
 				5818FE291E0391C0007F082D /* Utils */,
@@ -211,40 +207,6 @@
 				DDD071B293BF49D93C06B860 /* Pods_BitmarkSDKTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		589E6ED21E2FFE1D006F7A06 /* DNSServiceDiscovery */ = {
-			isa = PBXGroup;
-			children = (
-				589E6ED31E2FFE1D006F7A06 /* iphoneos */,
-				589E6ED51E2FFE1D006F7A06 /* iphonesimulator */,
-				589E6ED71E2FFE1D006F7A06 /* macosx */,
-			);
-			path = DNSServiceDiscovery;
-			sourceTree = "<group>";
-		};
-		589E6ED31E2FFE1D006F7A06 /* iphoneos */ = {
-			isa = PBXGroup;
-			children = (
-				589E6ED41E2FFE1D006F7A06 /* module.map */,
-			);
-			path = iphoneos;
-			sourceTree = "<group>";
-		};
-		589E6ED51E2FFE1D006F7A06 /* iphonesimulator */ = {
-			isa = PBXGroup;
-			children = (
-				589E6ED61E2FFE1D006F7A06 /* module.map */,
-			);
-			path = iphonesimulator;
-			sourceTree = "<group>";
-		};
-		589E6ED71E2FFE1D006F7A06 /* macosx */ = {
-			isa = PBXGroup;
-			children = (
-				589E6ED81E2FFE1D006F7A06 /* module.map */,
-			);
-			path = macosx;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -606,28 +568,13 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftBase58/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftGMP/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Checkouts/CryptoSwift/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug-iphoneos",
-					"$(PROJECT_DIR)/Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Checkouts/Starscream/build/Debug-iphoneos",
-					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftWebSocket/build/Debug-iphoneos",
-					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftSocket/build/Debug-iphoneos",
-					"$(PROJECT_DIR)/Carthage/Checkouts/CocoaAsyncSocket/build/Debug-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = BitmarkSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitmark.BitmarkSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "";
-				"SWIFT_INCLUDE_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/BItmarkLib/DNSServiceDiscovery/iphoneos";
-				"SWIFT_INCLUDE_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/BItmarkLib/DNSServiceDiscovery/iphonesimulator";
-				"SWIFT_INCLUDE_PATHS[sdk=macosx*]" = "$(SRCROOT)/BItmarkLib/DNSServiceDiscovery/macosx";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
@@ -643,28 +590,13 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftBase58/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftGMP/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Checkouts/CryptoSwift/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug-iphoneos",
-					"$(PROJECT_DIR)/Carthage/Checkouts/tweetnacl-swiftwrap/build/Debug",
-					"$(PROJECT_DIR)/Carthage/Checkouts/Starscream/build/Debug-iphoneos",
-					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftWebSocket/build/Debug-iphoneos",
-					"$(PROJECT_DIR)/Carthage/Checkouts/SwiftSocket/build/Debug-iphoneos",
-					"$(PROJECT_DIR)/Carthage/Checkouts/CocoaAsyncSocket/build/Debug-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = BitmarkSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitmark.BitmarkSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "";
-				"SWIFT_INCLUDE_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/BItmarkLib/DNSServiceDiscovery/iphoneos";
-				"SWIFT_INCLUDE_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/BItmarkLib/DNSServiceDiscovery/iphonesimulator";
-				"SWIFT_INCLUDE_PATHS[sdk=macosx*]" = "$(SRCROOT)/BItmarkLib/DNSServiceDiscovery/macosx";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
