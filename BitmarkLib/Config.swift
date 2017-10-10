@@ -20,8 +20,6 @@ public struct Network {
     public let name: String
     public let addressValue: Int
     public let kifValue: Int
-    public let staticHostName: String
-    public let staticNodes: [String]
 }
 
 public class Config {
@@ -45,21 +43,15 @@ public class Config {
     // MARK:- Networks
     public static let liveNet = Network(name: "livenet",
                           addressValue: 0x00,
-                          kifValue: 0x00,
-                          staticHostName: "nodes.live.bitmark.com",
-                          staticNodes: ["118.163.122.206:3130", "118.163.122.207:3130"])
+                          kifValue: 0x00)
     
     public static let testNet = Network(name: "testnet",
                           addressValue: 0x01,
-                          kifValue: 0x01,
-                          staticHostName: "nodes.test.bitmark.com",
-                          staticNodes: ["118.163.120.178:3566", "118.163.120.176:3130"])
+                          kifValue: 0x01)
     
     public static let devNet = Network(name: "devnet",
                                        addressValue: 0x01,
-                                       kifValue: 0x01,
-                                       staticHostName: "nodes.devel.bitmark.com",
-                                       staticNodes: ["128.199.196.67:2136", "139.59.229.5:2136"])
+                                       kifValue: 0x01)
     
     static let networks = [liveNet, testNet]
     
@@ -82,28 +74,5 @@ public class Config {
     // MARK:- Currency
     struct CurrencyConfig {
         static let bitcoin = 0x01
-    }
-    
-    // RPC
-    struct RPCConfig {
-        static let timeout = 10
-        static let minimumRequiredNode = 1
-        static let enoughRequiredNode = 5
-        
-        struct Broadcast {
-            static let minimum = 1
-            static let enough = 3
-        }
-        
-        struct Discover {
-            static let enoughAliveNode = 3
-            static let enoughNodeRecord = 5
-        }
-        
-        static let renewalTooFew = 5 // interval for checking the database when the number of nodes is less than minimum
-        static let renewalFew = 60 // interval for checking the database when the number of nodes is higher than minimum but less than enough
-        
-        static let aliveNodeExpiry = 24 * 60 * 60 // time an alive node will need to be rechecked
-        static let deadNodeKeeping = 7 * 24 * 60 * 60 // if the client can't connect to the node for an amount of time, the node will be removed from the database
     }
 }
