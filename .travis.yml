@@ -1,14 +1,15 @@
-language: swift
-xcode_workspace: BitmarkLib.xcworkspace # path to your xcodeproj folder
-xcode_scheme: BitmarkLib
-osx_image: xcode9.0
+language: objective-c
+osx_image: xcode9
+branches:
+  only:
+    - master
 
 before_install:
   - gem install xcpretty
   - travis_wait pod repo update --silent
 
 script:
-  - xcodebuild -scheme BitmarkLib -workspace BitmarkLib.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6S,OS=10.3' build test | xcpretty
+  - xcodebuild -scheme BitmarkLib -workspace BitmarkLib.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6S,OS=10.3' -enableCodeCoverage YES ENABLE_TESTABILITY=YES build test | xcpretty
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
