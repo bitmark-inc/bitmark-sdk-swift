@@ -20,8 +20,8 @@ extension Network: Equatable {
     }
 }
 
-extension Address: Equatable {
-    public static func ==(lhs: Address, rhs: Address) -> Bool {
+extension AccountNumber: Equatable {
+    public static func ==(lhs: AccountNumber, rhs: AccountNumber) -> Bool {
         return lhs.pubKey == rhs.pubKey && lhs.network == rhs.network && lhs.string == rhs.string
     }
 }

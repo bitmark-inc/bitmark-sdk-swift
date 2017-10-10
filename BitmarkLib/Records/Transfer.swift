@@ -12,8 +12,8 @@ public struct Transfer {
     
     private(set) var txId: String?          // sha3_256 of the packed record
     private(set) var preTxId: String?
-    private(set) var owner: Address?        // address without checksum
-    private(set) var preOwner: Address?
+    private(set) var owner: AccountNumber?        // address without checksum
+    private(set) var preOwner: AccountNumber?
     private(set) var payment: Payment?
     private(set) var signature: Data?
     private(set) var isSigned = false
@@ -66,7 +66,7 @@ public struct Transfer {
         resetSignState()
     }
     
-    public mutating func set(to address: Address) throws {
+    public mutating func set(to address: AccountNumber) throws {
         if let preOwner = self.preOwner {
             if address.network != preOwner.network {
                 throw(BMError("Transfer error: trying to transfer bitmark to different network"))
@@ -82,7 +82,7 @@ public struct Transfer {
         resetSignState()
     }
     
-    public mutating func sign(privateKey: PrivateKey) throws {
+    public mutating func sign(privateKey: AuthKey) throws {
         if self.preTxId == nil {
             throw(BMError("Transfer error: missing previous transaction"))
         }

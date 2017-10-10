@@ -10,9 +10,9 @@ import Foundation
 import CryptoSwift
 import TweetNaclSwift
 
-public struct PrivateKey {
+public struct AuthKey {
     
-    public let address: Address
+    public let address: AccountNumber
     public let privateKey: Data
     public let type: KeyType
     public let network: Network
@@ -70,7 +70,7 @@ public struct PrivateKey {
         // get address
         let keyPair = try Ed25519.generateKeyPair(fromSeed: seed)
         self.privateKey = keyPair.privateKey
-        self.address = Address(fromPubKey: keyPair.publicKey, network: network, keyType: type)
+        self.address = AccountNumber(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
     public init(fromKeyPair keyPairData: Data, network: Network = Config.liveNet, type: KeyType = Config.ed25519) throws {
@@ -112,7 +112,7 @@ public struct PrivateKey {
         self.network = network
         self.type = type
         self.privateKey = keyPair.privateKey
-        self.address = Address(fromPubKey: keyPair.publicKey, network: network, keyType: type)
+        self.address = AccountNumber(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
     public init(fromKeyPairString keyPairString: String, network: Network = Config.liveNet, type: KeyType = Config.ed25519) throws {

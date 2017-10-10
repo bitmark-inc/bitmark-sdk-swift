@@ -35,34 +35,34 @@ class Address_Tests: XCTestCase {
     // MARK:- Init address tests
     
     func testAbleToCreateAddressLiveNet() {
-        let address = Address(fromPubKey: validData[0].pubKey.hexDecodedData)
+        let address = AccountNumber(fromPubKey: validData[0].pubKey.hexDecodedData)
         XCTAssertEqual(address.string, validData[0].address)
     }
     
     func testAbleToCreateAddressTestNet() {
-        let address = Address(fromPubKey: validData[1].pubKey.hexDecodedData, network: validData[1].network)
+        let address = AccountNumber(fromPubKey: validData[1].pubKey.hexDecodedData, network: validData[1].network)
         XCTAssertEqual(address.string, validData[1].address)
     }
     
     // MARK:- Bad cases tests
     
     func testBadBase58String() {
-        XCTAssertThrowsError(try Address(address: invalidAddress[0]))
+        XCTAssertThrowsError(try AccountNumber(address: invalidAddress[0]))
     }
     
     func testBadPublicKeyString() {
-        XCTAssertThrowsError(try Address(address: invalidAddress[1]))
+        XCTAssertThrowsError(try AccountNumber(address: invalidAddress[1]))
     }
     
     func testBadUnknowKeyType() {
-        XCTAssertThrowsError(try Address(address: invalidAddress[2]))
+        XCTAssertThrowsError(try AccountNumber(address: invalidAddress[2]))
     }
     
     // MARK:- Parse live net correctly tests
     
     func testParseAddressLiveNet() {
         do {
-            let address = try Address(address: validData[0].address)
+            let address = try AccountNumber(address: validData[0].address)
             XCTAssertEqual(address.pubKey.hexEncodedString, validData[0].pubKey)
             XCTAssertEqual(address.network, validData[0].network)
             XCTAssertEqual(address.keyType, validData[0].type)
@@ -74,7 +74,7 @@ class Address_Tests: XCTestCase {
     
     func testParseAddressTestNet() {
         do {
-            let address = try Address(address: validData[1].address)
+            let address = try AccountNumber(address: validData[1].address)
             XCTAssertEqual(address.pubKey.hexEncodedString, validData[1].pubKey)
             XCTAssertEqual(address.network, validData[1].network)
             XCTAssertEqual(address.keyType, validData[1].type)

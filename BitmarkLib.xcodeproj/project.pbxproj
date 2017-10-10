@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		29B4EA9C7A47BEE3DE32AC40 /* Pods_BitmarkLibTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD071B293BF49D93C06B860 /* Pods_BitmarkLibTests.framework */; };
 		580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61901E077DC5008BEBFF /* Data+Extension.swift */; };
-		580B61931E07C917008BEBFF /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61921E07C917008BEBFF /* PrivateKey.swift */; };
+		580B61931E07C917008BEBFF /* AuthKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61921E07C917008BEBFF /* AuthKey.swift */; };
 		580B61951E07CF16008BEBFF /* BigInt+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61941E07CF16008BEBFF /* BigInt+Extension.swift */; };
 		580B88E81E08DFBB0018F6A5 /* Ed25519.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E71E08DFBB0018F6A5 /* Ed25519.swift */; };
 		580B88EA1E090A120018F6A5 /* Address_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E91E090A120018F6A5 /* Address_Tests.swift */; };
@@ -19,7 +19,7 @@
 		5812655E1E0BC1BC00D6DF32 /* Asset_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */; };
 		5818FE2B1E0391CF007F082D /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE2A1E0391CF007F082D /* Base58.swift */; };
 		5818FE341E039820007F082D /* Varint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE331E039820007F082D /* Varint.swift */; };
-		5818FE361E03A64B007F082D /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE351E03A64B007F082D /* Address.swift */; };
+		5818FE361E03A64B007F082D /* AccountNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE351E03A64B007F082D /* AccountNumber.swift */; };
 		5818FE381E03A840007F082D /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE371E03A840007F082D /* Config.swift */; };
 		5818FE3A1E03BDB6007F082D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE391E03BDB6007F082D /* Common.swift */; };
 		5837980D1E15FD4100D136CF /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5837980C1E15FD4100D136CF /* Job.swift */; };
@@ -50,7 +50,7 @@
 		38191FBAB7465CCDA5454E9D /* Pods-BitmarkLibTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BitmarkLibTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BitmarkLibTests/Pods-BitmarkLibTests.debug.xcconfig"; sourceTree = "<group>"; };
 		42C40B73BCF971ED9029EFE6 /* Pods-BitmarkLib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BitmarkLib.release.xcconfig"; path = "Pods/Target Support Files/Pods-BitmarkLib/Pods-BitmarkLib.release.xcconfig"; sourceTree = "<group>"; };
 		580B61901E077DC5008BEBFF /* Data+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
-		580B61921E07C917008BEBFF /* PrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
+		580B61921E07C917008BEBFF /* AuthKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthKey.swift; sourceTree = "<group>"; };
 		580B61941E07CF16008BEBFF /* BigInt+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BigInt+Extension.swift"; sourceTree = "<group>"; };
 		580B88E71E08DFBB0018F6A5 /* Ed25519.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ed25519.swift; sourceTree = "<group>"; };
 		580B88E91E090A120018F6A5 /* Address_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address_Tests.swift; sourceTree = "<group>"; };
@@ -60,7 +60,7 @@
 		5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset_Tests.swift; sourceTree = "<group>"; };
 		5818FE2A1E0391CF007F082D /* Base58.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
 		5818FE331E039820007F082D /* Varint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Varint.swift; sourceTree = "<group>"; };
-		5818FE351E03A64B007F082D /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		5818FE351E03A64B007F082D /* AccountNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountNumber.swift; sourceTree = "<group>"; };
 		5818FE371E03A840007F082D /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		5818FE391E03BDB6007F082D /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		582BECA51E28AC0900BD511E /* TweetNaclSwift_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TweetNaclSwift_iOS.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkLib-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/TweetNaclSwift_iOS.framework"; sourceTree = "<group>"; };
@@ -188,8 +188,8 @@
 				5818FE291E0391C0007F082D /* Utils */,
 				581265581E0B703400D6DF32 /* Records */,
 				5865BD3D1E0250C200B25AB3 /* Info.plist */,
-				5818FE351E03A64B007F082D /* Address.swift */,
-				580B61921E07C917008BEBFF /* PrivateKey.swift */,
+				5818FE351E03A64B007F082D /* AccountNumber.swift */,
+				580B61921E07C917008BEBFF /* AuthKey.swift */,
 				5818FE371E03A840007F082D /* Config.swift */,
 			);
 			path = BitmarkLib;
@@ -465,7 +465,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5818FE361E03A64B007F082D /* Address.swift in Sources */,
+				5818FE361E03A64B007F082D /* AccountNumber.swift in Sources */,
 				58E163201E0CC66000DEED99 /* Transfer.swift in Sources */,
 				58E1631E1E0CB93400DEED99 /* Issue.swift in Sources */,
 				5818FE381E03A840007F082D /* Config.swift in Sources */,
@@ -481,7 +481,7 @@
 				5818FE341E039820007F082D /* Varint.swift in Sources */,
 				580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */,
 				580B61951E07CF16008BEBFF /* BigInt+Extension.swift in Sources */,
-				580B61931E07C917008BEBFF /* PrivateKey.swift in Sources */,
+				580B61931E07C917008BEBFF /* AuthKey.swift in Sources */,
 				580B88EC1E090FA80018F6A5 /* BitmarkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

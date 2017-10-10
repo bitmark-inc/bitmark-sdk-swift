@@ -14,7 +14,7 @@ public struct Asset {
     private(set) var name: String?
     private(set) var fingerprint: String?
     private(set) var metadata: String?
-    private(set) var registrant: Address?
+    private(set) var registrant: AccountNumber?
     private(set) var signature: Data?
     private(set) var isSigned = false
     
@@ -113,7 +113,7 @@ public struct Asset {
         try set(metadata: meta)
     }
     
-    public mutating func sign(withPrivateKey privateKey: PrivateKey) throws {
+    public mutating func sign(withPrivateKey privateKey: AuthKey) throws {
         if self.name == nil {
             throw(BMError("Asset error: missing name"))
         }

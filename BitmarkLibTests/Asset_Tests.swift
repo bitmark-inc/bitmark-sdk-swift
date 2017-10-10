@@ -26,7 +26,7 @@ class Asset_Tests: XCTestCase {
     }
     
     struct TestData {
-        static let privateKey = try! PrivateKey(fromKIF: "Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xr")
+        static let privateKey = try! AuthKey(fromKIF: "Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xr")
         static let name = "this is name"
         static let metadata = "description" + "\u{0000}" + "this is description"
         static let fingerprint = "5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c"

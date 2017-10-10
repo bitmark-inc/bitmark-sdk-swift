@@ -40,7 +40,7 @@ class PrivateKey_Tests: XCTestCase {
     
     func testParseLivenetKIF() {
         do {
-            let privateKey = try PrivateKey(fromKIF: validData[0].kif)
+            let privateKey = try AuthKey(fromKIF: validData[0].kif)
             
             XCTAssertEqual(privateKey.network, validData[0].network)
             XCTAssertEqual(privateKey.type, validData[0].type)
@@ -55,7 +55,7 @@ class PrivateKey_Tests: XCTestCase {
     
     func testParseTestnetKIF() {
         do {
-            let privateKey = try PrivateKey(fromKIF: validData[1].kif)
+            let privateKey = try AuthKey(fromKIF: validData[1].kif)
             
             XCTAssertEqual(privateKey.network, validData[1].network)
             XCTAssertEqual(privateKey.type, validData[1].type)
@@ -71,26 +71,26 @@ class PrivateKey_Tests: XCTestCase {
     // MARK:- Test failed cases
     
     func testWrongKey() {
-        XCTAssertThrowsError(try PrivateKey(fromKIF: invalidKIF[0]))
+        XCTAssertThrowsError(try AuthKey(fromKIF: invalidKIF[0]))
     }
     
     func testUnknowKeyType() {
-        XCTAssertThrowsError(try PrivateKey(fromKIF: invalidKIF[1]))
+        XCTAssertThrowsError(try AuthKey(fromKIF: invalidKIF[1]))
     }
     
     func testWrongChecksum() {
-        XCTAssertThrowsError(try PrivateKey(fromKIF: invalidKIF[2]))
+        XCTAssertThrowsError(try AuthKey(fromKIF: invalidKIF[2]))
     }
     
     func testWrongKeyLength() {
-        XCTAssertThrowsError(try PrivateKey(fromKIF: invalidKIF[3]))
+        XCTAssertThrowsError(try AuthKey(fromKIF: invalidKIF[3]))
     }
     
     // MARK:- Build from key pair
     
     func testAbleCreateFromBuffer() {
         do {
-            _ = try PrivateKey(fromKeyPairString: "cbfa5516b0375ebf5a6c9401fa3933e7a95545193d11acdf161c439b480577b7")
+            _ = try AuthKey(fromKeyPairString: "cbfa5516b0375ebf5a6c9401fa3933e7a95545193d11acdf161c439b480577b7")
         }
         catch {
             XCTFail()
@@ -99,7 +99,7 @@ class PrivateKey_Tests: XCTestCase {
     
     func testCreateLivenetFromBufferFunctional() {
         do {
-            let privateKey = try PrivateKey(fromKeyPairString: validData[0].privateKey,
+            let privateKey = try AuthKey(fromKeyPairString: validData[0].privateKey,
                                             network: validData[0].network,
                                             type: validData[0].type)
             XCTAssertEqual(privateKey.kif, validData[0].kif)
@@ -112,7 +112,7 @@ class PrivateKey_Tests: XCTestCase {
     
     func testCreateTestnetFromBufferFunctional() {
         do {
-            let privateKey = try PrivateKey(fromKeyPairString: validData[1].privateKey,
+            let privateKey = try AuthKey(fromKeyPairString: validData[1].privateKey,
                                             network: validData[1].network,
                                             type: validData[1].type)
             XCTAssertEqual(privateKey.kif, validData[1].kif)

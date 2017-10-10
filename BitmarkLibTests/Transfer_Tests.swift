@@ -11,14 +11,14 @@ import XCTest
 
 class Transfer_Tests: XCTestCase {
     
-    let assetPk = try! PrivateKey(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
+    let assetPk = try! AuthKey(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
     var asset = Asset()
     
     let issueNonce = UInt64(1475482198529)
-    let issuePk = try! PrivateKey.init(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
+    let issuePk = try! AuthKey.init(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
     var issue = Issue()
     
-    let transferPk = try! PrivateKey(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
+    let transferPk = try! AuthKey(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
     
     override func setUp() {
         super.setUp()

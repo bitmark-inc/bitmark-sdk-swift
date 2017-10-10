@@ -15,7 +15,7 @@ public struct Issue {
     private(set) var signature: Data?
     private(set) var isSigned = false
     private(set) var txId: String?
-    private(set) var owner: Address?
+    private(set) var owner: AccountNumber?
     
     // MARK:- Internal methods
     
@@ -58,7 +58,7 @@ public struct Issue {
         resetSignState()
     }
     
-    public mutating func sign(privateKey: PrivateKey) throws {
+    public mutating func sign(privateKey: AuthKey) throws {
         if self.asset == nil {
             throw(BMError("Issue error: missing asset"))
         }

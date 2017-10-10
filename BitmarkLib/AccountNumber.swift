@@ -9,7 +9,7 @@
 import Foundation
 import CryptoSwift
 
-public struct Address {
+public struct AccountNumber {
     
     public let prefix: Data
     public let pubKey: Data
