@@ -23,13 +23,6 @@ public struct BMError: Error {
     }
 }
 
-extension BMError: Equatable {
-    public static func ==(lhs: BMError, rhs: BMError) -> Bool {
-        return lhs.debugDescription == rhs.debugDescription
-            && lhs.type == rhs.type
-    }
-}
-
 extension BMError: CustomStringConvertible {
     public var description: String {
         return debugDescription

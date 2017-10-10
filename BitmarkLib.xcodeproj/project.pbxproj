@@ -10,7 +10,6 @@
 		29B4EA9C7A47BEE3DE32AC40 /* Pods_BitmarkLibTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD071B293BF49D93C06B860 /* Pods_BitmarkLibTests.framework */; };
 		580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61901E077DC5008BEBFF /* Data+Extension.swift */; };
 		580B61931E07C917008BEBFF /* AuthKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61921E07C917008BEBFF /* AuthKey.swift */; };
-		580B61951E07CF16008BEBFF /* BigInt+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61941E07CF16008BEBFF /* BigInt+Extension.swift */; };
 		580B88E81E08DFBB0018F6A5 /* Ed25519.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E71E08DFBB0018F6A5 /* Ed25519.swift */; };
 		580B88EA1E090A120018F6A5 /* Address_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E91E090A120018F6A5 /* Address_Tests.swift */; };
 		580B88EC1E090FA80018F6A5 /* BitmarkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88EB1E090FA80018F6A5 /* BitmarkError.swift */; };
@@ -22,9 +21,7 @@
 		5818FE361E03A64B007F082D /* AccountNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE351E03A64B007F082D /* AccountNumber.swift */; };
 		5818FE381E03A840007F082D /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE371E03A840007F082D /* Config.swift */; };
 		5818FE3A1E03BDB6007F082D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE391E03BDB6007F082D /* Common.swift */; };
-		5837980D1E15FD4100D136CF /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5837980C1E15FD4100D136CF /* Job.swift */; };
 		584C23701E13B46D0047AC97 /* RPCTransformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C236F1E13B46D0047AC97 /* RPCTransformable.swift */; };
-		584C23721E13C4B00047AC97 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584C23711E13C4B00047AC97 /* Array+Extension.swift */; };
 		5865BD431E0250C200B25AB3 /* BitmarkLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD391E0250C200B25AB3 /* BitmarkLib.framework */; };
 		5865BD4A1E0250C200B25AB3 /* BitmarkLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58E1631E1E0CB93400DEED99 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E1631D1E0CB93400DEED99 /* Issue.swift */; };
@@ -51,7 +48,6 @@
 		42C40B73BCF971ED9029EFE6 /* Pods-BitmarkLib.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BitmarkLib.release.xcconfig"; path = "Pods/Target Support Files/Pods-BitmarkLib/Pods-BitmarkLib.release.xcconfig"; sourceTree = "<group>"; };
 		580B61901E077DC5008BEBFF /* Data+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		580B61921E07C917008BEBFF /* AuthKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthKey.swift; sourceTree = "<group>"; };
-		580B61941E07CF16008BEBFF /* BigInt+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BigInt+Extension.swift"; sourceTree = "<group>"; };
 		580B88E71E08DFBB0018F6A5 /* Ed25519.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ed25519.swift; sourceTree = "<group>"; };
 		580B88E91E090A120018F6A5 /* Address_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address_Tests.swift; sourceTree = "<group>"; };
 		580B88EB1E090FA80018F6A5 /* BitmarkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitmarkError.swift; sourceTree = "<group>"; };
@@ -68,9 +64,7 @@
 		582BECA91E28AC1E00BD511E /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkLib-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/BigInt.framework"; sourceTree = "<group>"; };
 		582BECAB1E28AC2600BD511E /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkLib-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/CocoaAsyncSocket.framework"; sourceTree = "<group>"; };
 		582BECAD1E28AC2A00BD511E /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkLib-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/CryptoSwift.framework"; sourceTree = "<group>"; };
-		5837980C1E15FD4100D136CF /* Job.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		584C236F1E13B46D0047AC97 /* RPCTransformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCTransformable.swift; sourceTree = "<group>"; };
-		584C23711E13C4B00047AC97 /* Array+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		5865BD391E0250C200B25AB3 /* BitmarkLib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BitmarkLib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5865BD3C1E0250C200B25AB3 /* BitmarkLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitmarkLib.h; sourceTree = "<group>"; };
 		5865BD3D1E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -127,10 +121,8 @@
 			isa = PBXGroup;
 			children = (
 				580B61901E077DC5008BEBFF /* Data+Extension.swift */,
-				580B61941E07CF16008BEBFF /* BigInt+Extension.swift */,
 				580B88EB1E090FA80018F6A5 /* BitmarkError.swift */,
 				58E2D5B81E0A39AD0014F011 /* ModelEquatable.swift */,
-				584C23711E13C4B00047AC97 /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -154,7 +146,6 @@
 				5818FE391E03BDB6007F082D /* Common.swift */,
 				580B88E71E08DFBB0018F6A5 /* Ed25519.swift */,
 				5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */,
-				5837980C1E15FD4100D136CF /* Job.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -475,12 +466,9 @@
 				5818FE2B1E0391CF007F082D /* Base58.swift in Sources */,
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
 				5812655A1E0B704800D6DF32 /* Asset.swift in Sources */,
-				5837980D1E15FD4100D136CF /* Job.swift in Sources */,
-				584C23721E13C4B00047AC97 /* Array+Extension.swift in Sources */,
 				5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */,
 				5818FE341E039820007F082D /* Varint.swift in Sources */,
 				580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */,
-				580B61951E07CF16008BEBFF /* BigInt+Extension.swift in Sources */,
 				580B61931E07C917008BEBFF /* AuthKey.swift in Sources */,
 				580B88EC1E090FA80018F6A5 /* BitmarkError.swift in Sources */,
 			);
