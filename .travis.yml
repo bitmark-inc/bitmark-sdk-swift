@@ -9,7 +9,7 @@ before_install:
   - travis_wait pod repo update --silent
 
 script:
-  - xcodebuild -scheme BitmarkLib -workspace BitmarkLib.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6S,OS=10.3' -enableCodeCoverage YES ENABLE_TESTABILITY=YES build test | xcpretty
+  - xcodebuild -scheme BitmarkLib -workspace BitmarkLib.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6s,OS=10.3.1' -enableCodeCoverage YES ENABLE_TESTABILITY=YES build test | xcpretty
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
