@@ -38,9 +38,9 @@
     "9BE9D417DFF2C108330E2C3DFD9D454205A39188" : "bitmark-lib-swift\/Carthage\/Checkouts\/SwiftSocket\/",
     "461E38320C4114EC57E2EBF35E0A0006BE429B72" : "bitmark-lib-swift\/Carthage\/Checkouts\/tweetnacl-swiftwrap\/"
   },
-  "DVTSourceControlWorkspaceBlueprintNameKey" : "BitmarkLib",
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "BitmarkSDK",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
-  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BitmarkLib.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BitmarkSDK.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tidwall\/SwiftWebSocket.git",
