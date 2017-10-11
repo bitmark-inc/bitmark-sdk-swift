@@ -22,7 +22,7 @@ public struct Network {
     public let kifValue: Int
 }
 
-public class Config {
+public struct Config {
     
     // MARK:- Key
     public static let ed25519 = KeyType(name: "ed25519",
@@ -74,5 +74,15 @@ public class Config {
     // MARK:- Currency
     struct CurrencyConfig {
         static let bitcoin = 0x01
+    }
+    
+    public struct SeedConfig {
+        public static let magicNumber: [UInt8] = [0x5a, 0xfe]
+        public static let length = 32
+        public static let checksumLength = 4
+        public static let pKeyNonceLength = 24
+        public static let pKeyCounterLength = 16
+        public static let version = 0x01
+        public static let networkLength = 1
     }
 }

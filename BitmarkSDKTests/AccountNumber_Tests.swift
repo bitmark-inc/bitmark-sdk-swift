@@ -1,5 +1,5 @@
 //
-//  Address_Tests.swift
+//  AccountNumber_Tests.swift
 //  BitmarkSDK
 //
 //  Created by Anh Nguyen on 12/20/16.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import BitmarkSDK
 
-class Address_Tests: XCTestCase {
+class AccountNumber_Tests: XCTestCase {
     
     struct TestData {
         let address: String

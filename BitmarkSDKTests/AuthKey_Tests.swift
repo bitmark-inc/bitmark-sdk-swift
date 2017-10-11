@@ -9,7 +9,7 @@
 import XCTest
 @testable import BitmarkSDK
 
-class PrivateKey_Tests: XCTestCase {
+class AuthKey_Tests: XCTestCase {
     
     struct TestData {
         let kif: String
