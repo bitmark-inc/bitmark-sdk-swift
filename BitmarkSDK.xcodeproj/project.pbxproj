@@ -25,6 +25,7 @@
 		5865BD431E0250C200B25AB3 /* BitmarkSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD391E0250C200B25AB3 /* BitmarkSDK.framework */; };
 		5865BD4A1E0250C200B25AB3 /* BitmarkSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5865BD3C1E0250C200B25AB3 /* BitmarkSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58C097091F8DBA3D0001EE55 /* Seed_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */; };
+		58C0970B1F8DF5E80001EE55 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0970A1F8DF5E80001EE55 /* FileUtil.swift */; };
 		58DD772C1F8CC1610024A0F6 /* Gateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD772B1F8CC1610024A0F6 /* Gateway.swift */; };
 		58DD772E1F8CC2190024A0F6 /* Seed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD772D1F8CC2190024A0F6 /* Seed.swift */; };
 		58E1631E1E0CB93400DEED99 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E1631D1E0CB93400DEED99 /* Issue.swift */; };
@@ -74,6 +75,7 @@
 		5865BD421E0250C200B25AB3 /* BitmarkSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BitmarkSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5865BD491E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seed_Tests.swift; sourceTree = "<group>"; };
+		58C0970A1F8DF5E80001EE55 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
 		58DD772B1F8CC1610024A0F6 /* Gateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gateway.swift; sourceTree = "<group>"; };
 		58DD772D1F8CC2190024A0F6 /* Seed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seed.swift; sourceTree = "<group>"; };
 		58E1631D1E0CB93400DEED99 /* Issue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				5818FE391E03BDB6007F082D /* Common.swift */,
 				580B88E71E08DFBB0018F6A5 /* Ed25519.swift */,
 				5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */,
+				58C0970A1F8DF5E80001EE55 /* FileUtil.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
 				5812655A1E0B704800D6DF32 /* Asset.swift in Sources */,
 				58DD772C1F8CC1610024A0F6 /* Gateway.swift in Sources */,
+				58C0970B1F8DF5E80001EE55 /* FileUtil.swift in Sources */,
 				5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */,
 				5818FE341E039820007F082D /* Varint.swift in Sources */,
 				580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */,
