@@ -118,15 +118,15 @@ public struct Transfer {
     }
 }
 
-extension Transfer: RPCTransformable {
+extension Transfer {
     public func getRPCParam() throws -> [String : Any] {
         if !self.isSigned {
             throw(BMError("Transfer error: need to sign the record before getting RPC param"))
         }
         
-        return ["owner": self.owner!.string,
-                "signature": self.signature!.toHexString(),
-                "link": self.preTxId!]
+        return ["transfer": ["owner": self.owner!.string,
+                             "signature": self.signature!.toHexString(),
+                             "link": self.preTxId!]]
     }
 }
 

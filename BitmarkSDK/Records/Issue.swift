@@ -82,15 +82,16 @@ public struct Issue {
     }
 }
 
-extension Issue: RPCTransformable {
+extension Issue {
     public func getRPCParam() throws -> [String : Any] {
         if !self.isSigned {
             throw(BMError("Issue error: need to sign the record before getting RPC param"))
         }
         
-        return ["owner": self.owner!.string,
-                "signature": self.signature!.toHexString(),
-                "asset": self.asset!.id!,
-                "nonce": self.nonce!]
+        return ["issues": [["owner": self.owner!.string,
+                            "signature": self.signature!.toHexString(),
+                            "asset": self.asset!.id!,
+                            "nonce": self.nonce!]],
+                "assets": [try asset!.getRPCParam()]]
     }
 }

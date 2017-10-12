@@ -1,7 +1,10 @@
 //: Playground - noun: a place where people can play
 
+import XCPlayground
 import BitmarkSDK
 import TweetNaclSwift
+
+XCPSetExecutionShouldContinueIndefinitely()
 
 let seed = try Seed(fromBase58: "5XEECsKPsXJEZRQJfeRU75tEk72WMs87jW1x9MhT6jF3UxMVaAZ7TSi")
 let seedCombine = seed.base58String
@@ -21,7 +24,42 @@ do {
     let secretKey = try TweetNaclSwift.NaclSign.KeyPair.keyPair()
     let fingerPrint2 = try FileUtil.Fingerprint.computeFingerprint(fromFile: fileURL)
     let encryption = try FileUtil.Encryption.encryptFile(fromFile: fileURL, sessionKey: sessionKey, secretKey: secretKey.secretKey)
-    print(encryption.hexEncodedString)
+}
+catch let e {
+    print(e)
+}
+
+let issueNonce = UInt64(1475482198529)
+
+do {
+    let seedCore = Common.randomBytes(length: 32)!
+    let authKey = try AuthKey(fromKIF: "dvSQZidUCWm179wQZFPWm1GxpWqmhw6eTov72dQRDEqwoyJhWZ")
+    print(authKey.kif)
+    var asset = Asset()
+    try asset.set(name: "Just want to test it")
+    try asset.set(metadata: ["description": "this is description"])
+    try asset.set(fingerPrint: "w3845723904723094asdasd7238942234")
+    try asset.sign(withPrivateKey: authKey)
+
+    var issue = Issue()
+    issue.set(asset: asset)
+    issue.set(nonce: issueNonce)
+    try issue.sign(privateKey: authKey)
+
+//    try Gateway.doIssue(withData: issue, network: Config.testNet, responseHandler: { (result) in
+//        print(result)
+//    })
+    
+    let transferTo = try AccountNumber(address: "fL3jywNn8T2hJa6EV7Gm1bR7MAQx4rFtMD8RtayYnvturtJvC7")
+    
+    var transfer = Transfer()
+    try transfer.set(from: "c5be32754022c7b4075ec7c8524935a4b6bbdd6e4db451259d1a4dd19a8321a3")
+    try transfer.set(to: transferTo)
+    try transfer.sign(privateKey: authKey)
+    
+    try Gateway.doTransfer(withData: transfer, network: Config.testNet, responseHandler: { (result, error) in
+        print(result)
+    })
 }
 catch let e {
     print(e)
