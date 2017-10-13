@@ -16,22 +16,36 @@ public struct KeyType {
     public let seedLength: Int
 }
 
+public extension KeyType {
+    public static let ed25519 = KeyType(name: "ed25519",
+                                        value: 0x01,
+                                        publicLength: 32,
+                                        privateLength: 64,
+                                        seedLength: 32)
+}
+
 public struct Network {
     public let name: String
     public let addressValue: Int
     public let kifValue: Int
 }
 
+public extension Network {
+    public static let livenet = Network(name: "livenet",
+                                        addressValue: 0x00,
+                                        kifValue: 0x00)
+    
+    public static let testnet = Network(name: "testnet",
+                                        addressValue: 0x01,
+                                        kifValue: 0x01)
+    
+    public static let devnet = Network(name: "devnet",
+                                       addressValue: 0x01,
+                                       kifValue: 0x01)
+}
+
 public struct Config {
-    
-    // MARK:- Key
-    public static let ed25519 = KeyType(name: "ed25519",
-                          value: 0x01,
-                          publicLength: 32,
-                          privateLength: 64,
-                          seedLength: 32)
-    
-    static let keyTypes = [ed25519]
+    static let keyTypes = [KeyType.ed25519]
     
     struct KeyPart {
         static let privateKey = 0x00
@@ -41,19 +55,8 @@ public struct Config {
     static let checksumLength = 4
     
     // MARK:- Networks
-    public static let liveNet = Network(name: "livenet",
-                          addressValue: 0x00,
-                          kifValue: 0x00)
     
-    public static let testNet = Network(name: "testnet",
-                          addressValue: 0x01,
-                          kifValue: 0x01)
-    
-    public static let devNet = Network(name: "devnet",
-                                       addressValue: 0x01,
-                                       kifValue: 0x01)
-    
-    static let networks = [liveNet, testNet]
+    static let networks = [Network.livenet, Network.testnet]
     
     // MARK:- Record
     struct AssetConfig {

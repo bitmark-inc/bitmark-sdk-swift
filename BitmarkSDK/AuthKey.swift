@@ -73,7 +73,7 @@ public struct AuthKey {
         self.address = AccountNumber(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
-    public init(fromKeyPair keyPairData: Data, network: Network = Config.liveNet, type: KeyType = Config.ed25519) throws {
+    public init(fromKeyPair keyPairData: Data, network: Network = Network.livenet, type: KeyType = KeyType.ed25519) throws {
         // Check length to determine the keypair
         
         var keyPair: (publicKey: Data, privateKey: Data)
@@ -115,7 +115,7 @@ public struct AuthKey {
         self.address = AccountNumber(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
-    public init(fromKeyPairString keyPairString: String, network: Network = Config.liveNet, type: KeyType = Config.ed25519) throws {
+    public init(fromKeyPairString keyPairString: String, network: Network = Network.livenet, type: KeyType = KeyType.ed25519) throws {
         let keyPairData = keyPairString.hexDecodedData
         try self.init(fromKeyPair: keyPairData, network: network, type: type)
     }

@@ -17,7 +17,7 @@ public struct AccountNumber {
     public let string: String
     public let keyType: KeyType
     
-    public init(fromPubKey pubKey: Data, network: Network = Config.liveNet, keyType: KeyType = Config.ed25519) {
+    public init(fromPubKey pubKey: Data, network: Network = Network.livenet, keyType: KeyType = KeyType.ed25519) {
         self.pubKey = pubKey
         self.network = network
         
@@ -60,11 +60,11 @@ public struct AccountNumber {
         // detect network
         let networkVal = (keyVariant >> 1) & 0x01
         
-        if networkVal == UInt64(Config.liveNet.addressValue) {
-            self.network = Config.liveNet
+        if networkVal == UInt64(Network.livenet.addressValue) {
+            self.network = Network.livenet
         }
         else {
-            self.network = Config.testNet
+            self.network = Network.testnet
         }
         
         // key type

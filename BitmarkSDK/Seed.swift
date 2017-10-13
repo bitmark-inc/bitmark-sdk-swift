@@ -26,7 +26,7 @@ public struct Seed {
     public let network: Network
     public let version: Int
     
-    public init(version: Int = Config.SeedConfig.version, network: Network = Config.liveNet) throws {
+    public init(version: Int = Config.SeedConfig.version, network: Network = Network.livenet) throws {
         guard let core = Common.randomBytes(length: Config.SeedConfig.length) else {
             throw(SeedError.randomError)
         }

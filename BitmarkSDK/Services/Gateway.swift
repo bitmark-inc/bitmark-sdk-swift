@@ -10,7 +10,7 @@ import Foundation
 
 public struct Gateway {
     
-    public static func doIssue(withData issue: Issue, network: Network = Config.liveNet, responseHandler:((String?, Error?) -> Void)?) throws {
+    public static func doIssue(withData issue: Issue, network: Network = Network.livenet, responseHandler:((String?, Error?) -> Void)?) throws {
         let json = try JSONSerialization.data(withJSONObject: issue.getRPCParam(), options: [])
         
         var endpointURL = URL(string: endPoint(forNetwork: network))!
@@ -26,7 +26,7 @@ public struct Gateway {
         }.resume()
     }
     
-    public static func doTransfer(withData transfer: Transfer, network: Network = Config.liveNet, responseHandler:((String?, Error?) -> Void)?) throws {
+    public static func doTransfer(withData transfer: Transfer, network: Network = Network.livenet, responseHandler:((String?, Error?) -> Void)?) throws {
         let json = try JSONSerialization.data(withJSONObject: transfer.getRPCParam(), options: [])
         print(String(data: json, encoding: .utf8)!)
         var endpointURL = URL(string: endPoint(forNetwork: network))!
