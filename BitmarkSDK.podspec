@@ -14,5 +14,5 @@ Pod::Spec.new do |spec|
 
   spec.dependency "BigInt"
   spec.dependency "CryptoSwift"
-  spec.dependency "TweetNaclSwift"
+  spec.dependency "TweetNacl"
 end

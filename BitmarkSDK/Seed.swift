@@ -8,7 +8,7 @@
 
 import Foundation
 import CryptoSwift
-import TweetNaclSwift
+import TweetNacl
 
 public struct Seed {
     

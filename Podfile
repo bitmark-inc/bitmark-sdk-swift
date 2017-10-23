@@ -9,7 +9,7 @@ target 'BitmarkSDK' do
   
   pod 'BigInt', '~> 3.0'
   pod 'CryptoSwift'
-  pod 'TweetNaclSwift' , :git => 'https://github.com/bitmark-inc/tweetnacl-swiftwrap.git'
+  pod 'TweetNacl'
 
   target 'BitmarkSDKTests' do
     inherit! :search_paths

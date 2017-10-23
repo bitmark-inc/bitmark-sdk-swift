@@ -8,7 +8,7 @@
 
 import Foundation
 import CryptoSwift
-import TweetNaclSwift
+import TweetNacl
 
 public struct FileUtil {
     public enum FileUtilError: Error {
@@ -64,7 +64,7 @@ public struct FileUtil {
             let encryptedBytes = try cipher.encrypt([UInt8](fileContent))
             var encryptedData = Data(bytes: encryptedBytes)
             
-            let signature = try TweetNaclSwift.NaclSign.signDetached(message: fileContent, secretKey: secretKey)
+            let signature = try TweetNacl.NaclSign.signDetached(message: fileContent, secretKey: secretKey)
             encryptedData += signature
             
             return encryptedData

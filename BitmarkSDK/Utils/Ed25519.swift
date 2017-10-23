@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import TweetNaclSwift
+import TweetNacl
 
 class Ed25519 {
     
