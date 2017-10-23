@@ -2,7 +2,7 @@
 
 import XCPlayground
 import BitmarkSDK
-import TweetNaclSwift
+import TweetNacl
 
 XCPSetExecutionShouldContinueIndefinitely()
 
@@ -26,7 +26,7 @@ let fileURL = Bundle.main.url(forResource: "test", withExtension: ".txt")!
 let sessionKey = Common.randomBytes(length: 32)!
 
 do {
-    let secretKey = try TweetNaclSwift.NaclSign.KeyPair.keyPair()
+    let secretKey = try TweetNacl.NaclSign.KeyPair.keyPair()
     let fingerPrint2 = try FileUtil.Fingerprint.computeFingerprint(fromFile: fileURL)
     let encryption = try FileUtil.Encryption.encryptFile(fromFile: fileURL, sessionKey: sessionKey, secretKey: secretKey.secretKey)
 }
@@ -70,4 +70,14 @@ do {
 }
 catch let e {
     print(e)
+}
+
+do {
+//    for i in 0..<999 {
+        var randomByte = Common.randomBytes(length: 32)!
+        randomByte.append(contentsOf: [0x01])
+        let phrases = try RecoverPhrase.createPhrase(fromData: randomByte)
+        print(<#T##items: Any...##Any#>)
+//    }
+
 }

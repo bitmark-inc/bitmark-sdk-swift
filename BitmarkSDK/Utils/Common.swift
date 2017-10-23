@@ -31,14 +31,10 @@ public class Common {
         return nil
     }
     
-    public static func randomBytes(length: Int) -> Data? {
+    public static func randomBytes(length: Int) -> Data {
         var data = Data(count: length)
         let result = data.withUnsafeMutableBytes {
             return SecRandomCopyBytes(kSecRandomDefault, length, $0)
-        }
-        
-        guard result == errSecSuccess else {
-            return nil
         }
         
         return data

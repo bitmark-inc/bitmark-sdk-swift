@@ -27,10 +27,12 @@ public struct Seed {
     public let version: Int
     
     public init(version: Int = Config.SeedConfig.version, network: Network = Network.livenet) throws {
-        guard let core = Common.randomBytes(length: Config.SeedConfig.length) else {
-            throw(SeedError.randomError)
-        }
+        let core = Common.randomBytes(length: Config.SeedConfig.length)
         
+        try self.init(core: core, version: version, network: network)
+    }
+    
+    public init(core: Data, version: Int = Config.SeedConfig.version, network: Network = Network.livenet) throws {
         if version != Config.SeedConfig.version {
             throw(SeedError.wrongVersion)
         }

@@ -55,9 +55,7 @@ public struct FileUtil {
         public static func encryptFile(fromFile url: URL, sessionKey: Data, secretKey: Data) throws -> Data {
             let fileContent = try Data(contentsOf: url)
             
-            guard let nonce = Common.randomBytes(length: 12) else {
-                throw(FileUtilError.randomFailed)
-            }
+            let nonce = Common.randomBytes(length: 12)
             
             let cipher = try ChaCha20(key: [UInt8](sessionKey), iv: [UInt8](nonce))
             
