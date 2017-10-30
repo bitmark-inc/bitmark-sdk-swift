@@ -39,4 +39,8 @@ public class Common {
         
         return data
     }
+    
+    public static func timeStamp() -> String {
+        return String(Int(Date().timeIntervalSince1970 * 1000))
+    }
 }

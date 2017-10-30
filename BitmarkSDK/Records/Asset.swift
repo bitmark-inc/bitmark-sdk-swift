@@ -10,7 +10,7 @@ import CryptoSwift
 
 public struct Asset {
     
-    private(set) var id: String?
+    private(set) public var id: String?
     private(set) var name: String?
     private(set) var fingerprint: String?
     private(set) var metadata: String?
@@ -57,7 +57,6 @@ public struct Asset {
     // MARK:- Internal methods
     
     internal mutating func resetSignState() {
-        self.id = nil
         self.isSigned = false
     }
     
@@ -97,6 +96,7 @@ public struct Asset {
             throw(BMError("fingerprint's length must be in correct length"))
         }
         self.fingerprint = fingerPrint
+        self.id = computeAssetId(fingerprint: fingerPrint)
         resetSignState()
     }
     

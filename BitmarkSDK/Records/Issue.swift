@@ -69,16 +69,11 @@ public struct Issue {
         self.owner = privateKey.address
         
         var recordPacked = packRecord()
-        do {
-            self.signature = try Ed25519.getSignature(message: recordPacked, privateKey: privateKey.privateKey)
-            self.isSigned = true
-            
-            recordPacked = BinaryPacking.append(toData: recordPacked, withData: self.signature)
-            self.txId = recordPacked.sha3(.sha256).hexEncodedString
-        }
-        catch {
-            resetSignState()
-        }
+        self.signature = try Ed25519.getSignature(message: recordPacked, privateKey: privateKey.privateKey)
+        
+        recordPacked = BinaryPacking.append(toData: recordPacked, withData: self.signature)
+        self.txId = recordPacked.sha3(.sha256).hexEncodedString
+        self.isSigned = true
     }
 }
 
@@ -88,10 +83,9 @@ extension Issue {
             throw(BMError("Issue error: need to sign the record before getting RPC param"))
         }
         
-        return ["issues": [["owner": self.owner!.string,
-                            "signature": self.signature!.toHexString(),
-                            "asset": self.asset!.id!,
-                            "nonce": self.nonce!]],
-                "assets": [try asset!.getRPCParam()]]
+        return ["owner": self.owner!.string,
+                "signature": self.signature!.toHexString(),
+                "asset": self.asset!.id!,
+                "nonce": self.nonce!]
     }
 }

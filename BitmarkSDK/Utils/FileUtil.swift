@@ -68,4 +68,48 @@ public struct FileUtil {
             return encryptedData
         }
     }
+    
+    public struct Upload {
+        public static func multipartUpload(data: Data, toURL url: URL, otherParams: [String: String]?, completionHandler: (() -> Void)?) {
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            let boundary = "Boundary-\(UUID().uuidString)"
+            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        }
+        
+        private static func createBody(parameters: [String: String]?,
+                                       boundary: String,
+                                       data: Data,
+                                       mimeType: String,
+                                       filename: String) -> Data {
+            var body = Data()
+            
+            let boundaryPrefix = "--\(boundary)\r\n"
+            
+            if let parameters = parameters {
+                for (key, value) in parameters {
+                    body.append(string: boundaryPrefix)
+                    body.append(string: "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
+                    body.append(string: "\(value)\r\n")
+                }
+            }
+            
+            body.append(string: boundaryPrefix)
+            body.append(string: "Content-Disposition: form-data; name=\"file\"; filename=\"\(filename)\"\r\n")
+            body.append(string: "Content-Type: \(mimeType)\r\n\r\n")
+            body.append(data)
+            body.append(string: "\r\n")
+            body.append(string: "--".appending(boundary.appending("--")))
+            
+            return body as Data
+        }
+    }
+}
+
+fileprivate extension Data {
+    fileprivate mutating func append(string: String) {
+        if let data = string.data(using: .utf8) {
+            self.append(data)
+        }
+    }
 }

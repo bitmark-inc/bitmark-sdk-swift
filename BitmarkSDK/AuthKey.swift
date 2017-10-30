@@ -119,4 +119,8 @@ public struct AuthKey {
         let keyPairData = keyPairString.hexDecodedData
         try self.init(fromKeyPair: keyPairData, network: network, type: type)
     }
+    
+    public func sign(message: String) throws -> Data {
+        return try NaclSign.signDetached(message: message.data(using: .utf8)!, secretKey: privateKey)
+    }
 }

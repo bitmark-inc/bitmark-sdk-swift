@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TweetNacl
 
 public extension Data {
     public mutating func concat(data: Data) {
@@ -26,19 +27,6 @@ public extension Data {
     public func slice(start: Int, end: Int) -> Data {
         let trueEnd = Swift.min(end, self.count)
         return self.subdata(in: start..<trueEnd)
-    }
-    
-    public static func +(data1: Data, data2: Data) -> Data {
-        return data1.concating(data: data2)
-    }
-    
-    public static func +=(data1: inout Data, data2: Data) {
-        data1.concat(data: data2)
-    }
-    
-    // NSData bridging
-    public var nsdata: NSData {
-        return NSData(data: self)
     }
     
     // Hex string
