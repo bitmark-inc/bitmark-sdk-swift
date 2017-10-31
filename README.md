@@ -5,7 +5,6 @@
 [![CocoaPods](https://img.shields.io/cocoapods/v/BitmarkSDK.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/l/BitmarkSDK.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/p/BitmarkSDK.svg)]()
-BitmarkSDK written in Swift.
 
 ## Requirements
 

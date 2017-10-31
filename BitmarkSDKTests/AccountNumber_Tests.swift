@@ -21,11 +21,11 @@ class AccountNumber_Tests: XCTestCase {
     let validData = [TestData(address: "a5fyw6MQT6C6fpCBeSVdCfT3WS8WTTM24meT3nVuHyxJF7yKes",
                               pubKey: "04946802fadd6d7723985ee012f2b02846fc9e5f6d8084f3c3af5407911a9b4a",
                               network: Network.livenet,
-                              type: Config.ed25519),
+                              type: KeyType.ed25519),
                      TestData(address: "dyALPzR7JSeNJybzogVXqrzsjfZos96bLurwMAHtbzjHSzk4yh",
                               pubKey: "04946802fadd6d7723985ee012f2b02846fc9e5f6d8084f3c3af5407911a9b4a",
-                              network: Network.testNet,
-                              type: Config.ed25519)]
+                              network: Network.testnet,
+                              type: KeyType.ed25519)]
     
     let invalidAddress = ["a5fyw6MQT6C6fpCBeSVdCfT3WS8WTTM24meT3nVuHyxJF7yKe", // bad base58 string
                           "c2RAAYPFsmREVPu6E4VaXGDxd3rAAJDohqkhCUPtwzLnnj2fsT", // wrong key part bit

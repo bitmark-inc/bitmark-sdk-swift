@@ -21,12 +21,12 @@ class AuthKey_Tests: XCTestCase {
     
     let validData = [TestData(kif: "Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xr",
                               network: Network.livenet,
-                              type: Config.ed25519,
+                              type: KeyType.ed25519,
                               address: "a5fyw6MQT6C6fpCBeSVdCfT3WS8WTTM24meT3nVuHyxJF7yKes",
                               privateKey: "d7007fdf823a8d2d769f5778e6fb2d2c0cca9a104a7d2a7171d0a2eea1f55b7304946802fadd6d7723985ee012f2b02846fc9e5f6d8084f3c3af5407911a9b4a"),
                      TestData(kif: "dd67Uj2rsMC6cEqGoXt6UdigFcMYG9iT64y5pEodDWk8HKUXeM",
-                              network: Network.testNet,
-                              type: Config.ed25519,
+                              network: Network.testnet,
+                              type: KeyType.ed25519,
                               address: "dyALPzR7JSeNJybzogVXqrzsjfZos96bLurwMAHtbzjHSzk4yh",
                               privateKey: "d7007fdf823a8d2d769f5778e6fb2d2c0cca9a104a7d2a7171d0a2eea1f55b7304946802fadd6d7723985ee012f2b02846fc9e5f6d8084f3c3af5407911a9b4a")]
     
