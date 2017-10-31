@@ -86,4 +86,10 @@ public extension Account {
             completion?(false)
         }
     }
+    
+    public func downloadAsset(bitmarkId: String, completion: ((Data?) -> Void)?) {
+        let network = self.authKey.network
+        let api = API(network: network)
+        api.downloadAsset(bitmarkId: bitmarkId, completion: completion)
+    }
 }

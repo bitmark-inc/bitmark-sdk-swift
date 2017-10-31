@@ -17,9 +17,9 @@ public struct Account {
     
     // MARK:- Basic init
     
-    public init(keyType: KeyType = KeyType.ed25519) throws {
+    public init(keyType: KeyType = KeyType.ed25519, network: Network = Network.livenet) throws {
         let core = Common.randomBytes(length: keyType.seedLength)
-        try self.init(core: core)
+        try self.init(core: core, network: network)
     }
     
     public init(core: Data, network: Network = Network.livenet) throws {

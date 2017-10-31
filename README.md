@@ -1,8 +1,10 @@
 # Bitmark SDK for Swift
 
-[![Build Status](https://travis-ci.org/bitmark-inc/bitmark-lib-swift.svg?branch=master)](https://travis-ci.org/bitmark-inc/bitmark-lib-swift)
+[![Build Status](https://travis-ci.org/bitmark-inc/bitmark-sdk-swift.svg?branch=master)](https://travis-ci.org/bitmark-inc/bitmark-sdk-swift)
 [![codecov](https://codecov.io/gh/bitmark-inc/bitmark-lib-swift/branch/master/graph/badge.svg)](https://codecov.io/gh/bitmark-inc/bitmark-lib-swift)
-
+[![CocoaPods](https://img.shields.io/cocoapods/v/BitmarkSDK.svg)]()
+[![CocoaPods](https://img.shields.io/cocoapods/l/BitmarkSDK.svg)]()
+[![CocoaPods](https://img.shields.io/cocoapods/p/BitmarkSDK.svg)]()
 BitmarkSDK written in Swift.
 
 ## Requirements
@@ -47,6 +49,117 @@ Comming soon....
 ```swift
 import BitmarkSDK
 ```
+
+## Quick start
+
+### How to create and restore an account?
+
+#### Create a new account
+
+```swift
+let account = Account()
+
+let account = Account(network: Network.testnet)
+```
+
+The account number designates ownership by serving as the account value
+in Bitmark blockchain records.
+
+```swift
+let accountNumber = account.accountNumber.string
+```
+
+#### Restore an account
+There are two different ways to restore an account:
+- from a seed (base58 encoded string):
+
+  should be stored in a secure way by application developers, and then can be used to reconstruct the account in order to issue or transfer bitmarks for their users
+- from a recovery phrase (24 English words):
+
+  should be sent to each application user so that they can back up their own accounts and properties.
+
+
+
+```swift
+let restoredAccount = try Account(fromSeed: "5XEECttxvRBzxzAmuV4oh6T1FcQu4mBg8eWd9wKbf8hweXsfwtJ8sfH")
+
+let recoverPhrase = try account.getRecoverPhrase()
+let restoredAccount = try Account(recoverPhrase: recoverPhrase)
+```
+
+### How to issue bitmarks?
+
+To issue bitmarks on an asset, first you have to decide the accessibility of the asset. The accessibility is set to either `public` or `private`. The following table describes the differences.
+
+| accessibility | public    | private                                  |
+|---------------|-----------|------------------------------------------|
+| encryption    | NO        | YES                                      |
+| access right  | every one | the issuer and the current bitmark owner |
+
+Currently, `private` is not supported yet.
+
+```swift
+let fileURL = Bundle.main.url(forResource: "test", withExtension: ".txt")! // the file path to the asset
+
+do {
+    let account = try Account(fromSeed: "5XEECttxvRBzxzAmuV4oh6T1FcQu4mBg8eWd9wKbf8hweXsfwtJ8sfH")
+
+    let accessibility = Accessibility.publicAsset
+    let propertyName = "bitmark swift sdk demo" // the name of the asset to be registered on the blockchain
+    let propertyMetadata = ["author": "Bitmark Inc. developers"] // the metadata of the asset to be registered on the blockchain
+    let quantity = 1 // the amount of bitmarks to be issued
+    
+    account.issueBitmarks(assetFile: fileURL,
+                          accessibility: accessibility,
+                          propertyName: propertyName,
+                          propertyMetadata: propertyMetadata,
+                          quantity: quantity, completion: { (success, bitmarkIds) in
+        print(success)
+        print(bitmarkIds)
+    })
+}
+catch let e {
+    print(e)
+}
+```
+
+After bitmarks are successfully issued, you'll get an array of bitmark IDs.
+To get detailed information of bitmarks, please refer to [Bitmark Query API](http://docs.bitmarkcoreapi.apiary.io/#reference/queries).
+
+### How to transfer a bitmark?
+
+```swift
+do {
+    let accountA = try Account(fromSeed: "5XEECttxvRBzxzAmuV4oh6T1FcQu4mBg8eWd9wKbf8hweXsfwtJ8sfH")
+    let accountB = try Account(fromSeed: "5XEECt6Mhj8Tanb9CDTGHhTQ7RqbS5LHD383LRK6QGDuj8mwfUU6gKs")
+    
+    let bitmarkID = "3879de7df441003c5387a0c727c133d647f2415901313c9afa33d1cf0fc40fb6"
+    accountA.transferBitmark(bitmarkId: bitmarkID,
+                             toAccount: accountB.accountNumber.string,
+                             completion: { (success) in
+        print(success)
+    })
+}
+catch let e {
+    print(e)
+}
+
+```
+
+After the bitmark is successfully transferred, you'll get an ID of this transaction.
+
+### Download your assets
+
+You can download your assets by its bitmark IDs.
+
+```swift
+let account = try Account(fromSeed: "5XEECttxvRBzxzAmuV4oh6T1FcQu4mBg8eWd9wKbf8hweXsfwtJ8sfH")
+let bitmarkID = "3879de7df441003c5387a0c727c133d647f2415901313c9afa33d1cf0fc40fb6"
+account.downloadAsset(bitmarkId: bitmarkID, completion: { (data) in
+        print(data?.hexEncodedString)
+})
+```
+
 
 ## Usage
 

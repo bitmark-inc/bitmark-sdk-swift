@@ -27,8 +27,24 @@ internal extension API {
             completion?(false)
             }.resume()
     }
-    
-    private static func multipartRequest(data: Data, fileName: String, toURL url: URL, otherParams: [String: String]?) -> URLRequest {
+
+    internal func downloadAsset(bitmarkId: String, completion: ((Data?) -> Void)?) {
+        let requestURL = url.appendingPathComponent("/v1/bitmarks/" + bitmarkId + "/asset")
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let error = error {
+                print(error)
+            }
+            
+            completion?(data)
+        }.resume()
+    }
+}
+
+fileprivate extension API {
+    fileprivate static func multipartRequest(data: Data, fileName: String, toURL url: URL, otherParams: [String: String]?) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         let boundary = "Boundary-\(UUID().uuidString)"
@@ -38,7 +54,7 @@ internal extension API {
         return request
     }
     
-    private static func createBody(parameters: [String: String]?,
+    fileprivate static func createBody(parameters: [String: String]?,
                                    boundary: String,
                                    data: Data,
                                    mimeType: String,

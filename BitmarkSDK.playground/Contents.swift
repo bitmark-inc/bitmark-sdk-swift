@@ -9,35 +9,35 @@ XCPSetExecutionShouldContinueIndefinitely()
 let fileURL = Bundle.main.url(forResource: "test", withExtension: ".txt")!
 
 do {
-    let account = try Account(fromSeed: "5XEECttxvRBzxzAmuV4oh6T1FcQu4mBg8eWd9wKbf8hweXsfwtJ8sfH")
-    account.accountNumber.string
-    let data = try Data(contentsOf: fileURL)
-    
-    
-    
-//    IssueHelper.doIssue(fromURL: fileURL, name: "Anh test", metadata: ["Name": "Hello world"], account: account, completion: { (success, txs) in
-//        print(success)
-//        print(txs)
-//    })
-    
-    account.issueBitmarks(assetFile: fileURL, propertyName: "Just test", completion: { (success, txs) in
+    let accountA = try Account(fromSeed: "5XEECttxvRBzxzAmuV4oh6T1FcQu4mBg8eWd9wKbf8hweXsfwtJ8sfH")
+    let accountB = try Account(fromSeed: "5XEECt6Mhj8Tanb9CDTGHhTQ7RqbS5LHD383LRK6QGDuj8mwfUU6gKs")
+
+    let accessibility = Accessibility.publicAsset
+    let propertyName = "bitmark swift sdk demo" // the name of the asset to be registered on the blockchain
+    let propertyMetadata = ["author": "Bitmark Inc. developers"] // the metadata of the asset to be registered on the blockchain
+    let quantity = 1 // the amount of bitmarks to be issued
+
+    accountA.issueBitmarks(assetFile: fileURL,
+                          accessibility: accessibility,
+                          propertyName: propertyName,
+                          propertyMetadata: propertyMetadata,
+                          quantity: quantity, completion: { (success, bitmarkIds) in
         print(success)
-        print(txs)
-        
-        if let txs = txs {
-            for tx in txs {
-                if let bitmarkId = tx {
-                    account.transferBitmark(bitmarkId: bitmarkId, toAccount: "eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9", completion: { (success) in
-                        print(success)
-                    })
-                }
-            }
-        }
+        print(bitmarkIds)
     })
     
+    let bitmarkID = "3879de7df441003c5387a0c727c133d647f2415901313c9afa33d1cf0fc40fb6"
+    accountA.transferBitmark(bitmarkId: bitmarkID,
+                             toAccount: accountB.accountNumber.string,
+                             completion: { (success) in
+        print(success)
+    })
+    
+    accountA.downloadAsset(bitmarkId: bitmarkID, completion: { (data) in
+        print(data?.hexEncodedString)
+    })
 }
 catch let e {
     print(e)
-    
 }
 
