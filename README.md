@@ -1,7 +1,7 @@
 # Bitmark SDK for Swift
 
 [![Build Status](https://travis-ci.org/bitmark-inc/bitmark-sdk-swift.svg?branch=master)](https://travis-ci.org/bitmark-inc/bitmark-sdk-swift)
-[![codecov](https://codecov.io/gh/bitmark-inc/bitmark-lib-swift/branch/master/graph/badge.svg)](https://codecov.io/gh/bitmark-inc/bitmark-lib-swift)
+[![codecov](https://codecov.io/gh/bitmark-inc/bitmark-sdk-swift/branch/master/graph/badge.svg)](https://codecov.io/gh/bitmark-inc/bitmark-sdk-swift)
 [![CocoaPods](https://img.shields.io/cocoapods/v/BitmarkSDK.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/l/BitmarkSDK.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/p/BitmarkSDK.svg)]()
