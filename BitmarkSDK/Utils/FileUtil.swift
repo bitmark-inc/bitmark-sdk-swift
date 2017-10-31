@@ -23,18 +23,5 @@ public struct FileUtil {
             let sha3Data = sha3.calculate(for: [UInt8](data))
             return "01" + Data(bytes: sha3Data).hexEncodedString
         }
-        
-        public static func computeFingerprint(fromFile url: URL) throws -> String {
-            let data = try Data(contentsOf: url)
-            return computeFingerprint(data: data)
-        }
-    }
-}
-
-fileprivate extension Data {
-    fileprivate mutating func append(string: String) {
-        if let data = string.data(using: .utf8) {
-            self.append(data)
-        }
     }
 }

@@ -89,5 +89,17 @@ class RecoverPhrase_Tests: XCTestCase {
             XCTFail(e.localizedDescription)
         }
     }
+    
+    func testIncorrectPhrase() {
+        let phraseWrong1 = ["dad", "budget", "race", "exhaust", "shine", "ordinary"]
+        let phraseWrong2 = ["dad", "budget", "race", "exhaust", "shine", "ordinary", "tower", "frame", "aaaaa", "panther", "fall", "mail", "stove", "tunnel", "party", "menu", "fashion", "green", "check", "remind", "science", "domain", "humble", "power"]
+        XCTAssertThrowsError(try RecoverPhrase.recoverSeed(fromPhrase: phraseWrong1))
+        XCTAssertThrowsError(try RecoverPhrase.recoverSeed(fromPhrase: phraseWrong2))
+    }
+    
+    func testIncorrectData() {
+        let data = Common.randomBytes(length: 32)
+        XCTAssertThrowsError(try RecoverPhrase.createPhrase(fromData: data))
+    }
 }
 

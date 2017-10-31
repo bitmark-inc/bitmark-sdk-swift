@@ -10,13 +10,6 @@ import Foundation
 import TweetNacl
 
 public extension Data {
-    public mutating func concat(data: Data) {
-        let buffer1 = [UInt8](self)
-        let buffer2 = [UInt8](data)
-        let buffer = buffer1 + buffer2
-        self = Data(bytes: buffer)
-    }
-    
     public func concating(data: Data) -> Data {
         let buffer1 = [UInt8](self)
         let buffer2 = [UInt8](data)

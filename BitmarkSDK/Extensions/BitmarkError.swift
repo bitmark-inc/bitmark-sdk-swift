@@ -22,9 +22,3 @@ public struct BMError: Error {
         self.type = type
     }
 }
-
-extension BMError: CustomStringConvertible {
-    public var description: String {
-        return debugDescription
-    }
-}

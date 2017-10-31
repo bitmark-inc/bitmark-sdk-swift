@@ -29,6 +29,8 @@
 		5865BD431E0250C200B25AB3 /* BitmarkSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD391E0250C200B25AB3 /* BitmarkSDK.framework */; };
 		5865BD4A1E0250C200B25AB3 /* BitmarkSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5865BD3C1E0250C200B25AB3 /* BitmarkSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		588A9C781FA86B01004B279A /* RecoverPhrase_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588A9C771FA86B01004B279A /* RecoverPhrase_Tests.swift */; };
+		588A9C7A1FA88CB9004B279A /* Utils_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588A9C791FA88CB9004B279A /* Utils_Tests.swift */; };
+		588A9C7C1FA88D8A004B279A /* Account_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588A9C7B1FA88D8A004B279A /* Account_Tests.swift */; };
 		588C5BC71F9DC5D400ADB619 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588C5BC61F9DC5D400ADB619 /* Account.swift */; };
 		588C5BCB1F9DCBA400ADB619 /* RecoverPhrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588C5BCA1F9DCBA400ADB619 /* RecoverPhrase.swift */; };
 		588C5BCD1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588C5BCC1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift */; };
@@ -90,6 +92,8 @@
 		5865BD421E0250C200B25AB3 /* BitmarkSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BitmarkSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5865BD491E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		588A9C771FA86B01004B279A /* RecoverPhrase_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPhrase_Tests.swift; sourceTree = "<group>"; };
+		588A9C791FA88CB9004B279A /* Utils_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils_Tests.swift; sourceTree = "<group>"; };
+		588A9C7B1FA88D8A004B279A /* Account_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account_Tests.swift; sourceTree = "<group>"; };
 		588C5BC61F9DC5D400ADB619 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		588C5BCA1F9DCBA400ADB619 /* RecoverPhrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPhrase.swift; sourceTree = "<group>"; };
 		588C5BCC1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecoverPhrase+Dic.swift"; sourceTree = "<group>"; };
@@ -225,6 +229,8 @@
 				58E163231E0CF96C00DEED99 /* Transfer_Tests.swift */,
 				58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */,
 				588A9C771FA86B01004B279A /* RecoverPhrase_Tests.swift */,
+				588A9C791FA88CB9004B279A /* Utils_Tests.swift */,
+				588A9C7B1FA88D8A004B279A /* Account_Tests.swift */,
 			);
 			path = BitmarkSDKTests;
 			sourceTree = "<group>";
@@ -498,6 +504,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				588A9C7C1FA88D8A004B279A /* Account_Tests.swift in Sources */,
 				580B88EA1E090A120018F6A5 /* AccountNumber_Tests.swift in Sources */,
 				5812655E1E0BC1BC00D6DF32 /* Asset_Tests.swift in Sources */,
 				58C097091F8DBA3D0001EE55 /* Seed_Tests.swift in Sources */,
@@ -505,6 +512,7 @@
 				58E163241E0CF96C00DEED99 /* Transfer_Tests.swift in Sources */,
 				58E163221E0CDD9A00DEED99 /* Issue_Tests.swift in Sources */,
 				588A9C781FA86B01004B279A /* RecoverPhrase_Tests.swift in Sources */,
+				588A9C7A1FA88CB9004B279A /* Utils_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

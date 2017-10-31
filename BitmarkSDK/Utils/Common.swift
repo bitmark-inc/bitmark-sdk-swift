@@ -33,7 +33,7 @@ public class Common {
     
     public static func randomBytes(length: Int) -> Data {
         var data = Data(count: length)
-        let result = data.withUnsafeMutableBytes {
+        _ = data.withUnsafeMutableBytes {
             return SecRandomCopyBytes(kSecRandomDefault, length, $0)
         }
         

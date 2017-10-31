@@ -55,4 +55,10 @@ class Asset_Tests: XCTestCase {
             XCTFail()
         }
     }
+    
+    func testFingerprint() {
+        let data = "9d42e2cc2973485fdeda1a435986ed117d420da1d540c30d5fb6fc963276b9f3487a485076f6ac2ad3c05cd8e9efd3972860c5564d4b5807a0bd340248aff84ee8629709bee7711b681c0557f1865aefb0e2a348ea0c8133c257960edf90cb42752910b4bf1d198f771a8ed64c49b4878f391ab6f832db05b0d1bff7077c8601".hexDecodedData
+        let fingerprint = "013e2a0aa3e49d470d52ee576a1a1a4d19d922d040dee2068d092c4c57f795781f3e66697078604e788f2276011550964672c2199c75d5d483aa9272ae453a6b4a"
+        XCTAssertEqual(fingerprint, FileUtil.Fingerprint.computeFingerprint(data: data))
+    }
 }

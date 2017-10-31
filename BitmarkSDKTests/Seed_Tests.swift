@@ -71,4 +71,32 @@ class Seed_Tests: XCTestCase {
     func testBadSeedCoreLength() {
         XCTAssertThrowsError(try Seed(fromBase58: badSeedCoreLength))
     }
+    
+    func testSeedRecover() {
+        do {
+            let seed = try Seed(core: core1.hexDecodedData, version: version1, network: Network.testnet)
+            XCTAssertEqual(seed.base58String, seed1)
+        }
+        catch {
+            XCTFail()
+        }
+    }
+    
+    func testSeedRaw() {
+        let seed = Seed(rawValue: seed1)
+        XCTAssertNotNil(seed)
+        XCTAssertEqual(seed?.rawValue, seed1)
+    }
+    
+    func testSeedInit() {
+        do {
+            let seed = try Seed()
+            XCTAssertEqual(seed.core.count, Config.SeedConfig.length)
+            
+            XCTAssertThrowsError(try Seed(version: 2))
+        }
+        catch {
+            XCTFail()
+        }
+    }
 }

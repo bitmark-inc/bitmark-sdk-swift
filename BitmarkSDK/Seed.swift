@@ -120,6 +120,6 @@ extension Seed: RawRepresentable {
     }
     
     public var rawValue: String {
-        return "core: " + core.hexEncodedString + ", network: " + network.name + ", version: " + String(version)
+        return base58String
     }
 }
