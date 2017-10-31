@@ -11,7 +11,7 @@ import Foundation
 internal extension API {
     internal func uploadAsset(data: Data, fileName: String, assetId: String, accessibility: Accessibility, fromAccount account: Account, completion: ((Bool) -> Void)?) throws {
         let params = ["asset_id": assetId,
-                      "accessibility": accessibility]
+                      "accessibility": accessibility.rawValue]
         
         let requestURL = url.appendingPathComponent("/v1/assets")
         

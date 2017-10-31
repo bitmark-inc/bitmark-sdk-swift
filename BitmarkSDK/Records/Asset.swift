@@ -8,12 +8,17 @@
 
 import CryptoSwift
 
+public enum Accessibility: String {
+    case publicAsset = "public"
+    case privateAsset = "private"
+}
+
 public struct Asset {
     
-    private(set) public var id: String?
+    private(set) var id: String?
     private(set) var name: String?
     private(set) var fingerprint: String?
-    private(set) var metadata: String?
+    private(set) var metadata = ""
     private(set) var registrant: AccountNumber?
     private(set) var signature: Data?
     private(set) var isSigned = false
@@ -139,13 +144,12 @@ extension Asset {
             throw(BMError("Asset error: need to sign the record before getting RPC message"))
         }
         
-        guard let metadata = metadata,
-            let fingerprint = fingerprint,
+        guard let fingerprint = fingerprint,
             let name = name,
             let registrant = registrant,
             let signature = signature
             else {
-                throw(BMError("Asset error: some field is missing"))
+                throw(BMError("Asset error: some fields are missing"))
         }
         
         return ["metadata": metadata,

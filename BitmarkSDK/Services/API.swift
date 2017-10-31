@@ -9,7 +9,6 @@
 import Foundation
 
 internal struct API {
-    typealias Accessibility = String
     let url: URL
     
     init(network: Network) {

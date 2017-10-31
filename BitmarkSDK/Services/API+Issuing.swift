@@ -9,7 +9,7 @@
 import Foundation
 
 extension API {
-    public func issue(withIssues issues: [Issue], assets: [Asset], completion:((Bool) -> Void)?) throws {
+    internal func issue(withIssues issues: [Issue], assets: [Asset], completion:((Bool, [String?]?) -> Void)?) throws {
         let issuePayloads = try issues.map {try $0.getRPCParam()}
         let assetPayloads = try assets.map {try $0.getRPCParam()}
         
@@ -18,8 +18,6 @@ extension API {
         
         let json = try JSONSerialization.data(withJSONObject: payload, options: [])
         
-        print(String(data: json, encoding: .utf8)!)
-        
         let requestURL = url.appendingPathComponent("/v1/issue")
         
         var urlRequest = URLRequest(url: requestURL)
@@ -27,12 +25,21 @@ extension API {
         urlRequest.httpMethod = "POST"
         
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            print(String(data: data!, encoding: .utf8)!)
-            if let response = response as? HTTPURLResponse {
-                completion?(response.statusCode == 200)
-                return
+            guard let r = response as? HTTPURLResponse,
+                let d = data else {
+                    completion?(false, nil)
+                    return
             }
-            completion?(false)
+            
+            do {
+                let result = try JSONDecoder().decode([[String: String]].self, from: d)
+                let bitmarkIDs = result.map {$0["txId"]}
+                completion?(r.statusCode == 200, bitmarkIDs)
+            }
+            catch let e {
+                print(e)
+                completion?(false, nil)
+            }
             }.resume()
     }
 }
