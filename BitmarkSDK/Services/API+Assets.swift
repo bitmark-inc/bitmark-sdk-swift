@@ -10,20 +10,37 @@ import Foundation
 
 internal extension API {
     internal func uploadAsset(data: Data, fileName: String, assetId: String, accessibility: Accessibility, fromAccount account: Account, completion: ((Bool) -> Void)?) throws {
-        let params = ["asset_id": assetId,
+        var params = ["asset_id": assetId,
                       "accessibility": accessibility.rawValue]
         
         let requestURL = url.appendingPathComponent("/v1/assets")
         
-        var request = API.multipartRequest(data: data, fileName: fileName, toURL: requestURL, otherParams: params)
-        try request.signRequest(withAccount: account, action: "uploadAsset", resource: assetId)
+        var request: URLRequest
         
-        URLSession.shared.dataTask(with: request) { (result, response, error) in
+        switch accessibility {
+        case .publicAsset:
+            request = API.multipartRequest(data: data, fileName: fileName, toURL: requestURL, otherParams: params)
+        case .privateAsset:
+            let assetEncryption = try AssetEncryption()
+            let (encryptedData, sessionData) = try assetEncryption.encrypt(data: data, signWithAccount: account)
+            params["session_data"] = String(data: try sessionData.serialize(), encoding: .utf8)
+            
+            request = API.multipartRequest(data: encryptedData, fileName: fileName, toURL: requestURL, otherParams: params)
+        }
+        
+        try request.signRequest(withAccount: account, action: "uploadAsset", resource: assetId)
+        print("aaaaaaaaaa")
+        print(String(data: request.httpBody!, encoding: .ascii)!)
+        print("senderAuthPubkey = " + account.authKey.publicKey.hexEncodedString)
+        
+        completion?(false)
+        urlSession.dataTask(with: request) { (result, response, error) in
+            print(String(data: result!, encoding: .utf8)!)
             if let response = response as? HTTPURLResponse {
                 completion?(response.statusCode == 200)
                 return
             }
-            
+
             completion?(false)
             }.resume()
     }
@@ -33,7 +50,7 @@ internal extension API {
         var request = URLRequest(url: requestURL)
         request.httpMethod = "GET"
         
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
+        urlSession.dataTask(with: request) { (data, _, error) in
             if let error = error {
                 print(error)
             }

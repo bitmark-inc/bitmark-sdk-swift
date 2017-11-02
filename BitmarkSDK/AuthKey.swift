@@ -10,10 +10,11 @@ import Foundation
 import CryptoSwift
 import TweetNacl
 
-public struct AuthKey {
+public struct AuthKey: AsymmetricKey {
     
     public let address: AccountNumber
     public let privateKey: Data
+    public let publicKey: Data
     public let type: KeyType
     public let network: Network
     public let kif: String
@@ -70,6 +71,7 @@ public struct AuthKey {
         // get address
         let keyPair = try Ed25519.generateKeyPair(fromSeed: seed)
         self.privateKey = keyPair.privateKey
+        self.publicKey = keyPair.publicKey
         self.address = AccountNumber(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
@@ -112,6 +114,7 @@ public struct AuthKey {
         self.network = network
         self.type = type
         self.privateKey = keyPair.privateKey
+        self.publicKey = keyPair.publicKey
         self.address = AccountNumber(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
@@ -122,5 +125,13 @@ public struct AuthKey {
     
     public func sign(message: String) throws -> Data {
         return try NaclSign.signDetached(message: message.data(using: .utf8)!, secretKey: privateKey)
+    }
+    
+    public func sign(message: Data) throws -> Data {
+        return try NaclSign.signDetached(message: message, secretKey: privateKey)
+    }
+    
+    var algorithm: Algorithm {
+        return .ed25519
     }
 }

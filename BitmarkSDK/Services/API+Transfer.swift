@@ -18,7 +18,7 @@ extension API {
         urlRequest.httpBody = json
         urlRequest.httpMethod = "POST"
         
-        URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+        urlSession.dataTask(with: urlRequest) { (data, response, error) in
             if let response = response as? HTTPURLResponse {
                 completion?(response.statusCode == 200)
                 return

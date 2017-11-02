@@ -44,7 +44,7 @@ public extension Account {
             try api.uploadAsset(data: data,
                                 fileName: fileName,
                                 assetId: asset.id!,
-                                accessibility: .publicAsset, // TODO: Support private assets
+                                accessibility: accessibility,
                                 fromAccount: self,
                                 completion: { (success) in
                                     if success {
@@ -91,5 +91,11 @@ public extension Account {
         let network = self.authKey.network
         let api = API(network: network)
         api.downloadAsset(bitmarkId: bitmarkId, completion: completion)
+    }
+    
+    public func registerPublicEncryptionKey(completion: ((Bool) -> Void)?) throws {
+        let network = self.authKey.network
+        let api = API(network: network)
+        try api.registerEncryptionPublicKey(forAccount: self, completion: completion)
     }
 }

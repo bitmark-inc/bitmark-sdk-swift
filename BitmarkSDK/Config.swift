@@ -38,10 +38,6 @@ public extension Network {
     public static let testnet = Network(name: "testnet",
                                         addressValue: 0x01,
                                         kifValue: 0x01)
-    
-    public static let devnet = Network(name: "devnet",
-                                       addressValue: 0x01,
-                                       kifValue: 0x01)
 }
 
 public struct Config {
