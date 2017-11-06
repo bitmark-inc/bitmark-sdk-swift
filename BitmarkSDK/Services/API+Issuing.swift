@@ -18,14 +18,14 @@ extension API {
         
         let json = try JSONSerialization.data(withJSONObject: payload, options: [])
         
-        let requestURL = url.appendingPathComponent("/v1/issue")
+        let requestURL = apiServerURL.appendingPathComponent("/v1/issue")
         
         var urlRequest = URLRequest(url: requestURL)
         urlRequest.httpBody = json
         urlRequest.httpMethod = "POST"
         
         urlSession.dataTask(with: urlRequest) { (data, response, error) in
-            print(String(data: data!, encoding: .utf8)!)
+            print(String(data: data!, encoding: .ascii)!)
             guard let r = response as? HTTPURLResponse,
                 let d = data else {
                     completion?(false, nil)
@@ -35,7 +35,7 @@ extension API {
             do {
                 let result = try JSONDecoder().decode([[String: String]].self, from: d)
                 let bitmarkIDs = result.map {$0["txId"]}
-                completion?(r.statusCode == 200, bitmarkIDs)
+                completion?(r.statusCode < 300, bitmarkIDs)
             }
             catch let e {
                 print(e)

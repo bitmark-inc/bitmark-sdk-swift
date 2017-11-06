@@ -9,22 +9,24 @@
 import Foundation
 
 extension API {
-    internal func transfer(withData transfer: Transfer, completion:((Bool) -> Void)?) throws {
+    internal func transfer(withData transfer: Transfer) throws -> Bool {
         let json = try JSONSerialization.data(withJSONObject: transfer.getRPCParam(), options: [])
         
-        let requestURL = url.appendingPathComponent("/v1/transfer")
+        let requestURL = apiServerURL.appendingPathComponent("/v1/transfer")
         
         var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringCacheData)
         urlRequest.httpBody = json
         urlRequest.httpMethod = "POST"
         
-        urlSession.dataTask(with: urlRequest) { (data, response, error) in
-            if let response = response as? HTTPURLResponse {
-                completion?(response.statusCode == 200)
-                return
-            }
-            
-            completion?(false)
-            }.resume()
+        let (result, response) = try urlSession.synchronousDataTask(with: urlRequest)
+        
+        guard let r = result,
+            let res = response else {
+            return false
+        }
+        
+        print(String(data: r, encoding: .ascii)!)
+        
+        return (res.statusCode < 300)
     }
 }

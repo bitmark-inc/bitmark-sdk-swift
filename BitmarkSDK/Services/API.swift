@@ -9,11 +9,24 @@
 import Foundation
 
 internal struct API {
-    let url: URL
+    let apiServerURL: URL
+    let assetServerURL: URL
     let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     
     init(network: Network) {
-        url = URL(string: API.endPoint(forNetwork: network))!
+        switch network.name {
+        case "livenet":
+            apiServerURL = URL(string: "https://api.bitmark.com")!
+            assetServerURL = URL(string: "https://assets.bitmark.com")!
+        case "testnet":
+            // TODO: should be testnet, just for the time developing the SDK
+            apiServerURL = URL(string: "https://api.devel.bitmark.com")!
+            assetServerURL = URL(string: "https://assets.devel.bitmark.com")!
+        default:
+            apiServerURL = URL(string: "https://api.devel.bitmark.com")!
+            assetServerURL = URL(string: "https://assets.devel.bitmark.com")!
+        }
+        
     }
 }
 
@@ -43,4 +56,36 @@ internal extension API {
             return "https://api.test.bitmark.com"
         }
     }
+}
+
+internal extension URLSession {
+    
+    func synchronousDataTask(with request: URLRequest) throws -> (data: Data?, response: HTTPURLResponse?) {
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        var responseData: Data?
+        var theResponse: URLResponse?
+        var theError: Error?
+        
+        dataTask(with: request) { (data, response, error) -> Void in
+            
+            responseData = data
+            theResponse = response
+            theError = error
+            
+            semaphore.signal()
+            
+            }.resume()
+        
+        _ = semaphore.wait(timeout: .distantFuture)
+        
+        if let error = theError {
+            throw error
+        }
+        
+        return (data: responseData, response: theResponse as! HTTPURLResponse?)
+        
+    }
+    
 }

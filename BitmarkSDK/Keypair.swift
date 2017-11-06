@@ -28,10 +28,15 @@ struct EncryptionKey: AsymmetricKey {
 }
 
 extension EncryptionKey {
-    func publicKeyEncrypt(message: Data, withRecipient publicKey: Data, signWith privateKey: Data) throws -> Data {
+    func publicKeyEncrypt(message: Data, withRecipient senderPublicKey: Data) throws -> Data {
         let nonce = Common.randomBytes(length: 24)
-        
-        let key = try TweetNacl.NaclBox.before(publicKey: publicKey, secretKey: privateKey)
-        return try TweetNacl.NaclSecretBox.secretBox(message: message, nonce: nonce, key: key)
+        let encryptedMessageWithoutNonce = try TweetNacl.NaclBox.box(message: message, nonce: nonce, publicKey: senderPublicKey, secretKey: privateKey)
+        return nonce + encryptedMessageWithoutNonce
+    }
+    
+    func decrypt(encryptedMessage: Data, peerPublicKey: Data) throws -> Data {
+        let nonce = encryptedMessage.subdata(in: 0..<24)
+        let message = encryptedMessage.subdata(in: 24..<encryptedMessage.count)
+        return try TweetNacl.NaclBox.open(message: message, nonce: nonce, publicKey: peerPublicKey, secretKey: privateKey)
     }
 }

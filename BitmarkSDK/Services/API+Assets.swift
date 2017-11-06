@@ -13,7 +13,7 @@ internal extension API {
         var params = ["asset_id": assetId,
                       "accessibility": accessibility.rawValue]
         
-        let requestURL = url.appendingPathComponent("/v1/assets")
+        let requestURL = apiServerURL.appendingPathComponent("/v1/assets")
         
         var request: URLRequest
         
@@ -23,21 +23,18 @@ internal extension API {
         case .privateAsset:
             let assetEncryption = try AssetEncryption()
             let (encryptedData, sessionData) = try assetEncryption.encrypt(data: data, signWithAccount: account)
-            params["session_data"] = String(data: try sessionData.serialize(), encoding: .utf8)
+            let sessionDataSerialized = try JSONEncoder().encode(sessionData)
+            params["session_data"] = String(data: sessionDataSerialized, encoding: .utf8)
             
             request = API.multipartRequest(data: encryptedData, fileName: fileName, toURL: requestURL, otherParams: params)
         }
         
         try request.signRequest(withAccount: account, action: "uploadAsset", resource: assetId)
-        print("aaaaaaaaaa")
-        print(String(data: request.httpBody!, encoding: .ascii)!)
-        print("senderAuthPubkey = " + account.authKey.publicKey.hexEncodedString)
         
-        completion?(false)
         urlSession.dataTask(with: request) { (result, response, error) in
-            print(String(data: result!, encoding: .utf8)!)
+            print(String(data: result!, encoding: .ascii)!)
             if let response = response as? HTTPURLResponse {
-                completion?(response.statusCode == 200)
+                completion?(response.statusCode < 300)
                 return
             }
 
@@ -46,7 +43,7 @@ internal extension API {
     }
 
     internal func downloadAsset(bitmarkId: String, completion: ((Data?) -> Void)?) {
-        let requestURL = url.appendingPathComponent("/v1/bitmarks/" + bitmarkId + "/asset")
+        let requestURL = apiServerURL.appendingPathComponent("/v1/bitmarks/" + bitmarkId + "/asset")
         var request = URLRequest(url: requestURL)
         request.httpMethod = "GET"
         

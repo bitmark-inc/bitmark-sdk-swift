@@ -8,32 +8,24 @@
 
 import Foundation
 import CryptoSwift
-
-struct SessionData {
-    let encryptedDataKey: Data
-    let encryptedDataKeySignature: Data
-    let dataKeySignature: Data
-    let dataKeyAlgorithm: String
-}
-
-extension SessionData {
-    func serialize() throws -> Data {
-        let dic = [["enc_data_key": encryptedDataKey.hexEncodedString],
-                   ["enc_data_key_sig": encryptedDataKeySignature.hexEncodedString],
-                   ["data_key_sig": dataKeySignature.hexEncodedString],
-                   ["data_key_alg": dataKeyAlgorithm]]
-        
-        return try JSONSerialization.data(withJSONObject: dic, options: [])
-    }
-}
+import TweetNacl
 
 struct AssetEncryption {
-    
-    let key = Common.randomBytes(length: 32)
+
+    let key: Data
     private let cipher: ChaCha20
     private let iv = Array<UInt8>(repeating: 0, count: 12)
     
     init() throws {
+        let key = Common.randomBytes(length: 32)
+        try self.init(key: key)
+    }
+    
+    init(key: Data) throws {
+        if key.count != 32 {
+            throw(BMError("Invalid key length for chacha20, actual count: \(key.count)"))
+        }
+        self.key = key
         cipher = try ChaCha20(key: key.bytes, iv: iv)
     }
     
@@ -41,7 +33,7 @@ struct AssetEncryption {
         let encryptedData = try data.encrypt(cipher: cipher)
         
         return (encryptedData,
-                try createSessionData(account: account,
+                try SessionData.createSessionData(account: account,
                                       sessionKey: key,
                                       forRecipient: account.encryptionKey.publicKey))
     }
@@ -52,17 +44,20 @@ struct AssetEncryption {
 }
 
 extension AssetEncryption {
-    
-    func createSessionData(account: Account, sessionKey: Data, forRecipient publicKey: Data) throws -> SessionData {
-        let encryptedSessionKey = try account.encryptionKey.publicKeyEncrypt(message: sessionKey,
-                                                                         withRecipient: publicKey,
-                                                                         signWith: account.encryptionKey.privateKey)
+    static func encryptionKey(fromSessionData sessionData: SessionData, account: Account, senderEncryptionPublicKey: Data, senderAuthPublicKey: Data) throws -> AssetEncryption {
+        // Decrypt message
+        let key = try account.encryptionKey.decrypt(encryptedMessage: sessionData.encryptedDataKey, peerPublicKey: senderEncryptionPublicKey)
         
-        return SessionData(encryptedDataKey: encryptedSessionKey,
-                           encryptedDataKeySignature: try account.authKey.sign(message: encryptedSessionKey),
-                           dataKeySignature: try account.authKey.sign(message: sessionKey),
-                           dataKeyAlgorithm: "chacha20poly1305")
+        print(key.hexEncodedString)
+        print(sessionData.dataKeySignature.hexEncodedString)
+        print(senderAuthPublicKey.hexEncodedString)
+        
+        // Verify signature
+        let test = try TweetNacl.NaclSign.signDetachedVerify(message: sessionData.encryptedDataKey, sig: sessionData.encryptedDataKeySignature, publicKey: senderAuthPublicKey)
+        if !test {
+            throw(BMError("Signature verification failed"))
+        }
+        
+        return try AssetEncryption(key: key)
     }
-    
-    
 }

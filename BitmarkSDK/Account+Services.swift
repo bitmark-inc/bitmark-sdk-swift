@@ -69,21 +69,45 @@ public extension Account {
     }
     
     public func transferBitmark(bitmarkId: String,
-                                toAccount accountNumber: String,
-                                completion: ((Bool) -> Void)?) {
+                                toAccount recipient: String) throws -> Bool {
         do {
             let network = self.authKey.network
+            let api = API(network: network)
+            // Get asset's access information
+            
+            guard let assetAccess = try api.getAssetAccess(account: self, bitmarkId: bitmarkId) else {
+                print("Failed to get asset's access")
+                return false
+            }
+            
+            if assetAccess.sessionData != nil {
+                let senderEncryptionPublicKey = self.encryptionKey.publicKey.hexEncodedString
+                
+                let assetEnryption = try AssetEncryption.encryptionKey(fromSessionData: assetAccess.sessionData!,
+                                                                       account: self,
+                                                                       senderEncryptionPublicKey: senderEncryptionPublicKey.hexDecodedData,
+                                                                       senderAuthPublicKey: self.authKey.publicKey)
+                
+                guard let recipientEncrPubkey = try api.getEncryptionPublicKey(accountNumber: recipient) else {
+                    return false
+                }
+                
+                let sessionData = try SessionData.createSessionData(account: self,
+                                                                sessionKey: assetEnryption.key, forRecipient: recipientEncrPubkey.hexDecodedData)
+                
+                let result = try api.updateSession(account: self, bitmarkId: bitmarkId, recipient: recipient, sessionData: sessionData)
+                if result == false {
+                    print("Fail to update session data")
+                    return false
+                }
+            }
+            
             var transfer = Transfer()
             transfer.set(from: bitmarkId)
-            try transfer.set(to: try AccountNumber(address: accountNumber))
+            try transfer.set(to: try AccountNumber(address: recipient))
             try transfer.sign(privateKey: self.authKey)
             
-            let api = API(network: network)
-            try api.transfer(withData: transfer, completion: completion)
-        }
-        catch let e {
-            print(e)
-            completion?(false)
+            return try api.transfer(withData: transfer)
         }
     }
     
