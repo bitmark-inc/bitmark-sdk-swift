@@ -9,7 +9,7 @@
 import Foundation
 
 extension API {
-    internal func issue(withIssues issues: [Issue], assets: [Asset], completion:((Bool, [String?]?) -> Void)?) throws {
+    internal func issue(withIssues issues: [Issue], assets: [Asset]) throws -> Bool {
         let issuePayloads = try issues.map {try $0.getRPCParam()}
         let assetPayloads = try assets.map {try $0.getRPCParam()}
         
@@ -24,23 +24,12 @@ extension API {
         urlRequest.httpBody = json
         urlRequest.httpMethod = "POST"
         
-        urlSession.dataTask(with: urlRequest) { (data, response, error) in
-            print(String(data: data!, encoding: .ascii)!)
-            guard let r = response as? HTTPURLResponse,
-                let d = data else {
-                    completion?(false, nil)
-                    return
-            }
-            
-            do {
-                let result = try JSONDecoder().decode([[String: String]].self, from: d)
-                let bitmarkIDs = result.map {$0["txId"]}
-                completion?(r.statusCode < 300, bitmarkIDs)
-            }
-            catch let e {
-                print(e)
-                completion?(false, nil)
-            }
-            }.resume()
+        let result = try urlSession.synchronousDataTask(with: urlRequest)
+        guard let data = result.data,
+        let response = result.response else {
+            return false
+        }
+        
+        return 200..<300 ~= response.statusCode
     }
 }

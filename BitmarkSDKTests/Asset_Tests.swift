@@ -17,7 +17,7 @@ class Asset_Tests: XCTestCase {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         
         for _ in 1...length {
-            let randomIndex  = Int(arc4random_uniform(UInt32(letters.characters.count)))
+            let randomIndex  = Int(arc4random_uniform(UInt32(letters.count)))
             let a = letters.index(letters.startIndex, offsetBy: randomIndex)
             randomString +=  String(letters[a])
         }

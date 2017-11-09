@@ -25,8 +25,6 @@ extension API {
             return false
         }
         
-        print(String(data: r, encoding: .ascii)!)
-        
-        return (res.statusCode < 300)
+        return 200..<300 ~= res.statusCode
     }
 }

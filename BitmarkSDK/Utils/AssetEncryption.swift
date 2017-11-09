@@ -49,14 +49,13 @@ extension AssetEncryption {
         let key = try account.encryptionKey.decrypt(encryptedMessage: sessionData.encryptedDataKey, peerPublicKey: senderEncryptionPublicKey)
         
         print(key.hexEncodedString)
-        print(sessionData.dataKeySignature.hexEncodedString)
         print(senderAuthPublicKey.hexEncodedString)
-        
-        // Verify signature
-        let test = try TweetNacl.NaclSign.signDetachedVerify(message: sessionData.encryptedDataKey, sig: sessionData.encryptedDataKeySignature, publicKey: senderAuthPublicKey)
-        if !test {
-            throw(BMError("Signature verification failed"))
-        }
+//        
+//        // Verify signature
+//        let test = try TweetNacl.NaclSign.signDetachedVerify(message: sessionData.encryptedDataKey, sig: sessionData.encryptedDataKeySignature, publicKey: senderAuthPublicKey)
+//        if !test {
+//            throw(BMError("Signature verification failed"))
+//        }
         
         return try AssetEncryption(key: key)
     }

@@ -9,37 +9,36 @@
 import Foundation
 
 internal extension API {
-    internal func uploadAsset(data: Data, fileName: String, assetId: String, accessibility: Accessibility, fromAccount account: Account, completion: ((Bool) -> Void)?) throws {
+    internal func uploadAsset(data: Data, fileName: String, assetId: String, accessibility: Accessibility, fromAccount account: Account) throws -> Bool {
         var params = ["asset_id": assetId,
                       "accessibility": accessibility.rawValue]
         
         let requestURL = apiServerURL.appendingPathComponent("/v1/assets")
         
-        var request: URLRequest
+        var urlRequest: URLRequest
         
         switch accessibility {
         case .publicAsset:
-            request = API.multipartRequest(data: data, fileName: fileName, toURL: requestURL, otherParams: params)
+            print("Uploading with public assets")
+            urlRequest = API.multipartRequest(data: data, fileName: fileName, toURL: requestURL, otherParams: params)
         case .privateAsset:
+            print("Uploading with private assets")
             let assetEncryption = try AssetEncryption()
             let (encryptedData, sessionData) = try assetEncryption.encrypt(data: data, signWithAccount: account)
             let sessionDataSerialized = try JSONEncoder().encode(sessionData)
             params["session_data"] = String(data: sessionDataSerialized, encoding: .utf8)
             
-            request = API.multipartRequest(data: encryptedData, fileName: fileName, toURL: requestURL, otherParams: params)
+            urlRequest = API.multipartRequest(data: encryptedData, fileName: fileName, toURL: requestURL, otherParams: params)
         }
         
-        try request.signRequest(withAccount: account, action: "uploadAsset", resource: assetId)
+        try urlRequest.signRequest(withAccount: account, action: "uploadAsset", resource: assetId)
         
-        urlSession.dataTask(with: request) { (result, response, error) in
-            print(String(data: result!, encoding: .ascii)!)
-            if let response = response as? HTTPURLResponse {
-                completion?(response.statusCode < 300)
-                return
-            }
-
-            completion?(false)
-            }.resume()
+        let result = try urlSession.synchronousDataTask(with: urlRequest)
+        guard let response = result.response else {
+                return false
+        }
+        
+        return 200..<300 ~= response.statusCode
     }
 
     internal func downloadAsset(bitmarkId: String, completion: ((Data?) -> Void)?) {

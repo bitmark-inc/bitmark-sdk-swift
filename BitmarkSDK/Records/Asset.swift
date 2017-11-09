@@ -56,7 +56,7 @@ public struct Asset {
     }
     
     static func isValidLength(metadata: String) -> Bool {
-        return metadata.characters.count <= Config.AssetConfig.maxMetadata
+        return metadata.count <= Config.AssetConfig.maxMetadata
     }
     
     // MARK:- Internal methods
@@ -97,7 +97,7 @@ public struct Asset {
     }
     
     public mutating func set(fingerPrint: String) throws {
-        if !(fingerPrint.characters.count <= Config.AssetConfig.maxFingerprint) {
+        if !(fingerPrint.count <= Config.AssetConfig.maxFingerprint) {
             throw(BMError("fingerprint's length must be in correct length"))
         }
         self.fingerprint = fingerPrint
@@ -106,7 +106,7 @@ public struct Asset {
     }
     
     public mutating func set(name: String) throws {
-        if !(name.characters.count <= Config.AssetConfig.maxName) {
+        if !(name.count <= Config.AssetConfig.maxName) {
             throw(BMError("name's length must be in corrent length"))
         }
         self.name = name
