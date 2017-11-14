@@ -22,7 +22,7 @@ public struct RecoverPhrase {
             throw(RecoverPhraseError.invalidLength)
         }
         
-        let input = data.bytes
+        let input = [UInt8](data)
         var phrases = [String]()
         var accumulator: UInt64 = 0
         var bits: UInt64 = 0

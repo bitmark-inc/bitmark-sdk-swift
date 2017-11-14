@@ -6,7 +6,7 @@
 //  Copyright © 2016 Bitmark. All rights reserved.
 //
 
-import CryptoSwift
+import Foundation
 
 public enum Accessibility: String {
     case publicAsset = "public"

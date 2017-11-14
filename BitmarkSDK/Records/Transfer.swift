@@ -6,7 +6,7 @@
 //  Copyright © 2016 Bitmark. All rights reserved.
 //
 
-import CryptoSwift
+import Foundation
 
 public struct Transfer {
     
@@ -125,7 +125,7 @@ extension Transfer {
         }
         
         return ["transfer": ["owner": self.owner!.string,
-                             "signature": self.signature!.toHexString(),
+                             "signature": self.signature!.hexEncodedString,
                              "link": self.preTxId!]]
     }
 }

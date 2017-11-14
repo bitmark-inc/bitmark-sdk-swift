@@ -19,10 +19,8 @@ internal extension API {
         
         switch accessibility {
         case .publicAsset:
-            print("Uploading with public assets")
             urlRequest = API.multipartRequest(data: data, fileName: fileName, toURL: requestURL, otherParams: params)
         case .privateAsset:
-            print("Uploading with private assets")
             let assetEncryption = try AssetEncryption()
             let (encryptedData, sessionData) = try assetEncryption.encrypt(data: data, signWithAccount: account)
             let sessionDataSerialized = try JSONEncoder().encode(sessionData)

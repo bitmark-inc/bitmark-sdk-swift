@@ -29,12 +29,14 @@ extension SessionData: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: SessionDataKeys.self)
         try container.encode(self.encryptedDataKey.hexEncodedString, forKey: .encryptedDataKey)
+        try container.encode(self.dataKeyAlgorithm, forKey: .dataKeyAlgorithm)
     }
 }
 
 extension SessionData {
     func serialize() -> [String: String] {
-        return ["enc_data_key": encryptedDataKey.hexEncodedString]
+        return ["enc_data_key": encryptedDataKey.hexEncodedString,
+                "data_key_alg": dataKeyAlgorithm]
     }
 }
 

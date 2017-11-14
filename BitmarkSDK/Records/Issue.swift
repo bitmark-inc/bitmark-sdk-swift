@@ -6,7 +6,7 @@
 //  Copyright © 2016 Bitmark. All rights reserved.
 //
 
-import CryptoSwift
+import Foundation
 
 public struct Issue {
     
@@ -84,7 +84,7 @@ extension Issue {
         }
         
         return ["owner": self.owner!.string,
-                "signature": self.signature!.toHexString(),
+                "signature": self.signature!.hexEncodedString,
                 "asset": self.asset!.id!,
                 "nonce": self.nonce!]
     }

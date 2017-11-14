@@ -13,8 +13,7 @@ import TweetNacl
 struct AssetEncryption {
 
     let key: Data
-    private let cipher: ChaCha20
-    private let iv = Array<UInt8>(repeating: 0, count: 12)
+    private let nonce = Data(bytes: Array<UInt8>(repeating: 0x00, count: 12))
     
     init() throws {
         let key = Common.randomBytes(length: 32)
@@ -26,11 +25,10 @@ struct AssetEncryption {
             throw(BMError("Invalid key length for chacha20, actual count: \(key.count)"))
         }
         self.key = key
-        cipher = try ChaCha20(key: key.bytes, iv: iv)
     }
     
     func encrypt(data: Data, signWithAccount account: Account) throws -> (encryptedData: Data, sessionData: SessionData) {
-        let encryptedData = try data.encrypt(cipher: cipher)
+        let encryptedData = try Chacha20Poly1305.seal(withKey: key, nonce: nonce, plainText: data, additionalData: nil)
         
         return (encryptedData,
                 try SessionData.createSessionData(account: account,
@@ -39,7 +37,7 @@ struct AssetEncryption {
     }
     
     func decypt(data: Data) throws -> Data {
-        return try data.decrypt(cipher: cipher)
+        return try Chacha20Poly1305.open(withKey: key, nonce: nonce, cipherText: data, additionalData: nil)
     }
 }
 

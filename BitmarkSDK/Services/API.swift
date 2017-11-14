@@ -69,7 +69,6 @@ internal extension URLSession {
         var theError: Error?
         
         dataTask(with: request) { (data, response, error) -> Void in
-            
             responseData = data
             theResponse = response
             theError = error
