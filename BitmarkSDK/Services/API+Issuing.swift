@@ -21,7 +21,7 @@ extension API {
                 return false
             }
             
-            payload["transfer"] = try transfer.getRPCParam()
+            payload["transfer"] = try transfer.getRPCParam()["transfer"]
         }
         
         let json = try JSONSerialization.data(withJSONObject: payload, options: [])
