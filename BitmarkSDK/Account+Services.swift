@@ -39,7 +39,7 @@ public extension Account {
         // Upload asset
         let api = API(network: network)
         
-        let uploadSuccess = try api.uploadAsset(data: data, fileName: fileName, assetId: asset.id!, accessibility: accessibility, fromAccount: self)
+        let (_, uploadSuccess) = try api.uploadAsset(data: data, fileName: fileName, assetId: asset.id!, accessibility: accessibility, fromAccount: self)
         
         if !uploadSuccess {
             print("Failed to upload assets")
@@ -59,8 +59,8 @@ public extension Account {
         
         let network = self.authKey.network
         let api = API(network: network)
-        // Get asset's access information
         
+        // Get asset's access information
         guard let assetAccess = try api.getAssetAccess(account: self, bitmarkId: bitmarkId) else {
             return false
         }
@@ -93,6 +93,62 @@ public extension Account {
         try transfer.sign(privateKey: self.authKey)
         
         return try api.transfer(withData: transfer)
+    }
+    
+    public func issueThenTransfer(assetFile url: URL,
+                                  accessibility: Accessibility = .publicAsset,
+                                  propertyName name: String,
+                                  propertyMetadata metadata: [String: String]? = nil,
+                                  toAccount recipient: String) throws -> Bool {
+        let data = try Data(contentsOf: url)
+        let fileName = url.lastPathComponent
+        let network = self.authKey.network
+        let fingerprint = FileUtil.Fingerprint.computeFingerprint(data: data)
+        var asset = Asset()
+        try asset.set(name: name)
+        try asset.set(fingerPrint: fingerprint)
+        if let metadata = metadata {
+            try asset.set(metadata: metadata)
+        }
+        try asset.sign(withPrivateKey: self.authKey)
+        
+        // upload the assets with the owner’s session data attached.
+        let api = API(network: network)
+        
+        let (sessionData, uploadSuccess) = try api.uploadAsset(data: data, fileName: fileName, assetId: asset.id!, accessibility: accessibility, fromAccount: self)
+        
+        if !uploadSuccess {
+            print("Failed to upload assets")
+            return false
+        }
+        
+        // Generate the bitmark issue object with the dedicated assets.
+        var issue = Issue()
+        issue.set(nonce: UInt64(arc4random()))
+        issue.set(asset: asset)
+        try issue.sign(privateKey: self.authKey)
+        
+        guard let bitmarkId = issue.txId else {
+            return false
+        }
+        
+        // create session data for the receiver, and set session data from the `/v2/session` api.
+        if let sessionData = sessionData,
+            accessibility == .privateAsset {
+            let result = try api.updateSession(account: self, bitmarkId: bitmarkId, recipient: recipient, sessionData: sessionData, withIssue: issue)
+            if result == false {
+                print("Fail to update session data")
+                return false
+            }
+        }
+        
+        // Transfer records
+        var transfer = Transfer()
+        transfer.set(from: bitmarkId)
+        try transfer.set(to: try AccountNumber(address: recipient))
+        try transfer.sign(privateKey: self.authKey)
+        
+        return try api.issue(withIssues: [issue], assets: [asset], transfer: transfer)
     }
     
     public func downloadAsset(bitmarkId: String, completion: ((Data?) -> Void)?) {

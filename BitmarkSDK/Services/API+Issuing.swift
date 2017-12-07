@@ -9,12 +9,20 @@
 import Foundation
 
 extension API {
-    internal func issue(withIssues issues: [Issue], assets: [Asset]) throws -> Bool {
+    internal func issue(withIssues issues: [Issue], assets: [Asset], transfer: Transfer? = nil) throws -> Bool {
         let issuePayloads = try issues.map {try $0.getRPCParam()}
         let assetPayloads = try assets.map {try $0.getRPCParam()}
         
-        let payload = ["issues": issuePayloads,
+        var payload: [String: Any] = ["issues": issuePayloads,
                        "assets": assetPayloads]
+        
+        if let transfer = transfer {
+            if issues.count > 1 {
+                return false
+            }
+            
+            payload["transfer"] = try transfer.getRPCParam()
+        }
         
         let json = try JSONSerialization.data(withJSONObject: payload, options: [])
         

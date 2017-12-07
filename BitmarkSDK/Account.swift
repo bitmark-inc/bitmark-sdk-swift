@@ -9,6 +9,10 @@
 import Foundation
 import TweetNacl
 
+public enum SignMethod: String {
+    case Indentity = "identity"
+}
+
 public struct Account {
     
     public let core: Data
@@ -70,6 +74,12 @@ public struct Account {
     
     private static func deriveEncryptionKey(seed: Data) throws -> Data {
         return try derive(seed: seed, indexData: "000000000000000000000000000003e8".hexDecodedData)
+    }
+    
+    // MARK:- Sign
+    public func sign(withMessage message: Data, forAction action: SignMethod) throws -> Data {
+        let actualMessage = action.rawValue + "|" + String(data: message, encoding: .ascii)!
+        return try authKey.sign(message: actualMessage)
     }
 }
 

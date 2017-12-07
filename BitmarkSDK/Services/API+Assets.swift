@@ -9,22 +9,24 @@
 import Foundation
 
 internal extension API {
-    internal func uploadAsset(data: Data, fileName: String, assetId: String, accessibility: Accessibility, fromAccount account: Account) throws -> Bool {
+    internal func uploadAsset(data: Data, fileName: String, assetId: String, accessibility: Accessibility, fromAccount account: Account) throws -> (SessionData?, Bool) {
         var params = ["asset_id": assetId,
                       "accessibility": accessibility.rawValue]
         
         let requestURL = apiServerURL.appendingPathComponent("/v1/assets")
         
         var urlRequest: URLRequest
+        var sessionData: SessionData?
         
         switch accessibility {
         case .publicAsset:
             urlRequest = API.multipartRequest(data: data, fileName: fileName, toURL: requestURL, otherParams: params)
         case .privateAsset:
             let assetEncryption = try AssetEncryption()
-            let (encryptedData, sessionData) = try assetEncryption.encrypt(data: data, signWithAccount: account)
-            let sessionDataSerialized = try JSONEncoder().encode(sessionData)
+            let (encryptedData, sData) = try assetEncryption.encrypt(data: data, signWithAccount: account)
+            let sessionDataSerialized = try JSONEncoder().encode(sData)
             params["session_data"] = String(data: sessionDataSerialized, encoding: .utf8)
+            sessionData = sData
             
             urlRequest = API.multipartRequest(data: encryptedData, fileName: fileName, toURL: requestURL, otherParams: params)
         }
@@ -33,10 +35,10 @@ internal extension API {
         
         let result = try urlSession.synchronousDataTask(with: urlRequest)
         guard let response = result.response else {
-                return false
+                return (sessionData, false)
         }
         
-        return 200..<300 ~= response.statusCode
+        return (sessionData, 200..<300 ~= response.statusCode)
     }
 
     internal func downloadAsset(bitmarkId: String, completion: ((Data?) -> Void)?) {

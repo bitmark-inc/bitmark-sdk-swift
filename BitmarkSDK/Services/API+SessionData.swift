@@ -106,7 +106,7 @@ extension API {
         return dic["encryption_pubkey"]
     }
     
-    func updateSession(account: Account, bitmarkId: String, recipient: String, sessionData: SessionData) throws -> Bool {
+    func updateSession(account: Account, bitmarkId: String, recipient: String, sessionData: SessionData, withIssue issue: Issue? = nil) throws -> Bool {
         let requestURL = apiServerURL.appendingPathComponent("/v2/session")
         
         let params: [String: Any] = ["bitmark_id": bitmarkId,
@@ -118,6 +118,11 @@ extension API {
         urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
         let sessionDataSerialized = try JSONEncoder().encode(sessionData)
         try urlRequest.signRequest(withAccount: account, action: "updateSession", resource: String(data: sessionDataSerialized, encoding: .ascii)!)
+        
+        if let issue = issue {
+            let bitmarkIssueBody = try JSONSerialization.data(withJSONObject: try issue.getRPCParam(), options: [])
+            urlRequest.setValue(String(data: bitmarkIssueBody, encoding: .utf8), forHTTPHeaderField: "Bitmark-Issue-Body")
+        }
         
         let (_, res) = try urlSession.synchronousDataTask(with: urlRequest)
         guard let response = res else {
