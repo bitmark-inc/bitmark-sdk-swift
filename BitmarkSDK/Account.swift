@@ -77,8 +77,8 @@ public struct Account {
     }
     
     // MARK:- Sign
-    public func sign(withMessage message: Data, forAction action: SignMethod) throws -> Data {
-        let actualMessage = action.rawValue + "|" + String(data: message, encoding: .ascii)!
+    public func sign(withMessage message: String, forAction action: SignMethod) throws -> Data {
+        let actualMessage = action.rawValue + "|" + message
         return try authKey.sign(message: actualMessage)
     }
 }
