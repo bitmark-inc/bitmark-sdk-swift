@@ -99,7 +99,7 @@ public extension Account {
                                   accessibility: Accessibility = .publicAsset,
                                   propertyName name: String,
                                   propertyMetadata metadata: [String: String]? = nil,
-                                  toAccount recipient: String) throws -> Bool {
+                                  toAccount recipient: String) throws -> (Issue, Asset)? {
         let data = try Data(contentsOf: url)
         let fileName = url.lastPathComponent
         let network = self.authKey.network
@@ -119,7 +119,7 @@ public extension Account {
         
         if !uploadSuccess {
             print("Failed to upload assets")
-            return false
+            return nil
         }
         
         // Generate the bitmark issue object with the dedicated assets.
@@ -129,7 +129,7 @@ public extension Account {
         try issue.sign(privateKey: self.authKey)
         
         guard let bitmarkId = issue.txId else {
-            return false
+            return nil
         }
         
         // create session data for the receiver, and set session data from the `/v2/session` api.
@@ -138,7 +138,7 @@ public extension Account {
             let result = try api.updateSession(account: self, bitmarkId: bitmarkId, recipient: recipient, sessionData: sessionData, withIssue: issue)
             if result == false {
                 print("Fail to update session data")
-                return false
+                return nil
             }
         }
         
@@ -148,7 +148,12 @@ public extension Account {
         try transfer.set(to: try AccountNumber(address: recipient))
         try transfer.sign(privateKey: self.authKey)
         
-        return try api.issue(withIssues: [issue], assets: [asset], transfer: transfer)
+        let issueSuccess = try api.issue(withIssues: [issue], assets: [asset], transfer: transfer)
+        if !issueSuccess {
+            return nil
+        }
+        
+        return (issue, asset)
     }
     
     public func downloadAsset(bitmarkId: String, completion: ((Data?) -> Void)?) {

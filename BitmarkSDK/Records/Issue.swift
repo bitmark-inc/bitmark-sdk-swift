@@ -14,7 +14,7 @@ public struct Issue {
     private(set) var nonce: UInt64?
     private(set) var signature: Data?
     private(set) var isSigned = false
-    private(set) var txId: String?
+    private(set) public var txId: String?
     private(set) var owner: AccountNumber?
     
     // MARK:- Internal methods

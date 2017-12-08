@@ -15,7 +15,7 @@ public enum Accessibility: String {
 
 public struct Asset {
     
-    private(set) var id: String?
+    private(set) public var id: String?
     private(set) var name: String?
     private(set) var fingerprint: String?
     private(set) var metadata = ""

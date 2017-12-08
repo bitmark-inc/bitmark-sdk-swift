@@ -10,7 +10,7 @@ import Foundation
 
 public struct Transfer {
     
-    private(set) var txId: String?          // sha3_256 of the packed record
+    private(set) public var txId: String?          // sha3_256 of the packed record
     private(set) var preTxId: String?
     private(set) var owner: AccountNumber?        // address without checksum
     private(set) var preOwner: AccountNumber?
