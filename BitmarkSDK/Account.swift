@@ -52,8 +52,11 @@ public struct Account {
     // MARK:- Recover phrase
     
     public init(recoverPhrase phrases: [String]) throws {
-        let core = try RecoverPhrase.recoverSeed(fromPhrase: phrases)
-        try self.init(core: core)
+        let bytes = try RecoverPhrase.recoverSeed(fromPhrase: phrases)
+        let networkByte = bytes[0]
+        let network = networkByte == Network.livenet.addressValue ? Network.livenet : Network.testnet
+        let coreBytes = bytes.subdata(in: 1..<33)
+        try self.init(core: coreBytes, network: network)
     }
 
     public func getRecoverPhrase(withNetwork network: Network = Network.livenet) throws -> [String] {
