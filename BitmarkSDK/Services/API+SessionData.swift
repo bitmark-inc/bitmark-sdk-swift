@@ -76,7 +76,7 @@ extension API {
         let params = ["encryption_pubkey": account.encryptionKey.publicKey.hexEncodedString,
                       "signature": signature]
         
-        let requestURL = apiServerURL.appendingPathComponent("/v1/encryption_keys/" + account.accountNumber.string)
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v1/encryption_keys/" + account.accountNumber.string)
         
         var urlRequest = URLRequest(url: requestURL)
         urlRequest.httpMethod = "POST"
@@ -91,7 +91,7 @@ extension API {
     }
     
     func getEncryptionPublicKey(accountNumber: String) throws -> String? {
-        let urlString = "https://key.\(assetServerURL.host!)/\(accountNumber)"
+        let urlString = "https://key.\(endpoint.assetServerURL.host!)/\(accountNumber)"
         let requestURL = URL(string: urlString)!
         let urlRequest = URLRequest(url: requestURL)
         
@@ -107,7 +107,7 @@ extension API {
     }
     
     func updateSession(account: Account, bitmarkId: String, recipient: String, sessionData: SessionData, withIssue issue: Issue? = nil) throws -> Bool {
-        let requestURL = apiServerURL.appendingPathComponent("/v2/session")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v2/session")
         
         let params: [String: Any] = ["bitmark_id": bitmarkId,
                                      "owner": recipient,
@@ -133,7 +133,7 @@ extension API {
     }
     
     func getAssetAccess(account: Account, bitmarkId: String) throws -> AssetAccess? {
-        let requestURL = apiServerURL.appendingPathComponent("/v1/bitmarks/" + bitmarkId + "/asset")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v1/bitmarks/" + bitmarkId + "/asset")
         var urlRequest = URLRequest(url: requestURL)
         urlRequest.httpMethod = "GET"
         try urlRequest.signRequest(withAccount: account, action: "downloadAsset", resource: bitmarkId)

@@ -12,7 +12,7 @@ extension API {
     internal func transfer(withData transfer: Transfer) throws -> Bool {
         let json = try JSONSerialization.data(withJSONObject: transfer.getRPCParam(), options: [])
         
-        let requestURL = apiServerURL.appendingPathComponent("/v1/transfer")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v1/transfer")
         
         var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringCacheData)
         urlRequest.httpBody = json

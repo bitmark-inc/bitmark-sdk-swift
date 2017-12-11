@@ -13,7 +13,7 @@ internal extension API {
         var params = ["asset_id": assetId,
                       "accessibility": accessibility.rawValue]
         
-        let requestURL = apiServerURL.appendingPathComponent("/v1/assets")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v1/assets")
         
         var urlRequest: URLRequest
         var sessionData: SessionData?
@@ -42,7 +42,7 @@ internal extension API {
     }
 
     internal func downloadAsset(bitmarkId: String, completion: ((Data?) -> Void)?) {
-        let requestURL = apiServerURL.appendingPathComponent("/v1/bitmarks/" + bitmarkId + "/asset")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v1/bitmarks/" + bitmarkId + "/asset")
         var request = URLRequest(url: requestURL)
         request.httpMethod = "GET"
         

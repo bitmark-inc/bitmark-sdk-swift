@@ -8,25 +8,45 @@
 
 import Foundation
 
+public protocol APIEndpoint {
+    var apiServerURL: URL {get}
+    var assetServerURL: URL {get}
+}
+
+extension Network: APIEndpoint {
+    public var apiServerURL: URL {
+        switch self.name {
+        case "livenet":
+            return URL(string: "https://api.bitmark.com")!
+        case "testnet":
+            return URL(string: "https://api.test.bitmark.com")!
+        default:
+            return URL(string: "https://api.devel.bitmark.com")!
+        }
+    }
+    
+    public var assetServerURL: URL {
+        switch self.name {
+        case "livenet":
+            return URL(string: "https://assets.bitmark.com")!
+        case "testnet":
+            return URL(string: "https://assets.test.bitmark.com")!
+        default:
+            return URL(string: "https://assets.devel.bitmark.com")!
+        }
+    }
+}
+
 internal struct API {
-    let apiServerURL: URL
-    let assetServerURL: URL
+    let endpoint: APIEndpoint
     let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     
     init(network: Network) {
-        switch network.name {
-        case "livenet":
-            apiServerURL = URL(string: "https://api.bitmark.com")!
-            assetServerURL = URL(string: "https://assets.bitmark.com")!
-        case "testnet":
-            // TODO: should be testnet, just for the time developing the SDK
-            apiServerURL = URL(string: "https://api.devel.bitmark.com")!
-            assetServerURL = URL(string: "https://assets.devel.bitmark.com")!
-        default:
-            apiServerURL = URL(string: "https://api.devel.bitmark.com")!
-            assetServerURL = URL(string: "https://assets.devel.bitmark.com")!
-        }
-        
+        self.init(apiEndpoint: network)
+    }
+    
+     init(apiEndpoint: APIEndpoint) {
+        endpoint = apiEndpoint
     }
 }
 
@@ -44,20 +64,6 @@ internal extension URLRequest {
     }
 }
 
-internal extension API {
-    private static func endPoint(forNetwork network: Network) -> String {
-        switch network.name {
-        case "livenet":
-            return "https://api.bitmark.com"
-        case "testnet":
-            // TODO: should be testnet, just for the time developing the SDK
-            return "https://api.devel.bitmark.com"
-        default:
-            return "https://api.test.bitmark.com"
-        }
-    }
-}
-
 internal extension URLSession {
     
     func synchronousDataTask(with request: URLRequest) throws -> (data: Data?, response: HTTPURLResponse?) {
@@ -67,6 +73,18 @@ internal extension URLSession {
         var responseData: Data?
         var theResponse: URLResponse?
         var theError: Error?
+        
+        
+//        print("========================================================")
+//        print("Request for url: \(request.url!.absoluteURL)")
+//
+//        if let header = request.allHTTPHeaderFields {
+//            print("Request Header: \(header)")
+//        }
+//
+//        if let body = request.httpBody {
+//            print("Request Body: \(String(data: body, encoding: .ascii)!)")
+//        }
         
         dataTask(with: request) { (data, response, error) -> Void in
             responseData = data
@@ -82,6 +100,12 @@ internal extension URLSession {
         if let error = theError {
             throw error
         }
+        
+//        if let responseD = responseData {
+//            print("Resonpose Body: \(String(data: responseD, encoding: .ascii)!)")
+//        }
+//
+//        print("========================================================")
         
         return (data: responseData, response: theResponse as! HTTPURLResponse?)
         

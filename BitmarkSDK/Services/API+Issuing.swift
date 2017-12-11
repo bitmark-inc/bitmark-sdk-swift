@@ -26,7 +26,7 @@ extension API {
         
         let json = try JSONSerialization.data(withJSONObject: payload, options: [])
         
-        let requestURL = apiServerURL.appendingPathComponent("/v1/issue")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v1/issue")
         
         var urlRequest = URLRequest(url: requestURL)
         urlRequest.httpBody = json
