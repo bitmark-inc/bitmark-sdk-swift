@@ -24,20 +24,29 @@ public extension KeyType {
                                         seedLength: 32)
 }
 
-public struct Network {
+public struct Network: APIEndpoint {
     public let name: String
     public let addressValue: Int
-    public let kifValue: Int
+    
+    private(set) var apiServerURL: URL
+    private(set) var assetServerURL: URL
+    
+    public mutating func setEndpoint(api: URL, asset: URL) {
+        self.apiServerURL = api
+        self.assetServerURL = asset
+    }
 }
 
 public extension Network {
     public static let livenet = Network(name: "livenet",
                                         addressValue: 0x00,
-                                        kifValue: 0x00)
+                                        apiServerURL: URL(string: "https://api.bitmark.com")!,
+                                        assetServerURL: URL(string: "https://assets.bitmark.com")!)
     
     public static let testnet = Network(name: "testnet",
                                         addressValue: 0x01,
-                                        kifValue: 0x01)
+                                        apiServerURL: URL(string: "https://api.test.bitmark.com")!,
+                                        assetServerURL: URL(string: "https://assets.test.bitmark.com")!)
 }
 
 public struct Config {

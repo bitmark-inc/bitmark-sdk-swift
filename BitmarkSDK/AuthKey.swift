@@ -97,7 +97,7 @@ public struct AuthKey: AsymmetricKey {
         }
         
         let keyPartVal = UInt8(Config.KeyPart.privateKey)
-        let networkVal = UInt8(network.kifValue)
+        let networkVal = UInt8(network.addressValue)
         let keyTypeVal = UInt8(type.value)
         
         var keyVariantVal = (keyTypeVal << 3) | networkVal

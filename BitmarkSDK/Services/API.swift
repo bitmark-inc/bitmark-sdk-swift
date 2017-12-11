@@ -8,33 +8,9 @@
 
 import Foundation
 
-public protocol APIEndpoint {
+protocol APIEndpoint {
     var apiServerURL: URL {get}
     var assetServerURL: URL {get}
-}
-
-extension Network: APIEndpoint {
-    public var apiServerURL: URL {
-        switch self.name {
-        case "livenet":
-            return URL(string: "https://api.bitmark.com")!
-        case "testnet":
-            return URL(string: "https://api.test.bitmark.com")!
-        default:
-            return URL(string: "https://api.devel.bitmark.com")!
-        }
-    }
-    
-    public var assetServerURL: URL {
-        switch self.name {
-        case "livenet":
-            return URL(string: "https://assets.bitmark.com")!
-        case "testnet":
-            return URL(string: "https://assets.test.bitmark.com")!
-        default:
-            return URL(string: "https://assets.devel.bitmark.com")!
-        }
-    }
 }
 
 internal struct API {
