@@ -135,6 +135,21 @@ public extension Account {
         // create session data for the receiver, and set session data from the `/v2/session` api.
         if let sessionData = sessionData,
             accessibility == .privateAsset {
+            
+            let senderEncryptionPublicKey = self.encryptionKey.publicKey.hexEncodedString
+            
+            let assetEnryption = try AssetEncryption.encryptionKey(fromSessionData: sessionData,
+                                                                   account: self,
+                                                                   senderEncryptionPublicKey: senderEncryptionPublicKey.hexDecodedData,
+                                                                   senderAuthPublicKey: self.authKey.publicKey)
+            
+            guard let recipientEncrPubkey = try api.getEncryptionPublicKey(accountNumber: recipient) else {
+                return nil
+            }
+            
+            let sessionData = try SessionData.createSessionData(account: self,
+                                                                sessionKey: assetEnryption.key, forRecipient: recipientEncrPubkey.hexDecodedData)
+            
             let result = try api.updateSession(account: self, bitmarkId: bitmarkId, recipient: recipient, sessionData: sessionData, withIssue: issue)
             if result == false {
                 print("Fail to update session data")
