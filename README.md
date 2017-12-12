@@ -95,8 +95,6 @@ To issue bitmarks on an asset, first you have to decide the accessibility of the
 | encryption    | NO        | YES                                      |
 | access right  | every one | the issuer and the current bitmark owner |
 
-Currently, `private` is not supported yet.
-
 ```swift
 let fileURL = Bundle.main.url(forResource: "test", withExtension: ".txt")! // the file path to the asset
 
@@ -142,10 +140,35 @@ do {
 catch let e {
     print(e)
 }
-
 ```
 
 After the bitmark is successfully transferred, you'll get an ID of this transaction.
+
+### How to issue and then transfer the asset right away?
+
+```swift
+let fileURL = Bundle.main.url(forResource: "test", withExtension: ".txt")! // the file path to the asset
+
+do {
+    let account = try Account(fromSeed: "5XEECttxvRBzxzAmuV4oh6T1FcQu4mBg8eWd9wKbf8hweXsfwtJ8sfH")
+
+    let accessibility = Accessibility.publicAsset
+    let propertyName = "bitmark swift sdk demo" // the name of the asset to be registered on the blockchain
+    let propertyMetadata = ["author": "Bitmark Inc. developers"] // the metadata of the asset to be registered on the blockchain
+    let quantity = 1 // the amount of bitmarks to be issued
+
+    try accountA.issueThenTransfer(assetFile: fileURL,
+                                accessibility: accessibility,
+                                propertyName: propertyName,
+                                propertyMetadata: propertyMetadata,
+                                toAccount: accountB.accountNumber.string)
+}
+catch let e {
+    print(e)
+}
+```
+
+After the bitmark is successfully submitted to server, it will automatically issue the bitmark, then wait for the issue to be confirmed, and transfer it to the receiver.
 
 ### Download your assets
 
