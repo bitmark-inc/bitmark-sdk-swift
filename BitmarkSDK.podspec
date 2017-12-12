@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name = "BitmarkSDK"
-  spec.version = "0.0.4"
-  spec.summary = "Bitmark library write on Swift."
+  spec.version = "0.0.5"
+  spec.summary = "Bitmark library written in Swift."
   spec.homepage = "https://github.com/bitmark-inc/bitmark-sdk-swift"
   spec.license = 'MIT'
   spec.authors = { "Bitmark Inc" => 'support@bitmark.com' }
