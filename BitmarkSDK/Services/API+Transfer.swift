@@ -27,23 +27,4 @@ extension API {
         
         return 200..<300 ~= res.statusCode
     }
-    
-    internal func transfer2Sig(withData transfer: CountersignedTransferRecord) throws -> Bool {
-        let json = try JSONSerialization.data(withJSONObject: transfer.getRPCParam(), options: [])
-        
-        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v1/transfer")
-        
-        var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringCacheData)
-        urlRequest.httpBody = json
-        urlRequest.httpMethod = "POST"
-        
-        let (result, response) = try urlSession.synchronousDataTask(with: urlRequest)
-        
-        guard let r = result,
-            let res = response else {
-                return false
-        }
-        
-        return 200..<300 ~= res.statusCode
-    }
 }
