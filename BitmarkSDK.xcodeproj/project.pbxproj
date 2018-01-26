@@ -37,6 +37,7 @@
 		588C5BC71F9DC5D400ADB619 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588C5BC61F9DC5D400ADB619 /* Account.swift */; };
 		588C5BCB1F9DCBA400ADB619 /* RecoverPhrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588C5BCA1F9DCBA400ADB619 /* RecoverPhrase.swift */; };
 		588C5BCD1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588C5BCC1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift */; };
+		58AF84322019D99600E5B40F /* API+BItmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AF84312019D99600E5B40F /* API+BItmark.swift */; };
 		58C097091F8DBA3D0001EE55 /* Seed_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */; };
 		58C0970B1F8DF5E80001EE55 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0970A1F8DF5E80001EE55 /* FileUtil.swift */; };
 		58D54C061FB5B12400372CB7 /* Chacha20Poly1305.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D54C051FB5B12400372CB7 /* Chacha20Poly1305.swift */; };
@@ -104,6 +105,7 @@
 		588C5BC61F9DC5D400ADB619 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		588C5BCA1F9DCBA400ADB619 /* RecoverPhrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPhrase.swift; sourceTree = "<group>"; };
 		588C5BCC1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecoverPhrase+Dic.swift"; sourceTree = "<group>"; };
+		58AF84312019D99600E5B40F /* API+BItmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+BItmark.swift"; sourceTree = "<group>"; };
 		58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seed_Tests.swift; sourceTree = "<group>"; };
 		58C0970A1F8DF5E80001EE55 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
 		58D54C051FB5B12400372CB7 /* Chacha20Poly1305.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chacha20Poly1305.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				58182CAF1FA72B7200EB5BE4 /* API+Assets.swift */,
 				58182CB11FA81BC100EB5BE4 /* API+Transfer.swift */,
 				583A22F81FAACB3F007CEAE3 /* API+SessionData.swift */,
+				58AF84312019D99600E5B40F /* API+BItmark.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				58182CB41FA8293000EB5BE4 /* Account+Services.swift in Sources */,
 				58E2D5B91E0A39AD0014F011 /* ModelEquatable.swift in Sources */,
 				5818FE2B1E0391CF007F082D /* Base58.swift in Sources */,
+				58AF84322019D99600E5B40F /* API+BItmark.swift in Sources */,
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
 				588C5BCD1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift in Sources */,
 				5812655A1E0B704800D6DF32 /* Asset.swift in Sources */,

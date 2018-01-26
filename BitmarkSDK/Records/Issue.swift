@@ -26,7 +26,7 @@ public struct Issue {
     
     internal func packRecord() -> Data {
         var txData: Data
-        txData = Data.varintFrom(Config.IssueConfig.value)
+        txData = Data.varintFrom(Config.issueTag)
         txData = BinaryPacking.append(toData: txData, withData: self.asset?.id?.hexDecodedData)
         txData = BinaryPacking.append(toData: txData, withData: self.owner?.pack())
         

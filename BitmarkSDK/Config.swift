@@ -71,13 +71,9 @@ public struct Config {
         static let maxFingerprint = 1024
     }
     
-    struct IssueConfig {
-        static let value = 0x03
-    }
-    
-    struct TransferConfig {
-        static let value = 0x04
-    }
+    static let issueTag = 0x03
+    static let transferUnratifiedTag = 0x04
+    static let transferCountersignedTag = 0x05
     
     // MARK:- Currency
     struct CurrencyConfig {

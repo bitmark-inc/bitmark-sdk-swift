@@ -27,13 +27,20 @@ do {
 //        print(success)
 //    })
 
-    let accessibility = Accessibility.privateAsset
+    let accessibility = Accessibility.publicAsset
     let propertyName = "Test Bitmark SDK" // the name of the asset to be registered on the blockchain
     let propertyMetadata = ["author": "Anh Nguyen"] // the metadata of the asset to be registered on the blockchain
     let quantity = 2 // the amount of bitmarks to be issued
     
 //    let result = try accountA.issueBitmarks(assetFile: fileURL, accessibility: accessibility, propertyName: propertyName, propertyMetadata: propertyMetadata, quantity: quantity)
-    // [{"txId":"b4a1dd1cff268483db396016aa255330a91b922b96958a7059b5749fa92d21b0"},{"txId":"b706b45f41ca4b3445603614d3286cdf18094c831c76fb679a2e63343bae1fc5"}]
+//    print(result!.0.map(({ (issue) -> String in
+//        return issue.txId!
+//    })))
+//    ["814013b19de56699ebe0aaf9fd301637a1af467828e25df8c1c811bff4436ade", "dc646d42a382f6b014e8aa396250dfefafa7cc61d0db9231af17b21dd80cf3e4"]
+    
+    let signOffer = try accountA.createTransferOffer(bitmarkId: "814013b19de56699ebe0aaf9fd301637a1af467828e25df8c1c811bff4436ade", recipient: accountB.accountNumber.string)
+    print(signOffer!)
+
     // ======================= Encrypt with session key: daa538069499aab138563cdf3a3cd5ccd6a746696b7dfdba86ea00fcc2ece125
 
 //    accountA.issueBitmarks(assetFile: fileURL,
@@ -94,7 +101,7 @@ do {
 //    let decyptedText = try Chacha20Poly1305.open(withKey: key, nonce: nonce, cipherText: cipheraaa, additionalData: nil)
 //    print(decyptedText.hexEncodedString)
     
-    try accountA.issueThenTransfer(assetFile: fileURL, accessibility: accessibility, propertyName: propertyName, propertyMetadata: propertyMetadata, toAccount: "fDyVczbiJstgno27j5VTy4UKHz1q5XEWUsQXFzimwkm7tiQ5ug")
+//    try accountA.issueThenTransfer(assetFile: fileURL, accessibility: accessibility, propertyName: propertyName, propertyMetadata: propertyMetadata, toAccount: "fDyVczbiJstgno27j5VTy4UKHz1q5XEWUsQXFzimwkm7tiQ5ug")
 }
 catch let e {
     print(e)

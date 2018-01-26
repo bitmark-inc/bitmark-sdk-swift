@@ -27,7 +27,7 @@ public struct Transfer {
     
     internal func packRecord() -> Data {
         var txData: Data
-        txData = Data.varintFrom(Config.TransferConfig.value)
+        txData = Data.varintFrom(Config.transferUnratifiedTag)
         txData = BinaryPacking.append(toData: txData, withData: self.preTxId?.hexDecodedData)
         
         if let payment = self.payment {
@@ -136,4 +136,78 @@ public struct Payment {
     let address: String
     let amount: Int
     
+}
+
+public struct TransferOffer {
+    internal(set) var txId: String
+    internal(set) var payment: Payment? = nil
+    internal(set) var receiver: AccountNumber
+    private(set) var signature: Data? = nil
+    
+    public init(txId: String, payment: Payment? = nil, receiver: AccountNumber, signature: Data? = nil) {
+        self.txId = txId
+        self.payment = payment
+        self.receiver = receiver
+        self.signature = signature
+    }
+    
+    internal func packRecord() -> Data {
+        var txData: Data
+        txData = Data.varintFrom(Config.transferCountersignedTag)
+        txData = BinaryPacking.append(toData: txData, withData: self.txId.hexDecodedData)
+        
+        if let payment = self.payment {
+            txData += Data(bytes: [0x01])
+            txData += Data.varintFrom(payment.currencyCode)
+            txData = BinaryPacking.append(toData: txData, withString: payment.address)
+            txData += Data.varintFrom(payment.amount)
+        }
+        else {
+            txData += Data(bytes: [0x00])
+        }
+        
+        txData = BinaryPacking.append(toData: txData, withData: self.receiver.pubKey)
+        
+        return txData
+    }
+    
+    internal mutating func sign(withSender senderAccount: Account) throws {
+        let pack = self.packRecord()
+        self.signature = try senderAccount.authKey.sign(message: pack)
+    }
+}
+
+public struct CountersignedTransferRecord {
+    internal(set) var offer: TransferOffer
+    private(set) var counterSignature: Data? = nil
+    
+    public init(offer: TransferOffer) {
+        self.offer = offer
+    }
+    
+    internal func packRecord() -> Data {
+        var txData: Data
+        txData = Data.varintFrom(Config.transferCountersignedTag)
+        txData = BinaryPacking.append(toData: txData, withData: offer.txId.hexDecodedData)
+        
+        if let payment = offer.payment {
+            txData += Data(bytes: [0x01])
+            txData += Data.varintFrom(payment.currencyCode)
+            txData = BinaryPacking.append(toData: txData, withString: payment.address)
+            txData += Data.varintFrom(payment.amount)
+        }
+        else {
+            txData += Data(bytes: [0x00])
+        }
+        
+        txData = BinaryPacking.append(toData: txData, withData: offer.receiver.pubKey)
+        txData = BinaryPacking.append(toData: txData, withData: offer.signature)
+        
+        return txData
+    }
+    
+    internal mutating func sign(withReceiver receiverAccount: Account) throws {
+        let pack = self.packRecord()
+        self.counterSignature = try receiverAccount.authKey.sign(message: pack)
+    }
 }

@@ -182,4 +182,57 @@ public extension Account {
         let api = API(network: network)
         return try api.registerEncryptionPublicKey(forAccount: self)
     }
+    
+    public func createTransferOffer(bitmarkId: String, recipient: String) throws -> TransferOffer? {
+        let network = self.authKey.network
+        let api = API(network: network)
+        
+        // Get asset's access information
+        guard let assetAccess = try api.getAssetAccess(account: self, bitmarkId: bitmarkId) else {
+            return nil
+        }
+
+        if assetAccess.sessionData != nil {
+            let senderEncryptionPublicKey = self.encryptionKey.publicKey.hexEncodedString
+
+            let assetEnryption = try AssetEncryption.encryptionKey(fromSessionData: assetAccess.sessionData!,
+                                                                   account: self,
+                                                                   senderEncryptionPublicKey: senderEncryptionPublicKey.hexDecodedData,
+                                                                   senderAuthPublicKey: self.authKey.publicKey)
+
+            guard let recipientEncrPubkey = try api.getEncryptionPublicKey(accountNumber: recipient) else {
+                return nil
+            }
+
+            let sessionData = try SessionData.createSessionData(account: self,
+                                                                sessionKey: assetEnryption.key, forRecipient: recipientEncrPubkey.hexDecodedData)
+
+            let result = try api.updateSession(account: self, bitmarkId: bitmarkId, recipient: recipient, sessionData: sessionData)
+            if result == false {
+                print("Fail to update session data")
+                return nil
+            }
+        }
+        
+        guard let bitmarkInfo = try api.bitmarkInfo(bitmarkId: bitmarkId) else {
+            return nil
+        }
+        
+        var transfer = TransferOffer(txId: bitmarkInfo.headId, receiver: try AccountNumber(address: recipient))
+        try transfer.sign(withSender: self)
+        
+        return transfer;
+    }
+    
+    public func createSignForTransferOffer(offer: TransferOffer) throws -> CountersignedTransferRecord {
+        var counterSign = CountersignedTransferRecord(offer: offer)
+        try counterSign.sign(withReceiver: self)
+        return counterSign
+    }
+    
+    public func signForTransferOffer(offer: TransferOffer) throws {
+        var counterSign = CountersignedTransferRecord(offer: offer)
+        try counterSign.sign(withReceiver: self)
+        return counterSign
+    }
 }

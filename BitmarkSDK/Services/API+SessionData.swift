@@ -42,7 +42,7 @@ extension SessionData {
 
 struct AssetAccess {
     let url: String
-    let sender: String
+    let sender: String?
     let sessionData: SessionData?
 }
 
@@ -57,8 +57,8 @@ extension AssetAccess: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: AssetAccessKeys.self)
         self.init(url: try container.decode(String.self, forKey: AssetAccessKeys.url),
-                  sender: try container.decode(String.self, forKey: AssetAccessKeys.sender),
-                  sessionData: try container.decode(SessionData?.self, forKey: AssetAccessKeys.sessionData))
+                  sender: try? container.decode(String.self, forKey: AssetAccessKeys.sender),
+                  sessionData: try? container.decode(SessionData.self, forKey: AssetAccessKeys.sessionData))
     }
     
     func encode(to encoder: Encoder) throws {
