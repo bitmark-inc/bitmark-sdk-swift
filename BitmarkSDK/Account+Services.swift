@@ -229,10 +229,4 @@ public extension Account {
         try counterSign.sign(withReceiver: self)
         return counterSign
     }
-    
-    public func signForTransferOffer(offer: TransferOffer) throws {
-        var counterSign = CountersignedTransferRecord(offer: offer)
-        try counterSign.sign(withReceiver: self)
-        return counterSign
-    }
 }
