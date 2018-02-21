@@ -11,6 +11,15 @@ Pod::Spec.new do |spec|
   spec.requires_arc = true
   spec.source = { :git => 'https://github.com/bitmark-inc/bitmark-sdk-swift.git', :tag => spec.version }
   spec.source_files = 'BitmarkSDK/**/*.{h,swift}'
+  spec.ios.vendored_library    = 'BitmarkSDK/libsodium/libsodium-ios.a'
+  spec.osx.vendored_library    = 'BitmarkSDK/libsodium/libsodium-osx.a'
+  spec.private_header_files = 'BitmarkSDK/libsodium/*.h'
+  spec.preserve_paths = 'BitmarkSDK/libsodium/module.modulemap'
+  spec.pod_target_xcconfig = {
+    'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/BitmarkSDK/libsodium',
+  }
+
+  spec.requires_arc = true
 
   spec.dependency "BigInt"
   spec.dependency "CryptoSwift"
