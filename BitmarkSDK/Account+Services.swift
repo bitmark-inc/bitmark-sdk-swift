@@ -70,8 +70,7 @@ public extension Account {
             
             let assetEnryption = try AssetEncryption.encryptionKey(fromSessionData: assetAccess.sessionData!,
                                                                    account: self,
-                                                                   senderEncryptionPublicKey: senderEncryptionPublicKey.hexDecodedData,
-                                                                   senderAuthPublicKey: self.authKey.publicKey)
+                                                                   senderEncryptionPublicKey: senderEncryptionPublicKey.hexDecodedData)
             
             guard let recipientEncrPubkey = try api.getEncryptionPublicKey(accountNumber: recipient) else {
                 return false
@@ -140,8 +139,7 @@ public extension Account {
             
             let assetEnryption = try AssetEncryption.encryptionKey(fromSessionData: sessionData,
                                                                    account: self,
-                                                                   senderEncryptionPublicKey: senderEncryptionPublicKey.hexDecodedData,
-                                                                   senderAuthPublicKey: self.authKey.publicKey)
+                                                                   senderEncryptionPublicKey: senderEncryptionPublicKey.hexDecodedData)
             
             guard let recipientEncrPubkey = try api.getEncryptionPublicKey(accountNumber: recipient) else {
                 return nil
@@ -171,10 +169,28 @@ public extension Account {
         return (issue, asset)
     }
     
-    public func downloadAsset(bitmarkId: String, completion: ((Data?) -> Void)?) {
+    public func downloadAsset(bitmarkId: String) throws -> (String?, Data?) {
         let network = self.authKey.network
         let api = API(network: network)
-        api.downloadAsset(bitmarkId: bitmarkId, completion: completion)
+        guard let access = try api.getAssetAccess(account: self, bitmarkId: bitmarkId) else {
+            return (nil, nil)
+        }
+        
+        let r = try api.getAssetContent(url: access.url)
+        guard let content = r.1 else {
+                return (nil, nil)
+        }
+        let filename = r.0
+        
+        guard let sessionData = access.sessionData,
+            let sender = access.sender else {
+                return (filename, content)
+        }
+        
+        let senderEncryptionPublicKey = try api.getEncryptionPublicKey(accountNumber: sender)
+        let dataKey = try AssetEncryption.encryptionKey(fromSessionData: sessionData, account: self, senderEncryptionPublicKey: senderEncryptionPublicKey!.hexDecodedData)
+        let decryptedData = try dataKey.decypt(data: content)
+        return (filename, decryptedData)
     }
     
     public func registerPublicEncryptionKey() throws -> Bool {
@@ -197,8 +213,7 @@ public extension Account {
 
             let assetEnryption = try AssetEncryption.encryptionKey(fromSessionData: assetAccess.sessionData!,
                                                                    account: self,
-                                                                   senderEncryptionPublicKey: senderEncryptionPublicKey.hexDecodedData,
-                                                                   senderAuthPublicKey: self.authKey.publicKey)
+                                                                   senderEncryptionPublicKey: senderEncryptionPublicKey.hexDecodedData)
 
             guard let recipientEncrPubkey = try api.getEncryptionPublicKey(accountNumber: recipient) else {
                 return nil
