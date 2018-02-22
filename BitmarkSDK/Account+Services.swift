@@ -14,7 +14,7 @@ public extension Account {
                               accessibility: Accessibility = .publicAsset,
                               propertyName name: String,
                               propertyMetadata metadata: [String: String]? = nil,
-                              quantity: Int = 1) throws -> ([Issue], Asset)? {
+                              quantity: Int = 1) throws -> ([Issue], Asset) {
         let data = try Data(contentsOf: url)
         let fileName = url.lastPathComponent
         let network = self.authKey.network
@@ -42,13 +42,12 @@ public extension Account {
         let (_, uploadSuccess) = try api.uploadAsset(data: data, fileName: fileName, assetId: asset.id!, accessibility: accessibility, fromAccount: self)
         
         if !uploadSuccess {
-            print("Failed to upload assets")
-            return nil
+            throw("Failed to upload assets")
         }
         
         let issueSuccess = try api.issue(withIssues: issues, assets: [asset])
         if !issueSuccess {
-            return nil
+            throw("Fail to issue bitmark")
         }
         
         return (issues, asset)
