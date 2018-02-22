@@ -199,13 +199,13 @@ public extension Account {
         return try api.registerEncryptionPublicKey(forAccount: self)
     }
     
-    public func createTransferOffer(bitmarkId: String, recipient: String) throws -> TransferOffer? {
+    public func createTransferOffer(bitmarkId: String, recipient: String) throws -> TransferOffer {
         let network = self.authKey.network
         let api = API(network: network)
         
         // Get asset's access information
         guard let assetAccess = try api.getAssetAccess(account: self, bitmarkId: bitmarkId) else {
-            return nil
+            throw("Fail to get asset's access")
         }
 
         if assetAccess.sessionData != nil {
@@ -216,7 +216,7 @@ public extension Account {
                                                                    senderEncryptionPublicKey: senderEncryptionPublicKey.hexDecodedData)
 
             guard let recipientEncrPubkey = try api.getEncryptionPublicKey(accountNumber: recipient) else {
-                return nil
+                throw("Fail to parse receiver's encryption public key")
             }
 
             let sessionData = try SessionData.createSessionData(account: self,
@@ -224,13 +224,12 @@ public extension Account {
 
             let result = try api.updateSession(account: self, bitmarkId: bitmarkId, recipient: recipient, sessionData: sessionData)
             if result == false {
-                print("Fail to update session data")
-                return nil
+                throw("Fail to update session data")
             }
         }
         
         guard let bitmarkInfo = try api.bitmarkInfo(bitmarkId: bitmarkId) else {
-            return nil
+            throw("Fail to get bitmark info")
         }
         
         var transfer = TransferOffer(txId: bitmarkInfo.headId, receiver: try AccountNumber(address: recipient))
@@ -244,4 +243,17 @@ public extension Account {
         try counterSign.sign(withReceiver: self)
         return counterSign
     }
+    
+    public func processTransferOffer(offer: TransferOffer) throws -> String {
+        let countersign = try createSignForTransferOffer(offer: offer)
+        
+        let network = self.authKey.network
+        let api = API(network: network)
+        
+        return try api.transfer(withData: countersign)
+    }
+}
+
+extension String: Error {
+    
 }
