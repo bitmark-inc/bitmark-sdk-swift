@@ -208,9 +208,11 @@ public extension Account {
         }
 
         if assetAccess.sessionData != nil {
-            guard let sender = assetAccess.sender,
-                let senderEncryptionPublicKey = try api.getEncryptionPublicKey(accountNumber: sender) else {
-                    throw("Cannot get public key encryption information of sender")
+            var senderEncryptionPublicKey = self.encryptionKey.publicKey.hexEncodedString
+            
+            if let sender = assetAccess.sender,
+             let senderEncryptionPublicKeyFromAPI = try api.getEncryptionPublicKey(accountNumber: sender) {
+                senderEncryptionPublicKey = senderEncryptionPublicKeyFromAPI
             }
 
             let assetEnryption = try AssetEncryption.encryptionKey(fromSessionData: assetAccess.sessionData!,
