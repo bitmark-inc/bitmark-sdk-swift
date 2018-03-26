@@ -97,7 +97,7 @@ public extension Account {
                                   accessibility: Accessibility = .publicAsset,
                                   propertyName name: String,
                                   propertyMetadata metadata: [String: String]? = nil,
-                                  toAccount recipient: String) throws -> (Issue, TransferOffer, Asset)? {
+                                  toAccount recipient: String) throws -> (SessionData?, TransferOffer) {
         let data = try Data(contentsOf: url)
         let fileName = url.lastPathComponent
         let network = self.authKey.network
@@ -116,8 +116,7 @@ public extension Account {
         let (sessionData, uploadSuccess) = try api.uploadAsset(data: data, fileName: fileName, assetId: asset.id!, accessibility: accessibility, fromAccount: self)
         
         if !uploadSuccess {
-            print("Failed to upload assets")
-            return nil
+            throw("Failed to upload assets")
         }
         
         // Generate the bitmark issue object with the dedicated assets.
@@ -126,8 +125,13 @@ public extension Account {
         issue.set(asset: asset)
         try issue.sign(privateKey: self.authKey)
         
+        let issueSuccess = try api.issue(withIssues: [issue], assets: [asset])
+        if !issueSuccess {
+            throw("Fail to issue bitmark")
+        }
+        
         guard let bitmarkId = issue.txId else {
-            return nil
+            throw("Fail to get bitmark id")
         }
         
         if let sessionData = sessionData {
@@ -138,7 +142,7 @@ public extension Account {
         var transfer = TransferOffer(txId: bitmarkId, receiver: try AccountNumber(address: recipient))
         try transfer.sign(withSender: self)
         
-        return (issue, transfer, asset)
+        return (sessionData, transfer)
     }
     
     public func downloadAsset(bitmarkId: String) throws -> (String?, Data?) {
