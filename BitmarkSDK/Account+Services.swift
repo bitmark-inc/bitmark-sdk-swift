@@ -199,14 +199,32 @@ public extension Account {
         return transfer;
     }
     
-    public func createSignForTransferOffer(offer: TransferOffer) throws -> CountersignedTransferRecord {
+    public func createAndSubmitTransferOffer(bitmarkId: String, recipient: String) throws -> String {
+        let network = self.authKey.network
+        let api = API(network: network)
+        
+        let offer = try createTransferOffer(bitmarkId: bitmarkId, recipient: recipient)
+        
+        return try api.submitTransferOffer(withSender: self, offer: offer, extraInfo: nil)
+    }
+    
+    public func createCounterSign(offer: TransferOffer) throws -> CountersignedTransferRecord {
         var counterSign = CountersignedTransferRecord(offer: offer)
         try counterSign.sign(withReceiver: self)
         return counterSign
     }
     
+    public func signForTransferOfferAndSubmit(offerId: String, offer: TransferOffer, action: String) throws -> String {
+        let network = self.authKey.network
+        let api = API(network: network)
+        
+        let counterSign = try createCounterSign(offer: offer)
+        
+        return try api.completeTransferOffer(withAccount: self, offerId: offerId, action: action, counterSignature: counterSign.counterSignature!.hexEncodedString)
+    }
+    
     public func processTransferOffer(offer: TransferOffer) throws -> String {
-        let countersign = try createSignForTransferOffer(offer: offer)
+        let countersign = try createCounterSign(offer: offer)
         
         let network = self.authKey.network
         let api = API(network: network)

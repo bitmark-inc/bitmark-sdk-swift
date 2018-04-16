@@ -16,6 +16,6 @@ class Utils_Tests: XCTestCase {
     }
     
     func testTimeStampLength() {
-        XCTAssertEqual(Common.timeStamp().count, 13)
+        XCTAssertEqual(Common.timestamp().count, 13)
     }
 }
