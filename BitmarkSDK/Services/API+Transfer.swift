@@ -82,7 +82,7 @@ extension API {
         }
         
         let responseData = try JSONDecoder().decode([String: String].self, from: data)
-        guard let offerId = responseData[0]["offer_id"] else {
+        guard let offerId = responseData["offer_id"] else {
             throw("Invalid response from gateway server")
         }
         
