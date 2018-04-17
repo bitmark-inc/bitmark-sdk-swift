@@ -151,7 +151,7 @@ public extension Account {
                                              propertyName name: String,
                                              propertyMetadata metadata: [String: String]? = nil,
                                              toAccount recipient: String,
-                                             extraInfo: [String: Any]? = nil) throws -> Bool {
+                                             extraInfo: [String: Any]? = nil) throws -> String {
         let data = try Data(contentsOf: url)
         let fileName = url.lastPathComponent
         let network = self.authKey.network
@@ -179,11 +179,6 @@ public extension Account {
         issue.set(asset: asset)
         try issue.sign(privateKey: self.authKey)
         
-//        let issueSuccess = try api.issue(withIssues: [issue], assets: [asset])
-//        if !issueSuccess {
-//            throw("Fail to issue bitmark")
-//        }
-        
         guard let bitmarkId = issue.txId else {
             throw("Fail to get bitmark id")
         }
@@ -197,7 +192,12 @@ public extension Account {
         var transfer = TransferOffer(txId: bitmarkId, receiver: try AccountNumber(address: recipient))
         try transfer.sign(withSender: self)
         
-        return try api.issueV2(withAccount: self, issues: [issue], assets: [asset], transferOffer: transfer, sessionData: newSessionData, extraInfo: extraInfo)
+        let ressult = try api.issueV2(withAccount: self, issues: [issue], assets: [asset], transferOffer: transfer, sessionData: newSessionData, extraInfo: extraInfo)
+        if !ressult {
+            throw("fail to give away issue")
+        }
+        
+        return bitmarkId
     }
     
     public func downloadAsset(bitmarkId: String) throws -> (String?, Data?) {
