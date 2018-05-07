@@ -8,6 +8,11 @@
 
 import Foundation
 
+public enum TransferOfferAction: String {
+    case accept = "accept"
+    case reject = "reject"
+}
+
 public extension Account {
     
     public func issueBitmarks(assetFile url: URL,
@@ -252,6 +257,17 @@ public extension Account {
         var counterSign = CountersignedTransferRecord(offer: offer)
         try counterSign.sign(withReceiver: self)
         return counterSign
+    }
+    
+    public func signForTransferOfferAndSubmit(offerId: String, action: TransferOfferAction) throws -> Bool {
+        let network = self.authKey.network
+        let api = API(network: network)
+        
+        let offer = try api.getTransferOffer(withId: offerId)
+        
+        let counterSign = try createCounterSign(offer: offer)
+        
+        return try api.completeTransferOffer(withAccount: self, offerId: offerId, action: action.rawValue, counterSignature: counterSign.counterSignature!.hexEncodedString)
     }
     
     public func signForTransferOfferAndSubmit(offerId: String, offer: TransferOffer, action: String) throws -> Bool {
