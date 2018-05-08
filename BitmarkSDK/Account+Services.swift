@@ -253,6 +253,20 @@ public extension Account {
         return try api.submitTransferOffer(withSender: self, offer: offer, extraInfo: extraInfo)
     }
     
+    public func cancelTransferOffer(offerId: String) throws -> Bool {
+        let network = self.authKey.network
+        let api = API(network: network)
+        
+        let offer = try api.getTransferOffer(withId: offerId)
+        
+        let counterSign = try createCounterSign(offer: offer)
+        
+        return try api.completeTransferOffer(withAccount: self,
+                                             offerId: offerId,
+                                             action: "cancel",
+                                             counterSignature: counterSign.counterSignature!.hexEncodedString)
+    }
+    
     public func createCounterSign(offer: TransferOffer) throws -> CountersignedTransferRecord {
         var counterSign = CountersignedTransferRecord(offer: offer)
         try counterSign.sign(withReceiver: self)

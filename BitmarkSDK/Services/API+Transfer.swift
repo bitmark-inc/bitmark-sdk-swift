@@ -138,10 +138,10 @@ extension API {
         }
         
         guard let offerInfo = responseData["offer"] as? [String: Any],
-            let record = offerInfo["record"] as? [String: String],
-            let link = record["link"],
-            let owner = record["owner"],
-            let signature = record["signature"] else {
+            let record = offerInfo["record"] as? [String: Any],
+            let link = record["link"] as? String,
+            let owner = record["owner"] as? String,
+            let signature = record["signature"] as? String else {
                 throw("Invalid response from gateway server")
         }
         
