@@ -23,7 +23,7 @@ public class Common {
     static func getNetwork(byAddressValue value: UInt64) -> Network? {
         
         for network in Config.networks {
-            if network.addressValue == value {
+            if network.rawValue == value {
                 return network
             }
         }

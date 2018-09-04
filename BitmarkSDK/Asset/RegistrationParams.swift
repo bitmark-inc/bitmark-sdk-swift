@@ -8,20 +8,15 @@
 
 import Foundation
 
-public enum Accessibility: String {
-    case publicAsset = "public"
-    case privateAsset = "private"
-}
-
-public struct Asset {
+public struct RegistrationParams {
     
-    private(set) public var id: String?
-    private(set) var name: String?
-    private(set) var fingerprint: String?
-    private(set) var metadata = ""
-    private(set) var registrant: AccountNumber?
-    private(set) var signature: Data?
-    private(set) var isSigned = false
+    internal(set) public var id: String?
+    var name: String?
+    var fingerprint: String?
+    var metadata = ""
+    var registrant: AccountNumber?
+    var signature: Data?
+    var isSigned = false
     
     static let metadataSeparator = "\u{0000}"
     
@@ -88,8 +83,8 @@ public struct Asset {
     public init() {}
     
     public mutating func set(metadata: [String: String]) throws {
-        let metaDataString = Asset.convertString(fromMetadata: metadata)
-        if !Asset.isValidLength(metadata: metaDataString) {
+        let metaDataString = RegistrationParams.convertString(fromMetadata: metadata)
+        if !RegistrationParams.isValidLength(metadata: metaDataString) {
             throw(BMError("meta data's length must be in correct length"))
         }
         self.metadata = metaDataString
@@ -114,18 +109,20 @@ public struct Asset {
     }
     
     public mutating func set(metadata: String) throws {
-        let meta = try Asset.convertMetadata(fromString: metadata)
+        let meta = try RegistrationParams.convertMetadata(fromString: metadata)
         try set(metadata: meta)
     }
-    
-    public mutating func sign(withPrivateKey privateKey: AuthKey) throws {
+}
+
+extension RegistrationParams: Parameterizable {
+    mutating func sign(_ signable: KeypairSignable) throws {
         if self.name == nil {
             throw(BMError("Asset error: missing name"))
         }
         if self.fingerprint == nil {
             throw(BMError("Asset error: missing fingerprint"))
         }
-        self.registrant = privateKey.address
+        self.registrant = signable.publicKey
         self.signature = try Ed25519.getSignature(message: self.packRecord(), privateKey: privateKey.privateKey)
         guard let id = computeAssetId(fingerprint: self.fingerprint) else {
             resetSignState()
@@ -135,11 +132,24 @@ public struct Asset {
         self.isSigned = true
     }
     
-
-}
-
-extension Asset {
-    public func getRPCParam() throws -> [String : Any] {
+    mutating func sign(withAccount account: Account) throws {
+        if self.name == nil {
+            throw(BMError("Asset error: missing name"))
+        }
+        if self.fingerprint == nil {
+            throw(BMError("Asset error: missing fingerprint"))
+        }
+        self.registrant = account.authKey.privateKey.address
+        self.signature = try Ed25519.getSignature(message: self.packRecord(), privateKey: privateKey.privateKey)
+        guard let id = computeAssetId(fingerprint: self.fingerprint) else {
+            resetSignState()
+            return
+        }
+        self.id = id
+        self.isSigned = true
+    }
+    
+    func toJSON() throws -> [String : Any] {
         if !self.isSigned {
             throw(BMError("Asset error: need to sign the record before getting RPC message"))
         }

@@ -8,9 +8,30 @@
 
 import Foundation
 
-protocol APIEndpoint {
-    var apiServerURL: URL {get}
-    var assetServerURL: URL {get}
+struct APIEndpoint {
+    public let network: Network
+    private(set) var apiServerURL: URL
+    
+    public mutating func setEndpoint(api: URL, asset: URL) {
+        self.apiServerURL = api
+    }
+}
+
+extension APIEndpoint {
+    public static let livenetEndpoint = APIEndpoint(network: .livenet,
+                                                    apiServerURL: URL(string: "https://api.bitmark.com")!)
+    
+    public static let testnetEndpoint = APIEndpoint(network: .testnet,
+                                                    apiServerURL: URL(string: "https://api.test.bitmark.com")!)
+    
+    internal static func endPointForNetwork(_ network: Network) -> APIEndpoint {
+        switch network {
+        case .livenet:
+            return livenetEndpoint
+        case .testnet:
+            return testnetEndpoint
+        }
+    }
 }
 
 internal struct API {
@@ -18,7 +39,7 @@ internal struct API {
     let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     
     init(network: Network) {
-        self.init(apiEndpoint: network)
+        self.init(apiEndpoint: APIEndpoint.endPointForNetwork(network))
     }
     
      init(apiEndpoint: APIEndpoint) {

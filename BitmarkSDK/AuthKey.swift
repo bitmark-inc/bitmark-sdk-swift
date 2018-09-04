@@ -9,16 +9,16 @@
 import Foundation
 import TweetNacl
 
-public struct AuthKey: AsymmetricKey {
+internal struct AuthKey: KeypairSignable {
     
-    public let address: AccountNumber
-    public let privateKey: Data
-    public let publicKey: Data
-    public let type: KeyType
-    public let network: Network
-    public let kif: String
+    let address: AccountNumber
+    let privateKey: Data
+    let publicKey: Data
+    let type: KeyType
+    let network: Network
+    let kif: String
     
-    public init(fromKIF kifString: String) throws {
+    init(fromKIF kifString: String) throws {
         guard let kifBuffer = Base58.decode(kifString) else {
             throw(BMError("Can not convert base58"))
         }
@@ -71,10 +71,10 @@ public struct AuthKey: AsymmetricKey {
         let keyPair = try Ed25519.generateKeyPair(fromSeed: seed)
         self.privateKey = keyPair.privateKey
         self.publicKey = keyPair.publicKey
-        self.address = AccountNumber(fromPubKey: keyPair.publicKey, network: network, keyType: type)
+        self.address = AccountNumber.build(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
-    public init(fromKeyPair keyPairData: Data, network: Network = Network.livenet, type: KeyType = KeyType.ed25519) throws {
+    init(fromKeyPair keyPairData: Data, network: Network = Network.livenet, type: KeyType = KeyType.ed25519) throws {
         // Check length to determine the keypair
         
         var keyPair: (publicKey: Data, privateKey: Data)
@@ -97,7 +97,7 @@ public struct AuthKey: AsymmetricKey {
         }
         
         let keyPartVal = UInt8(Config.KeyPart.privateKey)
-        let networkVal = UInt8(network.addressValue)
+        let networkVal = UInt8(network.rawValue)
         let keyTypeVal = UInt8(type.value)
         
         var keyVariantVal = (keyTypeVal << 3) | networkVal
@@ -114,23 +114,15 @@ public struct AuthKey: AsymmetricKey {
         self.type = type
         self.privateKey = keyPair.privateKey
         self.publicKey = keyPair.publicKey
-        self.address = AccountNumber(fromPubKey: keyPair.publicKey, network: network, keyType: type)
+        self.address = AccountNumber.build(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
-    public init(fromKeyPairString keyPairString: String, network: Network = Network.livenet, type: KeyType = KeyType.ed25519) throws {
+    init(fromKeyPairString keyPairString: String, network: Network = Network.livenet, type: KeyType = KeyType.ed25519) throws {
         let keyPairData = keyPairString.hexDecodedData
         try self.init(fromKeyPair: keyPairData, network: network, type: type)
     }
     
-    public func sign(message: String) throws -> Data {
-        return try NaclSign.signDetached(message: message.data(using: .utf8)!, secretKey: privateKey)
-    }
-    
-    public func sign(message: Data) throws -> Data {
+    func sign(message: Data) throws -> Data {
         return try NaclSign.signDetached(message: message, secretKey: privateKey)
-    }
-    
-    var algorithm: Algorithm {
-        return .ed25519
     }
 }

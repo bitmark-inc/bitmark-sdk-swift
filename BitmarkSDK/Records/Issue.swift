@@ -10,7 +10,7 @@ import Foundation
 
 public struct Issue {
     
-    private(set) var asset: Asset?
+    private(set) var assetId: String?
     private(set) var nonce: UInt64?
     private(set) var signature: Data?
     private(set) var isSigned = false
@@ -27,7 +27,7 @@ public struct Issue {
     internal func packRecord() -> Data {
         var txData: Data
         txData = Data.varintFrom(Config.issueTag)
-        txData = BinaryPacking.append(toData: txData, withData: self.asset?.id?.hexDecodedData)
+        txData = BinaryPacking.append(toData: txData, withData: self.assetId?.hexDecodedData)
         txData = BinaryPacking.append(toData: txData, withData: self.owner?.pack())
         
         if let nonce = self.nonce {
@@ -43,8 +43,8 @@ public struct Issue {
     
     public init() {}
     
-    public mutating func set(asset: Asset) {
-        self.asset = asset
+    public mutating func set(assetId: String) {
+        self.assetId = assetId
         resetSignState()
     }
     
@@ -59,7 +59,7 @@ public struct Issue {
     }
     
     public mutating func sign(privateKey: AuthKey) throws {
-        if self.asset == nil {
+        if self.assetId == nil {
             throw(BMError("Issue error: missing asset"))
         }
         if self.nonce == nil {
@@ -85,7 +85,7 @@ extension Issue {
         
         return ["owner": self.owner!.string,
                 "signature": self.signature!.hexEncodedString,
-                "asset": self.asset!.id!,
+                "asset": self.assetId!,
                 "nonce": self.nonce!]
     }
 }

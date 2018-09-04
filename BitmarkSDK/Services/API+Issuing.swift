@@ -9,9 +9,9 @@
 import Foundation
 
 extension API {
-    internal func issue(withIssues issues: [Issue], assets: [Asset], transfer: Transfer? = nil) throws -> Bool {
+    internal func issue(withIssues issues: [Issue], assets: [RegistrationParams], transfer: Transfer? = nil) throws -> Bool {
         let issuePayloads = try issues.map {try $0.getRPCParam()}
-        let assetPayloads = try assets.map {try $0.getRPCParam()}
+        let assetPayloads = try assets.map {try $0.toJSON()}
         
         var payload: [String: Any] = ["issues": issuePayloads,
                        "assets": assetPayloads]

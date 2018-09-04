@@ -100,7 +100,7 @@ public struct Seed {
     public var base58String: String {
         // Contruct parts
         let magicNumber = Data(bytes: Config.SeedConfig.magicNumber)
-        let currentNetwork = Data.varintFrom(self.network.addressValue)
+        let currentNetwork = Data.varintFrom(self.network.rawValue)
         let seedVersionEncoded = Data.varintFrom(self.version)
         var exportedSeed = magicNumber + seedVersionEncoded + currentNetwork + self.core
         

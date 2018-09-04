@@ -14,12 +14,6 @@ extension KeyType: Equatable {
     }
 }
 
-extension Network: Equatable {
-    public static func ==(lhs: Network, rhs: Network) -> Bool {
-        return lhs.addressValue == rhs.addressValue
-    }
-}
-
 extension AccountNumber: Equatable {
     public static func ==(lhs: AccountNumber, rhs: AccountNumber) -> Bool {
         return lhs.pubKey == rhs.pubKey && lhs.network == rhs.network && lhs.string == rhs.string

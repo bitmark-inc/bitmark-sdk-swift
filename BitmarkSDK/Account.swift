@@ -9,10 +9,6 @@
 import Foundation
 import TweetNacl
 
-public enum SignMethod: String {
-    case Indentity = "identity"
-}
-
 public struct Account {
     
     public let core: Data
@@ -51,7 +47,7 @@ public struct Account {
     }
     
     public func toSeed() throws -> String {
-        let seed = try Seed(core: core, version: 1, network: self.accountNumber.network)
+        let seed = try Seed(core: core, version: 1, network: globalConfig.network)
         return seed.base58String
     }
     
@@ -60,7 +56,7 @@ public struct Account {
     public init(recoverPhrase phrases: [String]) throws {
         let bytes = try RecoverPhrase.recoverSeed(fromPhrase: phrases)
         let networkByte = bytes[0]
-        let network = networkByte == Network.livenet.addressValue ? Network.livenet : Network.testnet
+        let network = networkByte == Network.livenet.rawValue ? Network.livenet : Network.testnet
         let coreBytes = bytes.subdata(in: 1..<33)
         try self.init(core: coreBytes, network: network)
     }
@@ -70,7 +66,7 @@ public struct Account {
     }
 
     public func getRecoverPhrase(withNetwork network: Network) throws -> [String] {
-        var data = Data(bytes: [UInt8(truncatingIfNeeded: network.addressValue)])
+        var data = Data(bytes: [UInt8(truncatingIfNeeded: network.rawValue)])
         data.append(core)
         return try RecoverPhrase.createPhrase(fromData: data)
     }
@@ -90,13 +86,7 @@ public struct Account {
     }
     
     // MARK:- Sign
-    public func sign(withMessage message: String, forAction action: SignMethod) throws -> Data {
-        let actualMessage = action.rawValue + "|" + message
-        return try authKey.sign(message: actualMessage)
-    }
-    
-    // TODO: Discuss and remove this function
-    public func riskySign(withMessage message: String) throws -> Data {
+    public func sign(withMessage message: String) throws -> Data {
         return try authKey.sign(message:message)
     }
 }
