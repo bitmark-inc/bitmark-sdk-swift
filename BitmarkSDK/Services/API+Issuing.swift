@@ -9,35 +9,29 @@
 import Foundation
 
 extension API {
-    internal func issue(withIssues issues: [Issue], assets: [RegistrationParams], transfer: Transfer? = nil) throws -> Bool {
-        let issuePayloads = try issues.map {try $0.getRPCParam()}
-        let assetPayloads = try assets.map {try $0.toJSON()}
-        
-        var payload: [String: Any] = ["issues": issuePayloads,
-                       "assets": assetPayloads]
-        
-        if let transfer = transfer {
-            if issues.count > 1 {
-                return false
-            }
-            
-            payload["transfer"] = try transfer.getRPCParam()["transfer"]
-        }
+    struct BitmarkResponse: Codable {
+        let id: String
+    }
+
+    struct IssueResponse: Codable {
+        var bitmarks: [BitmarkResponse]
+    }
+    
+    internal func issue(withIssueParams issueParams: IssuanceParams) throws -> [String] {
+        let payload = try issueParams.toJSON()
         
         let json = try JSONSerialization.data(withJSONObject: payload, options: [])
         
-        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v1/issue")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/issue")
         
         var urlRequest = URLRequest(url: requestURL)
         urlRequest.httpBody = json
         urlRequest.httpMethod = "POST"
         
-        let result = try urlSession.synchronousDataTask(with: urlRequest)
-        guard let _ = result.data,
-        let response = result.response else {
-            return false
-        }
+        let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
         
-        return 200..<300 ~= response.statusCode
+        let issueResponse = try JSONDecoder().decode(IssueResponse.self, from: data)
+        
+        return issueResponse.bitmarks.map {$0.id}
     }
 }

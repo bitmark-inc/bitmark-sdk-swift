@@ -47,17 +47,27 @@ extension API {
         var urlRequest = URLRequest(url: requestURL)
         urlRequest.httpMethod = "GET"
         
-        let result = try urlSession.synchronousDataTask(with: urlRequest)
-        guard let data = result.data,
-            let response = result.response else {
-                return nil
-        }
-        
-        if !(200..<300 ~= response.statusCode) {
-            return nil
-        }
+        let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
         
         let dic = try JSONDecoder().decode([String: BitmarkInfo].self, from: data)
         return dic["bitmark"]
+    }
+}
+
+extension API {
+    internal func get(bitmarkID: String) throws -> Asset {
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/assets/" + assetID + "?pending=true")
+        let urlRequest = URLRequest(url: requestURL)
+        let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
+        let result = try JSONDecoder().decode(AssetResponse.self, from: data)
+        return result.asset
+    }
+    
+    internal func listAsset(builder: Asset.QueryParam) throws -> [Asset] {
+        let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v3/assets")
+        let urlRequest = URLRequest(url: requestURL)
+        let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
+        let result = try JSONDecoder().decode(AssetsResponse.self, from: data)
+        return result.assets
     }
 }

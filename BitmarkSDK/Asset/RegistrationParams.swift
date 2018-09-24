@@ -67,22 +67,18 @@ public struct RegistrationParams {
         return fingerprintData.sha3(.sha512).hexEncodedString
     }
     
-    internal func packRecord() -> Data {
+    internal func packRecord() throws -> Data {
         var txData: Data
         txData = Data.varintFrom(Config.AssetConfig.value)
         txData = BinaryPacking.append(toData: txData, withString: self.name)
         txData = BinaryPacking.append(toData: txData, withString: self.fingerprint)
         txData = BinaryPacking.append(toData: txData, withString: self.metadata)
-        txData = BinaryPacking.append(toData: txData, withData: self.registrant?.pack())
+        txData = BinaryPacking.append(toData: txData, withData: try self.registrant?.pack())
         
         return txData
     }
     
-    // MARK:- Public methods
-    
-    public init() {}
-    
-    public mutating func set(metadata: [String: String]) throws {
+    internal mutating func set(metadata: [String: String]) throws {
         let metaDataString = RegistrationParams.convertString(fromMetadata: metadata)
         if !RegistrationParams.isValidLength(metadata: metaDataString) {
             throw(BMError("meta data's length must be in correct length"))
@@ -91,7 +87,7 @@ public struct RegistrationParams {
         resetSignState()
     }
     
-    public mutating func set(fingerPrint: String) throws {
+    internal mutating func set(fingerPrint: String) throws {
         if !(fingerPrint.count <= Config.AssetConfig.maxFingerprint) {
             throw(BMError("fingerprint's length must be in correct length"))
         }
@@ -100,7 +96,7 @@ public struct RegistrationParams {
         resetSignState()
     }
     
-    public mutating func set(name: String) throws {
+    internal mutating func set(name: String) throws {
         if !(name.count <= Config.AssetConfig.maxName) {
             throw(BMError("name's length must be in corrent length"))
         }
@@ -108,9 +104,18 @@ public struct RegistrationParams {
         resetSignState()
     }
     
-    public mutating func set(metadata: String) throws {
+    internal mutating func set(metadata: String) throws {
         let meta = try RegistrationParams.convertMetadata(fromString: metadata)
         try set(metadata: meta)
+    }
+    
+    // MARK:- Public methods
+    
+    public init() {}
+    
+    public mutating func setFingerprint(fromFileURL fileURL: String) throws -> String {
+        let fileData = try Data(contentsOf: URL(fileURLWithPath: fileURL))
+        return FileUtil.computeFingerprint(data: fileData)
     }
 }
 
@@ -122,25 +127,8 @@ extension RegistrationParams: Parameterizable {
         if self.fingerprint == nil {
             throw(BMError("Asset error: missing fingerprint"))
         }
-        self.registrant = signable.publicKey
-        self.signature = try Ed25519.getSignature(message: self.packRecord(), privateKey: privateKey.privateKey)
-        guard let id = computeAssetId(fingerprint: self.fingerprint) else {
-            resetSignState()
-            return
-        }
-        self.id = id
-        self.isSigned = true
-    }
-    
-    mutating func sign(withAccount account: Account) throws {
-        if self.name == nil {
-            throw(BMError("Asset error: missing name"))
-        }
-        if self.fingerprint == nil {
-            throw(BMError("Asset error: missing fingerprint"))
-        }
-        self.registrant = account.authKey.privateKey.address
-        self.signature = try Ed25519.getSignature(message: self.packRecord(), privateKey: privateKey.privateKey)
+        self.registrant =  AccountNumber.build(fromPubKey: signable.publicKey)
+        self.signature = try signable.sign(message: try self.packRecord())
         guard let id = computeAssetId(fingerprint: self.fingerprint) else {
             resetSignState()
             return
@@ -165,7 +153,7 @@ extension RegistrationParams: Parameterizable {
         return ["metadata": metadata,
                 "name": name,
                 "fingerprint": fingerprint,
-                "registrant": registrant.string,
+                "registrant": registrant,
                 "signature": signature.hexEncodedString]
     }
 }

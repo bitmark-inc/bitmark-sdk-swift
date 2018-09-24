@@ -11,4 +11,5 @@ import Foundation
 protocol KeypairSignable {
     func sign(message: Data) throws -> Data
     var publicKey: Data { get }
+    var address: AccountNumber { get }
 }

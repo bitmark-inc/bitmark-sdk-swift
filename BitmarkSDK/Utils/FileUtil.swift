@@ -17,11 +17,9 @@ public struct FileUtil {
         case sha3ChunkFailed
     }
     
-    public struct Fingerprint {
-        public static func computeFingerprint(data: Data) -> String {
-            let sha3 = SHA3(variant: .sha512)
-            let sha3Data = sha3.calculate(for: [UInt8](data))
-            return "01" + Data(bytes: sha3Data).hexEncodedString
-        }
+    public static func computeFingerprint(data: Data) -> String {
+        let sha3 = SHA3(variant: .sha512)
+        let sha3Data = sha3.calculate(for: [UInt8](data))
+        return "01" + Data(bytes: sha3Data).hexEncodedString
     }
 }

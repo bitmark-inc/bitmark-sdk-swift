@@ -13,7 +13,6 @@ public struct Account {
     
     public let core: Data
     let authKey: AuthKey
-    let encryptionKey: EncryptionKey
     
     // MARK:- Basic init
     
@@ -26,7 +25,6 @@ public struct Account {
         self.core = core
         
         authKey = try AuthKey(fromKeyPair: try Account.deriveAuthKey(seed: core), network: network)
-        encryptionKey = try Account.encryptionKeypair(fromSeed: try Account.deriveEncryptionKey(seed: core))
     }
     
     public var accountNumber: AccountNumber {
@@ -86,16 +84,7 @@ public struct Account {
     }
     
     // MARK:- Sign
-    public func sign(withMessage message: String) throws -> Data {
+    public func sign(withMessage message: Data) throws -> Data {
         return try authKey.sign(message:message)
     }
-}
-
-internal extension Account {
-    
-    internal static func encryptionKeypair(fromSeed seed: Data) throws -> EncryptionKey {
-        let publicKey = try TweetNacl.NaclScalarMult.base(n: seed)
-        return EncryptionKey(privateKey: seed, publicKey: publicKey)
-    }
-    
 }

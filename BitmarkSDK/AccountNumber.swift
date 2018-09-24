@@ -21,6 +21,66 @@ public extension AccountNumber {
 }
 
 internal extension AccountNumber {
+    func parseAndVerifyAccountNumber() throws -> (network: Network, prefix: Data, pubkey: Data) {
+        guard let addressData = Base58.decode(self) else {
+            throw(BMError("Address error: unknow address"))
+        }
+        
+        let addressBuffer = [UInt8](addressData)
+        
+        let (_keyVariant, _keyVariantLength) = addressData.toVarint64WithLength()
+        guard let keyVariant = _keyVariant,
+            let keyVariantLength = _keyVariantLength else {
+                throw(BMError("Address error: this is not an address"))
+        }
+        
+        // check for whether this is an address
+        let keyPartVal = Config.KeyPart.publicKey
+        if (keyVariant & 1) !=  keyPartVal {
+            throw(BMError("Address error: this is not an address"))
+        }
+        
+        // detect network
+        let networkVal = (keyVariant >> 1) & 0x01
+        var network: Network
+        
+        if networkVal == UInt64(Network.livenet.rawValue) {
+            network = Network.livenet
+        }
+        else {
+            network = Network.testnet
+        }
+        
+        // key type
+        let keyTypeVal = (keyVariant >> 4) & 0x07
+        
+        guard let keyType = Common.getKey(byValue: keyTypeVal) else {
+            throw(BMError("Address error: unknow key type"))
+        }
+        
+        let addressLength = keyVariantLength + keyType.publicLength + Config.checksumLength
+        
+        if addressLength != addressBuffer.count{
+            throw(BMError("Address error: key type " + keyType.name + " must be " +  String(addressLength) + " bytes"))
+        }
+        
+        // public key
+        let pubKey = addressData.slice(start: keyVariantLength, end: (addressLength - Config.checksumLength))
+        
+        // check checksum
+        let checksumData = addressData.slice(start: 0, end: keyVariantLength + keyType.publicLength)
+        let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
+        let checksumFromAddress = addressData.slice(start: addressLength - Config.checksumLength, end: addressLength)
+        
+        if checksum != checksumFromAddress {
+            throw(BMError("Address error: checksum mismatchs"))
+        }
+        
+        let prefix = Data.varintFrom(keyVariant)
+        
+        return (network, prefix, pubKey)
+    }
+    
     static func build(fromPubKey pubKey: Data, network: Network = Network.livenet, keyType: KeyType = KeyType.ed25519) -> AccountNumber {
         let keyTypeVal = keyType.value
         var keyVariantVal = keyTypeVal << 4
@@ -32,6 +92,12 @@ internal extension AccountNumber {
         
         let addressData = keyVariantData + pubKey + checksumData
         return Base58.encode(addressData)
+    }
+    
+    func pack() throws -> Data {
+        // Parse account number
+        let (_, prefix, pubkey) = try self.parseAndVerifyAccountNumber()
+        return prefix + pubkey
     }
 }
 
@@ -129,61 +195,8 @@ internal extension AccountNumber {
 
 public extension Account {
     public static func parseAccountNumber(accountNumber: AccountNumber) throws -> (network: Network, pubkey: Data) {
-        guard let addressData = Base58.decode(accountNumber) else {
-            throw(BMError("Address error: unknow address"))
-        }
-        
-        let addressBuffer = [UInt8](addressData)
-        
-        let (_keyVariant, _keyVariantLength) = addressData.toVarint64WithLength()
-        guard let keyVariant = _keyVariant,
-            let keyVariantLength = _keyVariantLength else {
-                throw(BMError("Address error: this is not an address"))
-        }
-        
-        // check for whether this is an address
-        let keyPartVal = Config.KeyPart.publicKey
-        if (keyVariant & 1) !=  keyPartVal {
-            throw(BMError("Address error: this is not an address"))
-        }
-        
-        // detect network
-        let networkVal = (keyVariant >> 1) & 0x01
-        var network: Network
-        
-        if networkVal == UInt64(Network.livenet.rawValue) {
-            network = Network.livenet
-        }
-        else {
-            network = Network.testnet
-        }
-        
-        // key type
-        let keyTypeVal = (keyVariant >> 4) & 0x07
-        
-        guard let keyType = Common.getKey(byValue: keyTypeVal) else {
-            throw(BMError("Address error: unknow key type"))
-        }
-        
-        let addressLength = keyVariantLength + keyType.publicLength + Config.checksumLength
-        
-        if addressLength != addressBuffer.count{
-            throw(BMError("Address error: key type " + keyType.name + " must be " +  String(addressLength) + " bytes"))
-        }
-        
-        // public key
-        let pubKey = addressData.slice(start: keyVariantLength, end: (addressLength - Config.checksumLength))
-        
-        // check checksum
-        let checksumData = addressData.slice(start: 0, end: keyVariantLength + keyType.publicLength)
-        let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
-        let checksumFromAddress = addressData.slice(start: addressLength - Config.checksumLength, end: addressLength)
-        
-        if checksum != checksumFromAddress {
-            throw(BMError("Address error: checksum mismatchs"))
-        }
-        
-        return (network, pubKey)
+        let (network, _, pubkey) = try accountNumber.parseAndVerifyAccountNumber()
+        return (network, pubkey)
     }
     
     public static func isValidAccountNumber(accontNumber: AccountNumber) -> Bool {

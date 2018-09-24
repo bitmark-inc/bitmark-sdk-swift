@@ -12,3 +12,10 @@ protocol Parameterizable {
     mutating func sign(_ signable: KeypairSignable) throws
     func toJSON() throws -> [String: Any]
 }
+
+
+
+//protocol Queryable {
+//    associatedtype record
+//    func asyncQuery(
+//}

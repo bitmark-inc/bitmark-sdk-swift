@@ -8,10 +8,64 @@
 
 import Foundation
 
-struct Asset {
+public struct Asset: Codable {
+    let id: String
+    let name: String
+    let metadata: String
+    let fingerprint: String
+    let registrant: String
+    let status: String
+    let block_number: String
+    let offset: String
+    let created_at: Date
+}
+
+public extension Asset {
     // MARK:- Static methods
-    public static func newRegistrationParams(name: String, metadata: [String: String]) -> RegistrationParams {
-        let registrationParam
+    public static func newRegistrationParams(name: String, metadata: [String: String]) throws -> RegistrationParams {
+        var registrationParam = RegistrationParams()
+        try registrationParam.set(name: name)
+        try registrationParam.set(metadata: metadata)
+        return registrationParam
+    }
+    
+    public static func register(_ params: RegistrationParams) throws -> String{
+        let api = API()
+        let assetIDs = try api.register(assets: [params])
+        guard let assetID = assetIDs.first else {
+            throw "Fail to register asset"
+        }
+        
+        return assetID
+    }
+    
+    // MARK:- Query
+    public static func get(assetID: String, completionHandler: @escaping (Asset?, Error?) -> Void) {
+        let api = API()
+        DispatchQueue.global().async {
+            do {
+                let asset = try api.get(assetID: assetID)
+                completionHandler(asset, nil)
+            } catch let e {
+                completionHandler(nil, e)
+            }
+        }
+    }
+    
+    public static func newQueryParams() -> Asset.QueryParam {
+        return Asset.QueryParam(queryItems: [URLQueryItem]())
+    }
+    
+    public static func list(params: Asset.QueryParam, completionHandler: @escaping ([Asset]?, Error?) -> Void) {
+        let api = API()
+        DispatchQueue.global().async {
+            do {
+                let assets = try api.listAsset(builder: params)
+                completionHandler(assets, nil)
+            } catch let e {
+                completionHandler(nil, e)
+            }
+        }
     }
     
     

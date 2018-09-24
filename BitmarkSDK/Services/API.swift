@@ -38,6 +38,10 @@ internal struct API {
     let endpoint: APIEndpoint
     let urlSession = URLSession(configuration: URLSessionConfiguration.default)
     
+    init() {
+        self.init(apiEndpoint: APIEndpoint.endPointForNetwork(globalConfig.network))
+    }
+    
     init(network: Network) {
         self.init(apiEndpoint: APIEndpoint.endPointForNetwork(network))
     }
@@ -47,20 +51,29 @@ internal struct API {
     }
 }
 
+internal extension API {
+    func asynchronousRequest(method: String, urlPath: String, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        let url = endpoint.apiServerURL.appendingPathComponent(urlPath)
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = method
+        urlSession.dataTask(with: url, completionHandler: completionHandler)
+    }
+}
+
 internal extension URLRequest {
-    internal mutating func signRequest(withAccount account: Account, action: String, resource: String) throws {
+    internal mutating func signRequest(withAccount account: KeypairSignable, action: String, resource: String) throws {
         let timestamp = Common.timestamp()
-        let parts = [action, resource, account.accountNumber.string, timestamp]
+        let parts = [action, resource, account.address, timestamp]
         try signRequest(withAccount: account, parts: parts, timestamp: timestamp)
     }
     
-    internal mutating func signRequest(withAccount account: Account, parts: [String], timestamp: String) throws {
-        let message = parts.joined(separator: "|")
-        print(message)
+    internal mutating func signRequest(withAccount account: KeypairSignable, parts: [String], timestamp: String) throws {
+        let messageString = parts.joined(separator: "|")
+        let messageData = messageString.data(using: .utf8)!
         
-        let signature = try account.authKey.sign(message: message).hexEncodedString
+        let signature = try account.sign(message: messageData).hexEncodedString
         
-        self.addValue(account.accountNumber.string, forHTTPHeaderField: "requester")
+        self.addValue(account.address, forHTTPHeaderField: "requester")
         self.addValue(timestamp, forHTTPHeaderField: "timestamp")
         self.addValue(signature, forHTTPHeaderField: "signature")
     }
@@ -68,7 +81,7 @@ internal extension URLRequest {
 
 internal extension URLSession {
     
-    func synchronousDataTask(with request: URLRequest) throws -> (data: Data?, response: HTTPURLResponse?) {
+    func synchronousDataTask(with request: URLRequest) throws -> (data: Data, response: HTTPURLResponse) {
         
         let semaphore = DispatchSemaphore(value: 0)
         
@@ -114,8 +127,18 @@ internal extension URLSession {
 
         print("========================================================")
         
-        return (data: responseData, response: theResponse as! HTTPURLResponse?)
+        guard let data = responseData,
+            let response = theResponse as? HTTPURLResponse else {
+                throw("Empty response from request: " + request.description)
+        }
         
+        if 200..<300 ~= response.statusCode {
+            return (data: data, response: response)
+        } else {
+            let responseMessage = String(data: data, encoding: .utf8)!
+            let requestMethod = request.httpMethod ?? "GET"
+            throw("Request " + requestMethod + " " + request.url!.absoluteString + " returns statuscode: " + String(response.statusCode) + " with data: " + responseMessage)
+        }
     }
     
 }
