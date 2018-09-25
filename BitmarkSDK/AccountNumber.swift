@@ -23,7 +23,7 @@ public extension AccountNumber {
 internal extension AccountNumber {
     func parseAndVerifyAccountNumber() throws -> (network: Network, prefix: Data, pubkey: Data) {
         guard let addressData = Base58.decode(self) else {
-            throw(BMError("Address error: unknow address"))
+            throw("Address error: unknow address")
         }
         
         let addressBuffer = [UInt8](addressData)
@@ -31,13 +31,13 @@ internal extension AccountNumber {
         let (_keyVariant, _keyVariantLength) = addressData.toVarint64WithLength()
         guard let keyVariant = _keyVariant,
             let keyVariantLength = _keyVariantLength else {
-                throw(BMError("Address error: this is not an address"))
+                throw("Address error: this is not an address")
         }
         
         // check for whether this is an address
         let keyPartVal = Config.KeyPart.publicKey
         if (keyVariant & 1) !=  keyPartVal {
-            throw(BMError("Address error: this is not an address"))
+            throw("Address error: this is not an address")
         }
         
         // detect network
@@ -55,13 +55,13 @@ internal extension AccountNumber {
         let keyTypeVal = (keyVariant >> 4) & 0x07
         
         guard let keyType = Common.getKey(byValue: keyTypeVal) else {
-            throw(BMError("Address error: unknow key type"))
+            throw("Address error: unknow key type")
         }
         
         let addressLength = keyVariantLength + keyType.publicLength + Config.checksumLength
         
         if addressLength != addressBuffer.count{
-            throw(BMError("Address error: key type " + keyType.name + " must be " +  String(addressLength) + " bytes"))
+            throw("Address error: key type " + keyType.name + " must be " +  String(addressLength) + " bytes")
         }
         
         // public key
@@ -73,7 +73,7 @@ internal extension AccountNumber {
         let checksumFromAddress = addressData.slice(start: addressLength - Config.checksumLength, end: addressLength)
         
         if checksum != checksumFromAddress {
-            throw(BMError("Address error: checksum mismatchs"))
+            throw("Address error: checksum mismatchs")
         }
         
         let prefix = Data.varintFrom(keyVariant)
@@ -130,7 +130,7 @@ internal extension AccountNumber {
 //
 //    public init(address: String) throws {
 //        guard let addressData = Base58.decode(address) else {
-//            throw(BMError("Address error: unknow address"))
+//            throw("Address error: unknow address"))
 //        }
 //
 //        let addressBuffer = [UInt8](addressData)
@@ -140,13 +140,13 @@ internal extension AccountNumber {
 //        let (_keyVariant, _keyVariantLength) = addressData.toVarint64WithLength()
 //        guard let keyVariant = _keyVariant,
 //            let keyVariantLength = _keyVariantLength else {
-//            throw(BMError("Address error: this is not an address"))
+//            throw("Address error: this is not an address"))
 //        }
 //
 //        // check for whether this is an address
 //        let keyPartVal = Config.KeyPart.publicKey
 //        if (keyVariant & 1) !=  keyPartVal {
-//            throw(BMError("Address error: this is not an address"))
+//            throw("Address error: this is not an address"))
 //        }
 //
 //        // detect network
@@ -163,13 +163,13 @@ internal extension AccountNumber {
 //        let keyTypeVal = (keyVariant >> 4) & 0x07
 //
 //        guard let keyType = Common.getKey(byValue: keyTypeVal) else {
-//            throw(BMError("Address error: unknow key type"))
+//            throw("Address error: unknow key type"))
 //        }
 //
 //        let addressLength = keyVariantLength + keyType.publicLength + Config.checksumLength
 //
 //        if addressLength != addressBuffer.count{
-//            throw(BMError("Address error: key type " + keyType.name + " must be " +  String(addressLength) + " bytes"))
+//            throw("Address error: key type " + keyType.name + " must be " +  String(addressLength) + " bytes"))
 //        }
 //
 //        // public key
@@ -181,7 +181,7 @@ internal extension AccountNumber {
 //        let checksumFromAddress = addressData.slice(start: addressLength - Config.checksumLength, end: addressLength)
 //
 //        if checksum != checksumFromAddress {
-//            throw(BMError("Address error: checksum mismatchs"))
+//            throw("Address error: checksum mismatchs"))
 //        }
 //
 //        self.prefix = Data.varintFrom(keyVariant)

@@ -36,7 +36,7 @@ public struct RegistrationParams {
     static func convertMetadata(fromString string: String) throws -> [String: String] {
         let tmp = string.components(separatedBy: metadataSeparator)
         if tmp.count % 2 != 0 {
-            throw(BMError("can not parse string to metadata"))
+            throw("can not parse string to metadata")
         }
         
         var result = [String: String]()
@@ -81,7 +81,7 @@ public struct RegistrationParams {
     internal mutating func set(metadata: [String: String]) throws {
         let metaDataString = RegistrationParams.convertString(fromMetadata: metadata)
         if !RegistrationParams.isValidLength(metadata: metaDataString) {
-            throw(BMError("meta data's length must be in correct length"))
+            throw("meta data's length must be in correct length")
         }
         self.metadata = metaDataString
         resetSignState()
@@ -89,7 +89,7 @@ public struct RegistrationParams {
     
     internal mutating func set(fingerPrint: String) throws {
         if !(fingerPrint.count <= Config.AssetConfig.maxFingerprint) {
-            throw(BMError("fingerprint's length must be in correct length"))
+            throw("fingerprint's length must be in correct length")
         }
         self.fingerprint = fingerPrint
         self.id = computeAssetId(fingerprint: fingerPrint)
@@ -98,7 +98,7 @@ public struct RegistrationParams {
     
     internal mutating func set(name: String) throws {
         if !(name.count <= Config.AssetConfig.maxName) {
-            throw(BMError("name's length must be in corrent length"))
+            throw("name's length must be in corrent length")
         }
         self.name = name
         resetSignState()
@@ -127,10 +127,10 @@ public struct RegistrationParams {
 extension RegistrationParams: Parameterizable {
     public mutating func sign(_ signable: KeypairSignable) throws {
         if self.name == nil {
-            throw(BMError("Asset error: missing name"))
+            throw("Asset error: missing name")
         }
         if self.fingerprint == nil {
-            throw(BMError("Asset error: missing fingerprint"))
+            throw("Asset error: missing fingerprint")
         }
         self.registrant =  signable.address
         self.signature = try signable.sign(message: try self.packRecord())
@@ -144,7 +144,7 @@ extension RegistrationParams: Parameterizable {
     
     public func toJSON() throws -> [String : Any] {
         if !self.isSigned {
-            throw(BMError("Asset error: need to sign the record before getting RPC message"))
+            throw("Asset error: need to sign the record before getting RPC message")
         }
         
         guard let fingerprint = fingerprint,
@@ -152,7 +152,7 @@ extension RegistrationParams: Parameterizable {
             let registrant = registrant,
             let signature = signature
             else {
-                throw(BMError("Asset error: some fields are missing"))
+                throw("Asset error: some fields are missing")
         }
         
         return ["metadata": metadata,

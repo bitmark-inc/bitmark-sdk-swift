@@ -75,7 +75,8 @@ class Asset_Tests: XCTestCase {
             
             // Issue
             let numberOfIssuance = 1
-            let issueParams = try Bitmark.newIssuanceParams(assetID: assetID, owner: TestData.accountNumberB, quantity: numberOfIssuance)
+            var issueParams = try Bitmark.newIssuanceParams(assetID: assetID, owner: TestData.accountNumberB, quantity: numberOfIssuance)
+            XCTAssertNoThrow(try issueParams.sign(TestData.accountB))
             let bitmarkIDs = try Bitmark.issue(issueParams)
             
             XCTAssertEqual(bitmarkIDs.count, numberOfIssuance)

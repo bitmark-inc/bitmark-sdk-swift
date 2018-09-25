@@ -79,15 +79,15 @@ public struct TransferRequest {
 extension TransferRequest: Parameterizable {
     public mutating func sign(_ signable: KeypairSignable) throws {
         if self.preTxId == nil {
-            throw(BMError("Transfer error: missing previous transaction"))
+            throw("Transfer error: missing previous transaction")
         }
         if self.owner == nil {
-            throw(BMError( "Transfer error: missing new owner"))
+            throw( "Transfer error: missing new owner")
         }
         
         if let preOwner = preOwner {
             if preOwner != signable.address {
-                throw(BMError("Transfer error: wrong key"))
+                throw("Transfer error: wrong key")
             }
         } else {
             self.preOwner = signable.address
@@ -108,7 +108,7 @@ extension TransferRequest: Parameterizable {
     
     public func toJSON() throws -> [String : Any] {
         if !self.isSigned {
-            throw(BMError("Issue error: need to sign the record before getting RPC param"))
+            throw("Issue error: need to sign the record before getting RPC param")
         }
         
         return ["owner": self.owner!,

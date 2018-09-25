@@ -20,40 +20,40 @@ internal struct AuthKey: KeypairSignable {
     
     init(fromKIF kifString: String) throws {
         guard let kifBuffer = Base58.decode(kifString) else {
-            throw(BMError("Can not convert base58"))
+            throw("Can not convert base58")
         }
         self.kif = kifString
         
         let (_keyVariant, _keyVariantBufferLength) = kifBuffer.toVarint64WithLength()
         guard let keyVariant = _keyVariant,
             let keyVariantLength = _keyVariantBufferLength else {
-                throw(BMError("Private key error: can not parse the kif string"))
+                throw("Private key error: can not parse the kif string")
         }
         
         // check for whether this is a kif
         let keyPartVal = Config.KeyPart.privateKey
         if keyVariant & 1 != keyPartVal {
-            throw(BMError("Private key error: can not parse the kif string"))
+            throw("Private key error: can not parse the kif string")
         }
         
         // detect network
         let networkVal = (keyVariant >> 1) & 0x01
         guard let network = Common.getNetwork(byAddressValue: networkVal) else {
-            throw(BMError("Unknow network"))
+            throw("Unknow network")
         }
         self.network = network
         
         // key type
         let keyTypeVal = (keyVariant >> 4) & 0x07
         guard let keyType = Common.getKey(byValue: keyTypeVal) else {
-            throw(BMError("Unknow key type"))
+            throw("Unknow key type")
         }
         self.type = keyType
         
         // check the length of kif
         let kifLength = keyVariantLength + keyType.seedLength + Config.checksumLength
         if kifLength != kifBuffer.count {
-            throw(BMError("Private key error: KIF for"  + keyType.name + " must be " + String(kifLength) + " bytes"))
+            throw("Private key error: KIF for"  + keyType.name + " must be " + String(kifLength) + " bytes")
         }
         
         // get private key
@@ -64,7 +64,7 @@ internal struct AuthKey: KeypairSignable {
         let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
         
         if checksum != kifBuffer.slice(start: kifLength - Config.checksumLength, end: kifLength) {
-            throw(BMError("Private key error: checksum mismatch"))
+            throw("Private key error: checksum mismatch")
         }
         
         // get address
@@ -93,7 +93,7 @@ internal struct AuthKey: KeypairSignable {
             keyPair = keyPairResult
         }
         else {
-            throw(BMError("Unknown cases"))
+            throw("Unknown cases")
         }
         
         let keyPartVal = UInt8(Config.KeyPart.privateKey)

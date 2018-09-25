@@ -62,10 +62,10 @@ public struct IssueRequest {
 extension IssueRequest: Parameterizable {
     public mutating func sign(_ signable: KeypairSignable) throws {
         if self.assetId == nil {
-            throw(BMError("Issue error: missing asset"))
+            throw("Issue error: missing asset")
         }
         if self.nonce == nil {
-            throw(BMError("Issue error: missing nonce"))
+            throw("Issue error: missing nonce")
         }
         
         self.owner = signable.address
@@ -80,7 +80,7 @@ extension IssueRequest: Parameterizable {
     
     public func toJSON() throws -> [String : Any] {
         if !self.isSigned {
-            throw(BMError("Issue error: need to sign the record before getting RPC param"))
+            throw("Issue error: need to sign the record before getting RPC param")
         }
         
         return ["owner": self.owner!,

@@ -72,5 +72,9 @@ public struct Config {
 }
 
 extension String: Error {
-    
+    public var localizedDescription: String {
+        get {
+            return self
+        }
+    }
 }
