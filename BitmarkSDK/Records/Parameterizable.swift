@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol Parameterizable {
+public protocol Parameterizable {
     mutating func sign(_ signable: KeypairSignable) throws
     func toJSON() throws -> [String: Any]
 }

@@ -1,14 +1,14 @@
 //
-//  Issue.swift
+//  IssueRequest.swift
 //  BitmarkSDK
 //
-//  Created by Anh Nguyen on 12/23/16.
-//  Copyright © 2016 Bitmark. All rights reserved.
+//  Created by Anh Nguyen on 9/21/18.
+//  Copyright © 2018 Bitmark. All rights reserved.
 //
 
 import Foundation
 
-public struct Issue {
+public struct IssueRequest {
     
     private(set) var assetId: String?
     private(set) var nonce: UInt64?
@@ -24,11 +24,11 @@ public struct Issue {
         self.isSigned = false
     }
     
-    internal func packRecord() -> Data {
+    internal func packRecord() throws -> Data {
         var txData: Data
         txData = Data.varintFrom(Config.issueTag)
         txData = BinaryPacking.append(toData: txData, withData: self.assetId?.hexDecodedData)
-        txData = BinaryPacking.append(toData: txData, withData: self.owner?.pack())
+        txData = BinaryPacking.append(toData: txData, withData: try self.owner?.pack())
         
         if let nonce = self.nonce {
             
@@ -39,26 +39,28 @@ public struct Issue {
         }
     }
     
-    // MARK:- Public methods
-    
-    public init() {}
-    
-    public mutating func set(assetId: String) {
+    internal mutating func set(assetId: String) {
         self.assetId = assetId
         resetSignState()
     }
     
-    public mutating func set(nonce: Data) {
+    internal mutating func set(nonce: Data) {
         self.nonce = nonce.toVarint64()
         resetSignState()
     }
     
-    public mutating func set(nonce: UInt64) {
+    internal mutating func set(nonce: UInt64) {
         self.nonce = nonce
         resetSignState()
     }
     
-    public mutating func sign(privateKey: AuthKey) throws {
+    // MARK:- Public methods
+    
+    public init() {}
+}
+
+extension IssueRequest: Parameterizable {
+    mutating func sign(_ signable: KeypairSignable) throws {
         if self.assetId == nil {
             throw(BMError("Issue error: missing asset"))
         }
@@ -66,26 +68,45 @@ public struct Issue {
             throw(BMError("Issue error: missing nonce"))
         }
         
-        self.owner = privateKey.address
+        self.owner = signable.address
         
-        var recordPacked = packRecord()
-        self.signature = try Ed25519.getSignature(message: recordPacked, privateKey: privateKey.privateKey)
+        var recordPacked = try packRecord()
+        self.signature = try signable.sign(message: recordPacked)
         
         recordPacked = BinaryPacking.append(toData: recordPacked, withData: self.signature)
         self.txId = recordPacked.sha3(.sha256).hexEncodedString
         self.isSigned = true
     }
-}
-
-extension Issue {
-    public func getRPCParam() throws -> [String : Any] {
+    
+    public func toJSON() throws -> [String : Any] {
         if !self.isSigned {
             throw(BMError("Issue error: need to sign the record before getting RPC param"))
         }
         
-        return ["owner": self.owner!.string,
+        return ["owner": self.owner!,
                 "signature": self.signature!.hexEncodedString,
                 "asset": self.assetId!,
                 "nonce": self.nonce!]
+    }
+}
+
+public struct IssuanceParams {
+    var issuances: [IssueRequest]
+}
+
+public extension IssuanceParams: Parameterizable {
+    mutating func sign(_ signable: KeypairSignable) throws {
+        var signedIssuances = [IssueRequest]()
+        for issueRequest in issuances {
+            var signIssueRequest = issueRequest
+            try signIssueRequest.sign(signable)
+            signedIssuances.append(signIssueRequest)
+        }
+        self.issuances = signedIssuances
+    }
+    
+    public func toJSON() throws -> [String : Any] {
+        let issuePayloads = try issuances.map {try $0.toJSON()}
+        return ["issues": issuePayloads]
     }
 }

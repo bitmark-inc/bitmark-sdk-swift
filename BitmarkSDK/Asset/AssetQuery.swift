@@ -20,14 +20,14 @@ public extension Asset {
             let queryItem = URLQueryItem(name: "limit", value: String(size))
             var items = self.queryItems
             items.append(queryItem)
-            return QueryParamBuilder(queryItems: items)
+            return QueryParam(queryItems: items)
         }
         
         public func registeredBy(registrant: String) -> QueryParam {
             let queryItem = URLQueryItem(name: "registrant", value: registrant)
             var items = self.queryItems
             items.append(queryItem)
-            return QueryParamBuilder(queryItems: items)
+            return QueryParam(queryItems: items)
         }
     }
 }

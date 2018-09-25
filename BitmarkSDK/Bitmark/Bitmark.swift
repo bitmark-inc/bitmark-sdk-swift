@@ -8,7 +8,30 @@
 
 import Foundation
 
-struct Bitmark {
+public struct TransferOffer: Codable {
+    let id: String
+    let from: String
+    let to: String
+    let record: CountersignedTransferRequest
+    let created_at: Date
+    let open: Bool
+}
+
+public struct Bitmark: Codable {
+    let id: String
+    let asset_id: String
+    let head_id: String
+    let issuer: String
+    let owner: String
+    let status: String
+    let offer: TransferOffer
+    let block_number: Int
+    let offset: Int
+    let created_at: Date
+    let confirmed_at: Date
+}
+
+public extension Bitmark {
     // MARK:- Issue
     public static func newIssuanceParams(assetID: String, owner: AccountNumber, quantity: Int) throws -> IssuanceParams {
         let baseNonce = UInt64(Date().timeIntervalSince1970)
@@ -43,7 +66,9 @@ struct Bitmark {
         
         return bitmarkIDs
     }
-    
+}
+
+extension Bitmark {
     // MARK:- Transfer
     public static func newTransferParams(to owner: AccountNumber) throws -> TransferParams {
         var transferRequest = TransferRequest()
@@ -55,7 +80,9 @@ struct Bitmark {
         let api = API()
         return try api.transfer(params)
     }
-    
+}
+
+extension Bitmark {
     // MARK:- Transfer offer
     public static func newOfferParams(to owner: AccountNumber, info: [String: Any]?) throws -> OfferParams {
         var transferRequest = TransferRequest()
@@ -63,8 +90,35 @@ struct Bitmark {
         let offer = Offer(transfer: transferRequest, extraInfo: info)
         return OfferParams(offer: offer)
     }
+}
+
+extension Bitmark {
+    // MARK:- Query
+    public static func get(bitmarkID: String, completionHandler: @escaping (Bitmark?, Error?) -> Void) {
+        let api = API()
+        DispatchQueue.global().async {
+            do {
+                let bitmark = try api.get(bitmarkID: bitmarkID)
+                completionHandler(bitmark, nil)
+            } catch let e {
+                completionHandler(nil, e)
+            }
+        }
+    }
     
-    public static func transfer(withOfferParams params: OfferParams) throws {
-        
+    public static func newBitmarkQueryParams() -> QueryParam {
+        return QueryParam(queryItems: [URLQueryItem]())
+    }
+    
+    public static func list(params: QueryParam, completionHandler: @escaping ([Bitmark]?, [Asset]?, Error?) -> Void) {
+        let api = API()
+        DispatchQueue.global().async {
+            do {
+                let (bitmarks, assets) = try api.listBitmark(builder: params)
+                completionHandler(bitmarks, assets, nil)
+            } catch let e {
+                completionHandler(nil, nil, e)
+            }
+        }
     }
 }

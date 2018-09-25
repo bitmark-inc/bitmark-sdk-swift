@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol KeypairSignable {
+public protocol KeypairSignable {
     func sign(message: Data) throws -> Data
     var publicKey: Data { get }
     var address: AccountNumber { get }

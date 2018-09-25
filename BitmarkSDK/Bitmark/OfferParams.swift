@@ -14,7 +14,7 @@ public struct Offer {
 }
 
 extension Offer: Parameterizable {
-    mutating func sign(_ signable: KeypairSignable) throws {
+    public mutating func sign(_ signable: KeypairSignable) throws {
         try self.transfer.sign(signable)
     }
     
@@ -41,7 +41,7 @@ public struct OfferParams {
 }
 
 extension OfferParams: Parameterizable {
-    mutating func sign(_ signable: KeypairSignable) throws {
+    public mutating func sign(_ signable: KeypairSignable) throws {
         try self.offer.sign(signable)
     }
     

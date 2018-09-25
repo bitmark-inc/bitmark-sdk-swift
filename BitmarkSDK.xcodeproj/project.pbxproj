@@ -31,6 +31,9 @@
 		58582D6821589EAD00AF30E6 /* OfferParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D6721589EAD00AF30E6 /* OfferParams.swift */; };
 		58582D6A2158DEE000AF30E6 /* AssetQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D692158DEE000AF30E6 /* AssetQuery.swift */; };
 		58582D6C2158E2B500AF30E6 /* Queryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D6B2158E2B500AF30E6 /* Queryable.swift */; };
+		58582D6E2159D9A000AF30E6 /* BitmarkQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D6D2159D9A000AF30E6 /* BitmarkQuery.swift */; };
+		58582D71215A123100AF30E6 /* TransactionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D70215A123100AF30E6 /* TransactionQuery.swift */; };
+		58582D73215A12BA00AF30E6 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D72215A12BA00AF30E6 /* Transaction.swift */; };
 		5865BD431E0250C200B25AB3 /* BitmarkSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD391E0250C200B25AB3 /* BitmarkSDK.framework */; };
 		5865BD4A1E0250C200B25AB3 /* BitmarkSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5865BD3C1E0250C200B25AB3 /* BitmarkSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5866639B212FB5D30038C3C7 /* BItmarkSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866639A212FB5D30038C3C7 /* BItmarkSDK.swift */; };
@@ -43,7 +46,7 @@
 		588C5BCD1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588C5BCC1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift */; };
 		58A24C0F2134F441006C5672 /* Parameterizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A24C0E2134F441006C5672 /* Parameterizable.swift */; };
 		58A24C112134F563006C5672 /* Signable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A24C102134F563006C5672 /* Signable.swift */; };
-		58AF84322019D99600E5B40F /* API+BItmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AF84312019D99600E5B40F /* API+BItmark.swift */; };
+		58AF84322019D99600E5B40F /* API+Bitmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AF84312019D99600E5B40F /* API+Bitmark.swift */; };
 		58C097091F8DBA3D0001EE55 /* Seed_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */; };
 		58C0970B1F8DF5E80001EE55 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0970A1F8DF5E80001EE55 /* FileUtil.swift */; };
 		58DD772E1F8CC2190024A0F6 /* Seed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD772D1F8CC2190024A0F6 /* Seed.swift */; };
@@ -101,6 +104,9 @@
 		58582D6721589EAD00AF30E6 /* OfferParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferParams.swift; sourceTree = "<group>"; };
 		58582D692158DEE000AF30E6 /* AssetQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetQuery.swift; sourceTree = "<group>"; };
 		58582D6B2158E2B500AF30E6 /* Queryable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queryable.swift; sourceTree = "<group>"; };
+		58582D6D2159D9A000AF30E6 /* BitmarkQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmarkQuery.swift; sourceTree = "<group>"; };
+		58582D70215A123100AF30E6 /* TransactionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionQuery.swift; sourceTree = "<group>"; };
+		58582D72215A12BA00AF30E6 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		5865BD391E0250C200B25AB3 /* BitmarkSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BitmarkSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5865BD3C1E0250C200B25AB3 /* BitmarkSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitmarkSDK.h; sourceTree = "<group>"; };
 		5865BD3D1E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -116,7 +122,7 @@
 		588C5BCC1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecoverPhrase+Dic.swift"; sourceTree = "<group>"; };
 		58A24C0E2134F441006C5672 /* Parameterizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameterizable.swift; sourceTree = "<group>"; };
 		58A24C102134F563006C5672 /* Signable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signable.swift; sourceTree = "<group>"; };
-		58AF84312019D99600E5B40F /* API+BItmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+BItmark.swift"; sourceTree = "<group>"; };
+		58AF84312019D99600E5B40F /* API+Bitmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Bitmark.swift"; sourceTree = "<group>"; };
 		58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seed_Tests.swift; sourceTree = "<group>"; };
 		58C0970A1F8DF5E80001EE55 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
 		58DD772D1F8CC2190024A0F6 /* Seed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seed.swift; sourceTree = "<group>"; };
@@ -206,9 +212,19 @@
 				58582D622154CD3300AF30E6 /* IssuanceParams.swift */,
 				58582D652157C83700AF30E6 /* TransferParams.swift */,
 				58582D6721589EAD00AF30E6 /* OfferParams.swift */,
+				58582D6D2159D9A000AF30E6 /* BitmarkQuery.swift */,
 				58E1631D1E0CB93400DEED99 /* Bitmark.swift */,
 			);
 			path = Bitmark;
+			sourceTree = "<group>";
+		};
+		58582D6F215A121A00AF30E6 /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				58582D70215A123100AF30E6 /* TransactionQuery.swift */,
+				58582D72215A12BA00AF30E6 /* Transaction.swift */,
+			);
+			path = Transaction;
 			sourceTree = "<group>";
 		};
 		5865BD2F1E0250C200B25AB3 = {
@@ -237,6 +253,7 @@
 				5865BD3C1E0250C200B25AB3 /* BitmarkSDK.h */,
 				5866639C212FE0470038C3C7 /* Asset */,
 				58582D642154D32C00AF30E6 /* Bitmark */,
+				58582D6F215A121A00AF30E6 /* Transaction */,
 				580B618F1E077DB4008BEBFF /* Extensions */,
 				5818FE291E0391C0007F082D /* Utils */,
 				581265581E0B703400D6DF32 /* Records */,
@@ -305,7 +322,7 @@
 				58582D5F2154B00700AF30E6 /* API+Asset.swift */,
 				58182CAD1FA728D400EB5BE4 /* API+Issuing.swift */,
 				58182CB11FA81BC100EB5BE4 /* API+Transfer.swift */,
-				58AF84312019D99600E5B40F /* API+BItmark.swift */,
+				58AF84312019D99600E5B40F /* API+Bitmark.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -522,11 +539,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				58582D662157C83700AF30E6 /* TransferParams.swift in Sources */,
+				58582D6E2159D9A000AF30E6 /* BitmarkQuery.swift in Sources */,
 				5866639E212FE1620038C3C7 /* Asset.swift in Sources */,
 				58582D6821589EAD00AF30E6 /* OfferParams.swift in Sources */,
 				58DD772E1F8CC2190024A0F6 /* Seed.swift in Sources */,
 				5818FE361E03A64B007F082D /* AccountNumber.swift in Sources */,
 				58E163201E0CC66000DEED99 /* Transfer.swift in Sources */,
+				58582D73215A12BA00AF30E6 /* Transaction.swift in Sources */,
 				58E1631E1E0CB93400DEED99 /* Bitmark.swift in Sources */,
 				5818FE381E03A840007F082D /* Config.swift in Sources */,
 				588C5BC71F9DC5D400ADB619 /* Account.swift in Sources */,
@@ -535,7 +554,7 @@
 				58182CB41FA8293000EB5BE4 /* Account+Services.swift in Sources */,
 				58E2D5B91E0A39AD0014F011 /* ModelEquatable.swift in Sources */,
 				5818FE2B1E0391CF007F082D /* Base58.swift in Sources */,
-				58AF84322019D99600E5B40F /* API+BItmark.swift in Sources */,
+				58AF84322019D99600E5B40F /* API+Bitmark.swift in Sources */,
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
 				58582D632154CD3300AF30E6 /* IssuanceParams.swift in Sources */,
 				588C5BCD1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift in Sources */,
@@ -545,6 +564,7 @@
 				58582D6A2158DEE000AF30E6 /* AssetQuery.swift in Sources */,
 				58C0970B1F8DF5E80001EE55 /* FileUtil.swift in Sources */,
 				5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */,
+				58582D71215A123100AF30E6 /* TransactionQuery.swift in Sources */,
 				58A24C112134F563006C5672 /* Signable.swift in Sources */,
 				58182CB21FA81BC100EB5BE4 /* API+Transfer.swift in Sources */,
 				58582D6C2158E2B500AF30E6 /* Queryable.swift in Sources */,
