@@ -89,24 +89,28 @@ internal extension URLSession {
         var theResponse: URLResponse?
         var theError: Error?
         
+        // Add api token
+        var modifyRequest = request
+        modifyRequest.setValue(globalConfig.apiToken, forHTTPHeaderField: "api-token")
+        
         
         print("========================================================")
         print("Request for url: \(request.url!.absoluteURL)")
         
         
-        if let method = request.httpMethod {
+        if let method = modifyRequest.httpMethod {
             print("Request method: \(method)")
         }
 
-        if let header = request.allHTTPHeaderFields {
+        if let header = modifyRequest.allHTTPHeaderFields {
             print("Request Header: \(header)")
         }
 
-        if let body = request.httpBody {
+        if let body = modifyRequest.httpBody {
             print("Request Body: \(String(data: body, encoding: .ascii)!)")
         }
         
-        dataTask(with: request) { (data, response, error) -> Void in
+        dataTask(with: modifyRequest) { (data, response, error) -> Void in
             responseData = data
             theResponse = response
             theError = error

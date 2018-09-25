@@ -35,37 +35,36 @@ class AccountNumber_Tests: XCTestCase {
     // MARK:- Init address tests
     
     func testAbleToCreateAddressLiveNet() {
-        let address = AccountNumber(fromPubKey: validData[0].pubKey.hexDecodedData)
-        XCTAssertEqual(address.string, validData[0].address)
+        let address = AccountNumber.build(fromPubKey: validData[0].pubKey.hexDecodedData, network: validData[0].network)
+        XCTAssertEqual(address, validData[0].address)
     }
     
     func testAbleToCreateAddressTestNet() {
-        let address = AccountNumber(fromPubKey: validData[1].pubKey.hexDecodedData, network: validData[1].network)
-        XCTAssertEqual(address.string, validData[1].address)
+        let address = AccountNumber.build(fromPubKey: validData[1].pubKey.hexDecodedData, network: validData[1].network)
+        XCTAssertEqual(address, validData[1].address)
     }
     
     // MARK:- Bad cases tests
     
     func testBadBase58String() {
-        XCTAssertThrowsError(try AccountNumber(address: invalidAddress[0]))
+        XCTAssertFalse(AccountNumber(invalidAddress[0]).isValid())
     }
     
     func testBadPublicKeyString() {
-        XCTAssertThrowsError(try AccountNumber(address: invalidAddress[1]))
+        XCTAssertFalse(AccountNumber(invalidAddress[1]).isValid())
     }
     
     func testBadUnknowKeyType() {
-        XCTAssertThrowsError(try AccountNumber(address: invalidAddress[2]))
+        XCTAssertFalse(AccountNumber(invalidAddress[2]).isValid())
     }
     
     // MARK:- Parse live net correctly tests
     
     func testParseAddressLiveNet() {
         do {
-            let address = try AccountNumber(address: validData[0].address)
-            XCTAssertEqual(address.pubKey.hexEncodedString, validData[0].pubKey)
-            XCTAssertEqual(address.network, validData[0].network)
-            XCTAssertEqual(address.keyType, validData[0].type)
+            let result = try AccountNumber(validData[0].address).parse()
+            XCTAssertEqual(result.pubkey.hexEncodedString, validData[0].pubKey)
+            XCTAssertEqual(result.network, validData[0].network)
         }
         catch {
             XCTFail()
@@ -74,10 +73,9 @@ class AccountNumber_Tests: XCTestCase {
     
     func testParseAddressTestNet() {
         do {
-            let address = try AccountNumber(address: validData[1].address)
-            XCTAssertEqual(address.pubKey.hexEncodedString, validData[1].pubKey)
-            XCTAssertEqual(address.network, validData[1].network)
-            XCTAssertEqual(address.keyType, validData[1].type)
+            let result = try AccountNumber(validData[1].address).parse()
+            XCTAssertEqual(result.pubkey.hexEncodedString, validData[1].pubKey)
+            XCTAssertEqual(result.network, validData[1].network)
         }
         catch {
             XCTFail()

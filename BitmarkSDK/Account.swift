@@ -88,3 +88,21 @@ public struct Account {
         return try authKey.sign(message:message)
     }
 }
+
+extension Account: KeypairSignable {
+    public func sign(message: Data) throws -> Data {
+        return try self.authKey.sign(message: message)
+    }
+    
+    public var publicKey: Data {
+        get {
+            return self.authKey.publicKey
+        }
+    }
+    
+    public var address: AccountNumber {
+        get {
+            return self.authKey.address
+        }
+    }
+}

@@ -44,8 +44,7 @@ class AuthKey_Tests: XCTestCase {
             
             XCTAssertEqual(privateKey.network, validData[0].network)
             XCTAssertEqual(privateKey.type, validData[0].type)
-            XCTAssertEqual(privateKey.address.string, validData[0].address)
-            XCTAssertEqual(privateKey.address.network, validData[0].network)
+            XCTAssertEqual(privateKey.address, validData[0].address)
             XCTAssertEqual(privateKey.privateKey.hexEncodedString, validData[0].privateKey)
         }
         catch {
@@ -59,8 +58,7 @@ class AuthKey_Tests: XCTestCase {
             
             XCTAssertEqual(privateKey.network, validData[1].network)
             XCTAssertEqual(privateKey.type, validData[1].type)
-            XCTAssertEqual(privateKey.address.string, validData[1].address)
-            XCTAssertEqual(privateKey.address.network, validData[1].network)
+            XCTAssertEqual(privateKey.address, validData[1].address)
             XCTAssertEqual(privateKey.privateKey.hexEncodedString, validData[1].privateKey)
         }
         catch {
@@ -103,7 +101,8 @@ class AuthKey_Tests: XCTestCase {
                                             network: validData[0].network,
                                             type: validData[0].type)
             XCTAssertEqual(privateKey.kif, validData[0].kif)
-            XCTAssertEqual(privateKey.address.network, validData[0].network)
+            let (network, _) = try privateKey.address.parse()
+            XCTAssertEqual(network, validData[0].network)
         }
         catch {
             XCTFail()
@@ -116,7 +115,8 @@ class AuthKey_Tests: XCTestCase {
                                             network: validData[1].network,
                                             type: validData[1].type)
             XCTAssertEqual(privateKey.kif, validData[1].kif)
-            XCTAssertEqual(privateKey.address.network, validData[1].network)
+            let (network, _) = try privateKey.address.parse()
+            XCTAssertEqual(network, validData[1].network)
         }
         catch {
             XCTFail()

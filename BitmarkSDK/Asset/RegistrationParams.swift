@@ -113,9 +113,14 @@ public struct RegistrationParams {
     
     public init() {}
     
-    public mutating func setFingerprint(fromFileURL fileURL: String) throws -> String {
+    public mutating func setFingerprint(fromData data: Data) throws {
+        let fingerprint = FileUtil.computeFingerprint(data: data)
+        try self.set(fingerPrint: fingerprint)
+    }
+    
+    public mutating func setFingerprint(fromFileURL fileURL: String) throws {
         let fileData = try Data(contentsOf: URL(fileURLWithPath: fileURL))
-        return FileUtil.computeFingerprint(data: fileData)
+        try setFingerprint(fromData: fileData)
     }
 }
 
@@ -127,7 +132,7 @@ extension RegistrationParams: Parameterizable {
         if self.fingerprint == nil {
             throw(BMError("Asset error: missing fingerprint"))
         }
-        self.registrant =  AccountNumber.build(fromPubKey: signable.publicKey)
+        self.registrant =  signable.address
         self.signature = try signable.sign(message: try self.packRecord())
         guard let id = computeAssetId(fingerprint: self.fingerprint) else {
             resetSignState()

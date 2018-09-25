@@ -26,39 +26,63 @@ class Asset_Tests: XCTestCase {
     }
     
     struct TestData {
-        static let privateKey = try! AuthKey(fromKIF: "Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xr")
+        static let accountA = try! Account(fromSeed: "5XEECttxvRBzxzAmuV4oh6T1FcQu4mBg8eWd9wKbf8hweXsfwtJ8sfH")
+        static let accountB = try! Account(fromSeed: "5XEECt6Mhj8Tanb9CDTGHhTQ7RqbS5LHD383LRK6QGDuj8mwfUU6gKs")
+        static let accountNumberA = AccountNumber("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
+        static let accountNumberB = AccountNumber("f3TnfGTVgNjrWKN6QH3xqiSW6G2Afe5wGQ8WM3wWDQyHEpicDX")
         static let name = "this is name"
-        static let metadata = "description" + "\u{0000}" + "this is description"
-        static let fingerprint = "5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c"
+        static let metadata = ["description": "this is description"]
+        static let fingerprintData = "5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c"
         static let signature = "2028900a6ddebce59e29fb41c27b45be57a07177927b24e46662e007ecad066399e87f4dec4eecb45599e9e9186497374978595a36f908b4fed9a51145b6e803"
+    }
+    
+    func randomString(length: Int) -> String {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
+    }
+    
+    override func setUp() {
+        BitmarkSDK.initialize(config: SDKConfig(apiToken: "bmk-lljpzkhqdkzmblhg", network: .testnet, urlSession: URLSession.shared))
     }
     
     // MARK:- Asset
     
-    func testAsset() {
-        var asset = Asset()
+    func testAssetAndIssue() {
         do {
-            try asset.set(name: TestData.name)
-            try asset.set(metadata: TestData.metadata)
-            try asset.set(fingerPrint: TestData.fingerprint)
+            var assetParams = try Asset.newRegistrationParams(name: "SwiftSDK test" + randomString(length: 8),
+                                                    metadata: ["Random string": randomString(length: 20)])
             
-            try asset.sign(withPrivateKey: TestData.privateKey)
+            let fileContent = randomString(length: 300)
+            let fileData = fileContent.data(using: .utf8)!
+            XCTAssertNoThrow(try assetParams.setFingerprint(fromData: fileData))
+            XCTAssertNoThrow(try assetParams.sign(TestData.accountA))
             
-            XCTAssert(asset.isSigned)
-            XCTAssertEqual(asset.name, TestData.name)
-            XCTAssertEqual(asset.metadata, TestData.metadata)
-            XCTAssertEqual(asset.fingerprint, TestData.fingerprint)
-            XCTAssertEqual(asset.registrant, TestData.privateKey.address)
-            XCTAssertEqual(asset.signature?.hexEncodedString, TestData.signature)
+            XCTAssert(assetParams.isSigned)
+            XCTAssertEqual(assetParams.registrant, TestData.accountNumberA)
+            
+            let assetID = try Asset.register(assetParams)
+            
+            // Issue
+            let numberOfIssuance = 1
+            let issueParams = try Bitmark.newIssuanceParams(assetID: assetID, owner: TestData.accountNumberB, quantity: numberOfIssuance)
+            let bitmarkIDs = try Bitmark.issue(issueParams)
+            
+            XCTAssertEqual(bitmarkIDs.count, numberOfIssuance)
+            XCTAssertEqual(issueParams.issuances.first!.txId!, bitmarkIDs.first!)
+            
         }
-        catch {
-            XCTFail()
+        catch (let e){
+            XCTFail(e.localizedDescription)
         }
-    }
-    
-    func testFingerprint() {
-        let data = "9d42e2cc2973485fdeda1a435986ed117d420da1d540c30d5fb6fc963276b9f3487a485076f6ac2ad3c05cd8e9efd3972860c5564d4b5807a0bd340248aff84ee8629709bee7711b681c0557f1865aefb0e2a348ea0c8133c257960edf90cb42752910b4bf1d198f771a8ed64c49b4878f391ab6f832db05b0d1bff7077c8601".hexDecodedData
-        let fingerprint = "013e2a0aa3e49d470d52ee576a1a1a4d19d922d040dee2068d092c4c57f795781f3e66697078604e788f2276011550964672c2199c75d5d483aa9272ae453a6b4a"
-        XCTAssertEqual(fingerprint, FileUtil.Fingerprint.computeFingerprint(data: data))
-    }
-}
+    }}
