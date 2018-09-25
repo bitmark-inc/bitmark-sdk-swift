@@ -8,12 +8,13 @@
 
 import Foundation
 
+public struct Payment: Codable {
+    let currencyCode: Int
+    let address: String
+    let amount: Int
+}
+
 public struct TransferRequest {
-    public struct Payment {
-        let currencyCode: Int
-        let address: String
-        let amount: Int
-    }
 
     private(set) public var txId: String?          // sha3_256 of the packed record
     private(set) var preTxId: String?
@@ -76,7 +77,7 @@ public struct TransferRequest {
 }
 
 extension TransferRequest: Parameterizable {
-    mutating func sign(_ signable: KeypairSignable) throws {
+    public mutating func sign(_ signable: KeypairSignable) throws {
         if self.preTxId == nil {
             throw(BMError("Transfer error: missing previous transaction"))
         }
@@ -121,15 +122,13 @@ public struct TransferParams {
     
     public mutating func from(bitmarkID: String) throws {
         let api = API()
-        guard let bitmarkInfo = try api.bitmarkInfo(bitmarkId: bitmarkID) else {
-            throw("Cannot get bitmark info")
-        }
-        self.transfer.set(fromTx: bitmarkInfo.headId)
+        let bitmark = try api.get(bitmarkID: bitmarkID)
+        self.transfer.set(fromTx: bitmark.head_id)
     }
 }
 
 extension TransferParams: Parameterizable {
-    mutating func sign(_ signable: KeypairSignable) throws {
+    public mutating func sign(_ signable: KeypairSignable) throws {
         self.transfer.set(fromOwner: signable.address)
         try self.transfer.sign(signable)
     }

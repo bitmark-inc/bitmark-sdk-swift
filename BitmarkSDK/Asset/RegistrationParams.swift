@@ -120,7 +120,7 @@ public struct RegistrationParams {
 }
 
 extension RegistrationParams: Parameterizable {
-    mutating func sign(_ signable: KeypairSignable) throws {
+    public mutating func sign(_ signable: KeypairSignable) throws {
         if self.name == nil {
             throw(BMError("Asset error: missing name"))
         }
@@ -137,7 +137,7 @@ extension RegistrationParams: Parameterizable {
         self.isSigned = true
     }
     
-    func toJSON() throws -> [String : Any] {
+    public func toJSON() throws -> [String : Any] {
         if !self.isSigned {
             throw(BMError("Asset error: need to sign the record before getting RPC message"))
         }

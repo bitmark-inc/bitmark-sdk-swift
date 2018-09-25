@@ -20,12 +20,12 @@ struct Transaction: Codable {
 
 extension Transaction {
     // MARK:- Query
-    public static func get(transactionID: String, completionHandler: @escaping (Bitmark?, Error?) -> Void) {
+    public static func get(transactionID: String, completionHandler: @escaping (Transaction?, Error?) -> Void) {
         let api = API()
         DispatchQueue.global().async {
             do {
-                let bitmark = try api.get(bitmarkID: bitmarkID)
-                completionHandler(bitmark, nil)
+                let transaction = try api.get(transactionID: transactionID)
+                completionHandler(transaction, nil)
             } catch let e {
                 completionHandler(nil, e)
             }
@@ -36,12 +36,12 @@ extension Transaction {
         return QueryParam(queryItems: [URLQueryItem]())
     }
     
-    public static func list(params: QueryParam, completionHandler: @escaping ([Bitmark]?, [Asset]?, Error?) -> Void) {
+    public static func list(params: QueryParam, completionHandler: @escaping ([Transaction]?, [Asset]?, Error?) -> Void) {
         let api = API()
         DispatchQueue.global().async {
             do {
-                let (bitmarks, assets) = try api.listBitmark(builder: params)
-                completionHandler(bitmarks, assets, nil)
+                let (transactions, assets) = try api.listTransaction(builder: params)
+                completionHandler(transactions, assets, nil)
             } catch let e {
                 completionHandler(nil, nil, e)
             }

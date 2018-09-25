@@ -33,10 +33,8 @@ public struct OfferParams {
     
     public mutating func from(bitmarkID: String) throws {
         let api = API()
-        guard let bitmarkInfo = try api.bitmarkInfo(bitmarkId: bitmarkID) else {
-            throw("Cannot get bitmark info")
-        }
-        self.offer.transfer.set(fromTx: bitmarkInfo.headId)
+        let bitmark = try api.get(bitmarkID: bitmarkID)
+        self.offer.transfer.set(fromTx: bitmark.head_id)
     }
 }
 
@@ -59,16 +57,65 @@ public struct CountersignedTransferRequest: Codable {
     let link: String
     let owner: String
     let signature: String
-    let counterSignature: String
+    var counterSignature: String?
+    let payment: Payment?
+    
+    internal func packRecord(withReceiver receiver: AccountNumber) throws -> Data {
+        var txData: Data
+        txData = Data.varintFrom(Config.transferCountersignedTag)
+        txData = BinaryPacking.append(toData: txData, withData: link.hexDecodedData)
+        
+        if let payment = payment {
+            txData += Data(bytes: [0x01])
+            txData += Data.varintFrom(payment.currencyCode)
+            txData = BinaryPacking.append(toData: txData, withString: payment.address)
+            txData += Data.varintFrom(payment.amount)
+        }
+        else {
+            txData += Data(bytes: [0x00])
+        }
+        
+        txData = try BinaryPacking.append(toData: txData, withAccount: receiver)
+        txData = BinaryPacking.append(toData: txData, withData: signature.hexDecodedData)
+        
+        return txData
+    }
+
+}
+
+extension CountersignedTransferRequest: Parameterizable {
+    public mutating func sign(_ signable: KeypairSignable) throws {
+        let message = try self.packRecord(withReceiver: signable.address)
+        self.counterSignature = try signable.sign(message: message).hexEncodedString
+    }
+    
+    public func toJSON() throws -> [String : Any] {
+        guard let counterSignature = counterSignature else {
+            throw("Need to sign first")
+        }
+        
+        return ["link": link,
+                "owner": owner,
+                "signature": signature,
+                "counterSignature": counterSignature]
+    }
 }
 
 public struct OfferResponseParam {
     let id: String
     let action: CountersignedTransferAction
-    let record: CountersignedTransferRecord
+    var record: CountersignedTransferRequest
     var counterSignature: String
+    var requestAuthrization: String
 }
 
 extension OfferResponseParam: Parameterizable {
+    public mutating func sign(_ signable: KeypairSignable) throws {
+        try self.record.sign(signable)
+        
+    }
     
+    public func toJSON() throws -> [String : Any] {
+        return ["offer": try record.toJSON()]
+    }
 }

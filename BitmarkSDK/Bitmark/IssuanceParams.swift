@@ -60,7 +60,7 @@ public struct IssueRequest {
 }
 
 extension IssueRequest: Parameterizable {
-    mutating func sign(_ signable: KeypairSignable) throws {
+    public mutating func sign(_ signable: KeypairSignable) throws {
         if self.assetId == nil {
             throw(BMError("Issue error: missing asset"))
         }
@@ -94,8 +94,8 @@ public struct IssuanceParams {
     var issuances: [IssueRequest]
 }
 
-public extension IssuanceParams: Parameterizable {
-    mutating func sign(_ signable: KeypairSignable) throws {
+extension IssuanceParams: Parameterizable {
+    public mutating func sign(_ signable: KeypairSignable) throws {
         var signedIssuances = [IssueRequest]()
         for issueRequest in issuances {
             var signIssueRequest = issueRequest

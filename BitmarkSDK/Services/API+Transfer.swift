@@ -12,6 +12,7 @@ extension API {
     struct TransferResponse: Codable {
         let txId: String
     }
+    
     internal func transfer(_ transfer: TransferParams) throws -> String {
         let json = try JSONSerialization.data(withJSONObject: transfer.toJSON(), options: [])
         
@@ -155,7 +156,7 @@ extension API {
         return result.transaction
     }
     
-    internal func listBitmark(builder: Bitmark.QueryParam) throws -> ([Transaction], [Asset]?) {
+    internal func listTransaction(builder: Transaction.QueryParam) throws -> ([Transaction], [Asset]?) {
         let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v3/txs")
         let urlRequest = URLRequest(url: requestURL)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
