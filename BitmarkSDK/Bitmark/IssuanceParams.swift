@@ -85,7 +85,7 @@ extension IssueRequest: Parameterizable {
         
         return ["owner": self.owner!,
                 "signature": self.signature!.hexEncodedString,
-                "asset": self.assetId!,
+                "asset_id": self.assetId!,
                 "nonce": self.nonce!]
     }
 }
