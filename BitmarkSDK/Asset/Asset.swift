@@ -41,10 +41,9 @@ public extension Asset {
     
     // MARK:- Query
     public static func get(assetID: String, completionHandler: @escaping (Asset?, Error?) -> Void) {
-        let api = API()
         DispatchQueue.global().async {
             do {
-                let asset = try api.get(assetID: assetID)
+                let asset = try get(assetID: assetID)
                 completionHandler(asset, nil)
             } catch let e {
                 completionHandler(nil, e)
@@ -52,15 +51,19 @@ public extension Asset {
         }
     }
     
+    public static func get(assetID: String) throws -> Asset {
+        let api = API()
+        return try api.get(assetID: assetID)
+    }
+    
     public static func newQueryParams() -> Asset.QueryParam {
         return Asset.QueryParam(queryItems: [URLQueryItem]())
     }
     
     public static func list(params: Asset.QueryParam, completionHandler: @escaping ([Asset]?, Error?) -> Void) {
-        let api = API()
         DispatchQueue.global().async {
             do {
-                let assets = try api.listAsset(builder: params)
+                let assets = try list(params: params)
                 completionHandler(assets, nil)
             } catch let e {
                 completionHandler(nil, e)
@@ -68,5 +71,8 @@ public extension Asset {
         }
     }
     
-    
+    public static func list(params: Asset.QueryParam) throws -> [Asset] {
+        let api = API()
+        return try api.listAsset(builder: params)
+    }
 }

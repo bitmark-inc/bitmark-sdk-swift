@@ -95,10 +95,9 @@ extension Bitmark {
 extension Bitmark {
     // MARK:- Query
     public static func get(bitmarkID: String, completionHandler: @escaping (Bitmark?, Error?) -> Void) {
-        let api = API()
         DispatchQueue.global().async {
             do {
-                let bitmark = try api.get(bitmarkID: bitmarkID)
+                let bitmark = try get(bitmarkID: bitmarkID)
                 completionHandler(bitmark, nil)
             } catch let e {
                 completionHandler(nil, e)
@@ -106,19 +105,28 @@ extension Bitmark {
         }
     }
     
+    public static func get(bitmarkID: String) throws -> Bitmark {
+        let api = API()
+        return try api.get(bitmarkID: bitmarkID)
+    }
+    
     public static func newBitmarkQueryParams() -> QueryParam {
         return QueryParam(queryItems: [URLQueryItem]())
     }
     
     public static func list(params: QueryParam, completionHandler: @escaping ([Bitmark]?, [Asset]?, Error?) -> Void) {
-        let api = API()
         DispatchQueue.global().async {
             do {
-                let (bitmarks, assets) = try api.listBitmark(builder: params)
+                let (bitmarks, assets) = try list(params: params)
                 completionHandler(bitmarks, assets, nil)
             } catch let e {
                 completionHandler(nil, nil, e)
             }
         }
+    }
+    
+    public static func list(params: QueryParam) throws -> ([Bitmark], [Asset]?) {
+        let api = API()
+        return try api.listBitmark(builder: params)
     }
 }
