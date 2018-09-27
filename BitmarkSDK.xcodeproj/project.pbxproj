@@ -341,7 +341,6 @@
 				5865BD351E0250C200B25AB3 /* Frameworks */,
 				5865BD361E0250C200B25AB3 /* Headers */,
 				5865BD371E0250C200B25AB3 /* Resources */,
-				105FE189B3921E0AD6F7D9D9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -361,7 +360,6 @@
 				5865BD3F1E0250C200B25AB3 /* Frameworks */,
 				5865BD401E0250C200B25AB3 /* Resources */,
 				D0111D64781A323C15A34506 /* [CP] Embed Pods Frameworks */,
-				FA1291BA354BBB198A787E78 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -432,21 +430,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		105FE189B3921E0AD6F7D9D9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BitmarkSDK/Pods-BitmarkSDK-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7A1CF0D8FE1BF3A0AF1B6389 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -505,21 +488,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BitmarkSDKTests/Pods-BitmarkSDKTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FA1291BA354BBB198A787E78 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BitmarkSDKTests/Pods-BitmarkSDKTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

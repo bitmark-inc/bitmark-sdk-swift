@@ -7,7 +7,7 @@ target 'BitmarkSDK' do
 
   # Pods for BitmarkSDK
   
-  pod 'BigInt', '~> 3.0'
+  pod 'BigInt'
   pod 'CryptoSwift'
   pod 'TweetNacl'
 
