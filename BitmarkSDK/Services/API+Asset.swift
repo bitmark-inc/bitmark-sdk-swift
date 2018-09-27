@@ -35,10 +35,13 @@ extension API {
     }
     
     internal func get(assetID: String) throws -> Asset {
-        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/assets/" + assetID + "?pending=true")
-        let urlRequest = URLRequest(url: requestURL)
+        var urlComponents = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v3/assets/" + assetID), resolvingAgainstBaseURL: false)!
+        urlComponents.queryItems = [URLQueryItem(name: "pending", value: "true")]
+        let urlRequest = URLRequest(url: urlComponents.url!)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
-        let result = try JSONDecoder().decode(AssetResponse.self, from: data)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+        let result = try decoder.decode(AssetResponse.self, from: data)
         return result.asset
     }
     
@@ -46,7 +49,9 @@ extension API {
         let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v3/assets")
         let urlRequest = URLRequest(url: requestURL)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
-        let result = try JSONDecoder().decode(AssetsResponse.self, from: data)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+        let result = try decoder.decode(AssetsResponse.self, from: data)
         return result.assets
     }
 }

@@ -23,6 +23,7 @@ public struct TransferRequest {
     private(set) var payment: Payment?
     private(set) var signature: Data?
     private(set) var isSigned = false
+    private(set) var requireCountersignature = false
     
     // MARK:- Internal methods
     
@@ -33,7 +34,11 @@ public struct TransferRequest {
     
     internal func packRecord() throws -> Data {
         var txData: Data
-        txData = Data.varintFrom(Config.transferUnratifiedTag)
+        if requireCountersignature {
+            txData = Data.varintFrom(Config.transferCountersignedTag)
+        } else {
+            txData = Data.varintFrom(Config.transferUnratifiedTag)
+        }
         txData = BinaryPacking.append(toData: txData, withData: self.preTxId?.hexDecodedData)
         
         if let payment = self.payment {
@@ -56,7 +61,7 @@ public struct TransferRequest {
         resetSignState()
     }
     
-    internal mutating func set(fromOwner preOwner: String) {
+    internal mutating func set(fromOwner preOwner: AccountNumber) {
         self.preOwner = preOwner
         resetSignState()
     }
@@ -68,6 +73,11 @@ public struct TransferRequest {
     
     internal mutating func set(payment: Payment) {
         self.payment = payment
+        resetSignState()
+    }
+    
+    internal mutating func set(requireCountersignature: Bool) {
+        self.requireCountersignature = requireCountersignature
         resetSignState()
     }
     

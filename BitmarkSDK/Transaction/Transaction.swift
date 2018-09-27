@@ -14,8 +14,8 @@ struct Transaction: Codable {
     let asset_id: String
     let owner: String
     let status: String
-    let block_number: String
-    let offset: String
+    let block_number: Int64
+    let offset: Int64
 }
 
 extension Transaction {

@@ -33,10 +33,14 @@ extension API {
     }
     
     internal func get(bitmarkID: String) throws -> Bitmark {
-        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/bitmarks/" + bitmarkID + "?pending=true")
-        let urlRequest = URLRequest(url: requestURL)
+        var urlComponents = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v3/bitmarks/" + bitmarkID), resolvingAgainstBaseURL: false)!
+        urlComponents.queryItems = [URLQueryItem(name: "pending", value: "true")]
+        let urlRequest = URLRequest(url: urlComponents.url!)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
-        let result = try JSONDecoder().decode(BitmarkQueryResponse.self, from: data)
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+        let result = try decoder.decode(BitmarkQueryResponse.self, from: data)
         return result.bitmark
     }
     
@@ -44,7 +48,10 @@ extension API {
         let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v3/bitmarks")
         let urlRequest = URLRequest(url: requestURL)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
-        let result = try JSONDecoder().decode(BitmarksQueryResponse.self, from: data)
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+        let result = try decoder.decode(BitmarksQueryResponse.self, from: data)
         return (result.bitmarks, result.assets)
     }
 }

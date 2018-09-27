@@ -15,7 +15,10 @@ public struct Offer {
 
 extension Offer: Parameterizable {
     public mutating func sign(_ signable: KeypairSignable) throws {
-        try self.transfer.sign(signable)
+        var transfer = self.transfer
+        transfer.set(fromOwner: signable.address)
+        try transfer.sign(signable)
+        self.transfer = transfer
     }
     
     public func toJSON() throws -> [String : Any] {
@@ -23,7 +26,8 @@ extension Offer: Parameterizable {
             return ["record": try self.transfer.toJSON(),
                     "extra_info": extraInfo]
         } else {
-            return ["record": try self.transfer.toJSON()]
+            return ["record": try self.transfer.toJSON(),
+                    "extra_info": [String:String]()]
         }
     }
 }
@@ -40,7 +44,9 @@ public struct OfferParams {
 
 extension OfferParams: Parameterizable {
     public mutating func sign(_ signable: KeypairSignable) throws {
-        try self.offer.sign(signable)
+        var offer = self.offer
+        try offer.sign(signable)
+        self.offer = offer
     }
     
     public func toJSON() throws -> [String : Any] {
@@ -101,21 +107,35 @@ extension CountersignedTransferRequest: Parameterizable {
     }
 }
 
-public struct OfferResponseParam {
+public struct OfferResponseParams {
     let id: String
     let action: CountersignedTransferAction
     var record: CountersignedTransferRequest
-    var counterSignature: String
-    var requestAuthrization: String
+    var counterSignature: String?
+    var apiHeader: [String: String]? = nil
 }
 
-extension OfferResponseParam: Parameterizable {
+extension OfferResponseParams: Parameterizable {
     public mutating func sign(_ signable: KeypairSignable) throws {
         try self.record.sign(signable)
+        self.counterSignature = self.record.counterSignature
+        let timestamp = Common.timestamp()
         
+        let parts = ["updateOffer",
+                     self.id,
+                     signable.address,
+                     timestamp]
+        let message = parts.joined(separator: "|")
+        let signature = try signable.sign(message: message.data(using: .utf8)!)
+        
+        apiHeader = ["requester": String(signable.address),
+                     "timestamp": timestamp,
+                     "signature": signature.hexEncodedString]
     }
     
     public func toJSON() throws -> [String : Any] {
-        return ["offer": try record.toJSON()]
+        return ["id": id,
+                "action": action.rawValue,
+                "countersignature": counterSignature!]
     }
 }

@@ -70,11 +70,3 @@ public struct Config {
         public static let networkLength = 1
     }
 }
-
-extension String: Error {
-    public var localizedDescription: String {
-        get {
-            return self
-        }
-    }
-}

@@ -60,7 +60,7 @@ class Asset_Tests: XCTestCase {
     
     func testAssetAndIssue() {
         do {
-            var assetParams = try Asset.newRegistrationParams(name: "SwiftSDK test" + randomString(length: 8),
+            var assetParams = try Asset.newRegistrationParams(name: "SwiftSDK_test_" + randomString(length: 8),
                                                     metadata: ["Random string": randomString(length: 20)])
             
             let fileContent = randomString(length: 300)
@@ -74,7 +74,7 @@ class Asset_Tests: XCTestCase {
             let assetID = try Asset.register(assetParams)
             
             // Issue
-            let numberOfIssuance = 1
+            let numberOfIssuance = 2
             var issueParams = try Bitmark.newIssuanceParams(assetID: assetID, owner: TestData.accountNumberB, quantity: numberOfIssuance)
             XCTAssertNoThrow(try issueParams.sign(TestData.accountB))
             let bitmarkIDs = try Bitmark.issue(issueParams)
@@ -82,6 +82,52 @@ class Asset_Tests: XCTestCase {
             XCTAssertEqual(bitmarkIDs.count, numberOfIssuance)
             XCTAssertEqual(issueParams.issuances.first!.txId!, bitmarkIDs.first!)
             
+            // Separate bitmark ids into two, one to test transfer with single signature, one to test with two signatures
+            
+            let bitmarkId1 = bitmarkIDs[0]
+            while true {
+                let issue = try Bitmark.get(bitmarkID: bitmarkId1)
+                if issue.status == "settled" {
+                    break
+                }
+                
+                sleep(5)
+            }
+            
+            // Transfer with single signature
+            var transferParam = try Bitmark.newTransferParams(to: TestData.accountA.accountNumber)
+            XCTAssertNoThrow(try transferParam.from(bitmarkID: bitmarkId1))
+            XCTAssertNoThrow(try transferParam.sign(TestData.accountB))
+            let tx1 = try Bitmark.transfer(withTransferParams: transferParam)
+            
+            // Transfer with two signatures
+            let bitmarkId2 = bitmarkIDs[1]
+            while true {
+                let issue = try Bitmark.get(bitmarkID: bitmarkId2)
+                if issue.status == "settled" {
+                    break
+                }
+                
+                sleep(5)
+            }
+            
+            var offerParam = try Bitmark.newOfferParams(to: TestData.accountA.accountNumber, info: nil)
+            XCTAssertNoThrow(try offerParam.from(bitmarkID: bitmarkId2))
+            XCTAssertNoThrow(try offerParam.sign(TestData.accountB))
+            XCTAssertNoThrow(try Bitmark.offer(withOfferParams: offerParam))
+            
+            sleep(2)
+            
+            let receivingBitmark = try Bitmark.get(bitmarkID: bitmarkId2)
+            var responseParams = try Bitmark.newTransferResponseParams(withBitmark: receivingBitmark, action: .accept)
+            XCTAssertNoThrow(try responseParams.sign(TestData.accountA))
+            XCTAssertNoThrow(try Bitmark.response(withResponseParams: responseParams))
+            
+            // Check transfer info
+            let transaction1 = try Transaction.get(transactionID: tx1)
+            XCTAssertEqual(transaction1.asset_id, assetID)
+            XCTAssertEqual(transaction1.bitmark_id, bitmarkId1)
+            XCTAssertEqual(transaction1.owner, TestData.accountNumberA)
         }
         catch (let e){
             XCTFail(e.localizedDescription)

@@ -24,11 +24,11 @@ public struct Bitmark: Codable {
     let issuer: String
     let owner: String
     let status: String
-    let offer: TransferOffer
-    let block_number: Int
-    let offset: Int
-    let created_at: Date
-    let confirmed_at: Date
+    let offer: TransferOffer?
+    let block_number: Int64
+    let offset: Int64
+    let created_at: Date?
+    let confirmed_at: Date?
 }
 
 public extension Bitmark {
@@ -86,9 +86,27 @@ extension Bitmark {
     // MARK:- Transfer offer
     public static func newOfferParams(to owner: AccountNumber, info: [String: Any]?) throws -> OfferParams {
         var transferRequest = TransferRequest()
+        transferRequest.set(requireCountersignature: true)
         try transferRequest.set(to: owner)
         let offer = Offer(transfer: transferRequest, extraInfo: info)
         return OfferParams(offer: offer)
+    }
+    
+    public static func offer(withOfferParams params: OfferParams) throws {
+        let api = API()
+        return try api.offer(params)
+    }
+    
+    public static func newTransferResponseParams(withBitmark bitmark: Bitmark, action: CountersignedTransferAction) throws -> OfferResponseParams {
+        guard let offer = bitmark.offer else {
+            throw("Cannot find any offer with this bitmark")
+        }
+        return OfferResponseParams(id: offer.id, action: action, record: offer.record, counterSignature: nil, apiHeader: nil)
+    }
+    
+    public static func response(withResponseParams responseParam: OfferResponseParams) throws {
+        let api = API()
+        return try api.response(responseParam)
     }
 }
 

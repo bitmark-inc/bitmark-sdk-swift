@@ -46,7 +46,7 @@ internal struct API {
         self.init(apiEndpoint: APIEndpoint.endPointForNetwork(network))
     }
     
-     init(apiEndpoint: APIEndpoint) {
+    init(apiEndpoint: APIEndpoint) {
         endpoint = apiEndpoint
     }
 }
@@ -92,6 +92,8 @@ internal extension URLSession {
         // Add api token
         var modifyRequest = request
         modifyRequest.setValue(globalConfig.apiToken, forHTTPHeaderField: "api-token")
+        modifyRequest.setValue("*", forHTTPHeaderField: "Accept-Encoding")
+        modifyRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         
         print("========================================================")

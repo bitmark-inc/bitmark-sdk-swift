@@ -10,7 +10,7 @@ import Foundation
 
 extension API {
     struct TransferResponse: Codable {
-        let txId: String
+        let txid: String
     }
     
     internal func transfer(_ transfer: TransferParams) throws -> String {
@@ -24,8 +24,10 @@ extension API {
         
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
         
-        let transferResponse = try JSONDecoder().decode(TransferResponse.self, from: data)
-        return transferResponse.txId
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+        let transferResponse = try decoder.decode(TransferResponse.self, from: data)
+        return transferResponse.txid
     }
     
     internal func offer(_ offer: OfferParams) throws {
@@ -37,130 +39,55 @@ extension API {
         urlRequest.httpBody = json
         urlRequest.httpMethod = "POST"
         
-        try urlSession.synchronousDataTask(with: urlRequest)
+        _ = try urlSession.synchronousDataTask(with: urlRequest)
     }
     
-//    internal func response(forBitmarkID bitmarkID: String, withAction action: CountersignedTransferAction) throws -> String {
-//        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v2/transfer_offers")
-//
-//        var params: [String: Any] = ["from": sender.accountNumber,
-//                    "record": try offer.serialize()]
-//        if let extraInfo = extraInfo {
-//            params["extra_info"] = extraInfo
-//        }
-//
-//        var urlRequest = URLRequest(url: requestURL)
-//        urlRequest.httpMethod = "POST"
-//        urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
-//
-//        let action = "transferOffer"
-//        let resource = String(data: try JSONEncoder().encode(try offer.serialize()), encoding: .utf8)!
-//
-//        try urlRequest.signRequest(withAccount: sender, action: action, resource: resource)
-//
-//        let (d, res) = try urlSession.synchronousDataTask(with: urlRequest)
-//        guard let response = res,
-//            let data = d else {
-//            throw("Cannot get http response")
-//        }
-//
-//        if !(200..<300 ~= response.statusCode) {
-//            throw("Request status" + String(response.statusCode))
-//        }
-//
-//        let responseData = try JSONDecoder().decode([String: String].self, from: data)
-//        guard let offerId = responseData["offer_id"] else {
-//            throw("Invalid response from gateway server")
-//        }
-//
-//        return offerId
-//    }
-//
-//    internal func completeTransferOffer(withAccount account: Account, offerId: String, action: String, counterSignature: String) throws -> Bool {
-//        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v2/transfer_offers")
-//
-//        let params: [String: Any]  = ["id": offerId,
-//                                      "reply":
-//                                        ["action": action,
-//                                         "countersignature": counterSignature]]
-//
-//        var urlRequest = URLRequest(url: requestURL)
-//        urlRequest.httpMethod = "PATCH"
-//        urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
-//        try urlRequest.signRequest(withAccount: account, action: "transferOffer", resource: "patch")
-//
-//        let (d, res) = try urlSession.synchronousDataTask(with: urlRequest)
-//        guard let response = res,
-//            let _ = d else {
-//                throw("Cannot get http response")
-//        }
-//
-//        if !(200..<300 ~= response.statusCode) {
-//            return false
-//        }
-//
-//        return true
-//    }
-//
-//    internal func getTransferOffer(withId offerID: String) throws -> TransferOffer {
-//        var url = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v2/transfer_offers"), resolvingAgainstBaseURL: false)!
-//        url.queryItems = [
-//            URLQueryItem(name: "offer_id", value: offerID)
-//        ]
-//
-//        let urlRequest = URLRequest(url: url.url!)
-//
-//        let (d, res) = try urlSession.synchronousDataTask(with: urlRequest)
-//        guard let response = res,
-//            let data = d else {
-//                throw("Cannot get http response")
-//        }
-//
-//        if !(200..<300 ~= response.statusCode) {
-//            throw("Request status" + String(response.statusCode))
-//        }
-//
-//        guard let responseData = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-//            throw("Cannot parse response")
-//        }
-//
-//        guard let offerInfo = responseData["offer"] as? [String: Any],
-//            let record = offerInfo["record"] as? [String: Any],
-//            let link = record["link"] as? String,
-//            let owner = record["owner"] as? String,
-//            let signature = record["signature"] as? String else {
-//                throw("Invalid response from gateway server")
-//        }
-//
-//        let offer = TransferOffer(txId: link, receiver: owner, signature: signature.hexDecodedData)
-//
-//        return offer
-//    }
+    internal func response(_ offerResponse: OfferResponseParams) throws {
+        let json = try JSONSerialization.data(withJSONObject: offerResponse.toJSON(), options: [])
+        
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/transfer")
+        
+        var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringCacheData)
+        urlRequest.httpBody = json
+        urlRequest.httpMethod = "PATCH"
+        for (k, v) in offerResponse.apiHeader! {
+            urlRequest.setValue(v, forHTTPHeaderField: k)
+        }
+        
+        _ = try urlSession.synchronousDataTask(with: urlRequest)
+    }
 }
 
 extension API {
     struct TransactionQueryResponse: Codable {
-        let transaction: Transaction
+        let tx: Transaction
     }
     
     struct TransactionsQueryResponse: Codable {
-        let transactions: [Transaction]
+        let txs: [Transaction]
         let assets: [Asset]?
     }
     
     internal func get(transactionID: String) throws -> Transaction {
-        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/txs/" + transactionID + "?pending=true")
-        let urlRequest = URLRequest(url: requestURL)
+        var urlComponents = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v3/txs/" + transactionID), resolvingAgainstBaseURL: false)!
+        urlComponents.queryItems = [URLQueryItem(name: "pending", value: "true")]
+        let urlRequest = URLRequest(url: urlComponents.url!)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
-        let result = try JSONDecoder().decode(TransactionQueryResponse.self, from: data)
-        return result.transaction
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+        let result = try decoder.decode(TransactionQueryResponse.self, from: data)
+        return result.tx
     }
     
     internal func listTransaction(builder: Transaction.QueryParam) throws -> ([Transaction], [Asset]?) {
         let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v3/txs")
         let urlRequest = URLRequest(url: requestURL)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
-        let result = try JSONDecoder().decode(TransactionsQueryResponse.self, from: data)
-        return (result.transactions, result.assets)
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+        let result = try decoder.decode(TransactionsQueryResponse.self, from: data)
+        return (result.txs, result.assets)
     }
 }

@@ -30,7 +30,9 @@ extension API {
         
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
         
-        let issueResponse = try JSONDecoder().decode(IssueResponse.self, from: data)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+        let issueResponse = try decoder.decode(IssueResponse.self, from: data)
         
         return issueResponse.bitmarks.map {$0.id}
     }
