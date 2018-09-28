@@ -66,8 +66,8 @@ class Query_Tests: XCTestCase {
     func testQueryTransactions() {
         do {
             let ownedBy = "eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9"
-            let referencedAssetID = "0e0b4e3bd771811d35a23707ba6197aa1dd5937439a221eaf8e7909309e7b31b6c0e06a1001c261a099abf04c560199db898bc154cf128aa9efa5efd36030c64"
-            let referencedBitmarkID = "58737de5ad68a535da6277da62d11eb3ed76ff6dd7fc2adf3c42a4096d9a2518"
+            let referencedAssetID = "e0e27961f97b8eebbc9b83eb0f442a3ce602ad350a33955b6e522fbbc8cda589b014559d2bc0bea8824eb477883906d0c0c3f0e6d5dd40bc3c5f4463ba723520"
+            let referencedBitmarkID = "bbfdd3c3fb35b539ba78703d89c66ae3013d5c10aa1516a874564f62d95686eb"
             let query = try Transaction.newTransactionQueryParams()
                 .limit(size: 100)
                 .owned(by: ownedBy, transient: true)
