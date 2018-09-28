@@ -30,6 +30,13 @@ extension Transaction {
             return QueryParam(queryItems: items)
         }
         
+        public func referenced(toAssetID assetID: String) -> QueryParam {
+            let queryItem = URLQueryItem(name: "asset_id", value: assetID)
+            var items = self.queryItems
+            items.append(queryItem)
+            return QueryParam(queryItems: items)
+        }
+        
         public func referenced(toBitmarkID bitmarkID: String) -> QueryParam {
             let queryItem = URLQueryItem(name: "bitmark_id", value: bitmarkID)
             var items = self.queryItems
@@ -37,7 +44,7 @@ extension Transaction {
             return QueryParam(queryItems: items)
         }
         
-        public func loadAsset(_ loadAsset: String) -> QueryParam {
+        public func loadAsset(_ loadAsset: Bool) -> QueryParam {
             let queryItem = URLQueryItem(name: "asset", value: String(loadAsset))
             var items = self.queryItems
             items.append(queryItem)

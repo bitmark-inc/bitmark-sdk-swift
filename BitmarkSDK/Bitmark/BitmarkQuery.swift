@@ -58,7 +58,7 @@ public extension Bitmark {
             return QueryParam(queryItems: items)
         }
         
-        public func loadAsset(_ loadAsset: String) -> QueryParam {
+        public func loadAsset(_ loadAsset: Bool) -> QueryParam {
             let queryItem = URLQueryItem(name: "asset", value: String(loadAsset))
             var items = self.queryItems
             items.append(queryItem)

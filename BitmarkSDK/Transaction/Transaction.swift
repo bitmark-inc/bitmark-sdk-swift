@@ -36,7 +36,7 @@ extension Transaction {
         return try api.get(transactionID: transactionID)
     }
     
-    public static func newBitmarkQueryParams() -> QueryParam {
+    public static func newTransactionQueryParams() -> QueryParam {
         return QueryParam(queryItems: [URLQueryItem]())
     }
     

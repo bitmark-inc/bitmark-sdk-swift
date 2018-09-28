@@ -11,12 +11,12 @@ import Foundation
 public struct Asset: Codable {
     let id: String
     let name: String
-    let metadata: String
+    let metadata: [String: String]
     let fingerprint: String
     let registrant: String
     let status: String
-    let block_number: String
-    let offset: String
+    let block_number: Int64
+    let offset: Int64
     let created_at: Date
 }
 

@@ -23,6 +23,7 @@
 		5818FE381E03A840007F082D /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE371E03A840007F082D /* Config.swift */; };
 		5818FE3A1E03BDB6007F082D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE391E03BDB6007F082D /* Common.swift */; };
 		58244CEE1FA2E8BA00CFA475 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58244CED1FA2E8BA00CFA475 /* API.swift */; };
+		58300E6E215DCE450053697C /* Query_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58300E6D215DCE450053697C /* Query_Tests.swift */; };
 		58582D602154B00700AF30E6 /* API+Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D5F2154B00700AF30E6 /* API+Asset.swift */; };
 		58582D632154CD3300AF30E6 /* IssuanceParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D622154CD3300AF30E6 /* IssuanceParams.swift */; };
 		58582D662157C83700AF30E6 /* TransferParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D652157C83700AF30E6 /* TransferParams.swift */; };
@@ -93,6 +94,7 @@
 		582BECA91E28AC1E00BD511E /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkSDK-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/BigInt.framework"; sourceTree = "<group>"; };
 		582BECAB1E28AC2600BD511E /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkSDK-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/CocoaAsyncSocket.framework"; sourceTree = "<group>"; };
 		582BECAD1E28AC2A00BD511E /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkSDK-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/CryptoSwift.framework"; sourceTree = "<group>"; };
+		58300E6D215DCE450053697C /* Query_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query_Tests.swift; sourceTree = "<group>"; };
 		58582D5F2154B00700AF30E6 /* API+Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Asset.swift"; sourceTree = "<group>"; };
 		58582D622154CD3300AF30E6 /* IssuanceParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuanceParams.swift; sourceTree = "<group>"; };
 		58582D652157C83700AF30E6 /* TransferParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferParams.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */,
 				588A9C791FA88CB9004B279A /* Utils_Tests.swift */,
 				588A9C7B1FA88D8A004B279A /* Account_Tests.swift */,
+				58300E6D215DCE450053697C /* Query_Tests.swift */,
 			);
 			path = BitmarkSDKTests;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58300E6E215DCE450053697C /* Query_Tests.swift in Sources */,
 				588A9C7C1FA88D8A004B279A /* Account_Tests.swift in Sources */,
 				580B88EA1E090A120018F6A5 /* AccountNumber_Tests.swift in Sources */,
 				5812655E1E0BC1BC00D6DF32 /* Asset_Tests.swift in Sources */,
