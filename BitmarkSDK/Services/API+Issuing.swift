@@ -9,7 +9,7 @@
 import Foundation
 
 extension API {
-    internal func issue(withIssues issues: [Issue], assets: [Asset], transfer: Transfer? = nil) throws -> Bool {
+    internal func issue(withIssues issues: [Issue], assets: [Asset], transfer: Transfer? = nil) throws {
         let issuePayloads = try issues.map {try $0.getRPCParam()}
         let assetPayloads = try assets.map {try $0.getRPCParam()}
         
@@ -18,7 +18,7 @@ extension API {
         
         if let transfer = transfer {
             if issues.count > 1 {
-                return false
+                throw("Issue count needs to be 1")
             }
             
             payload["transfer"] = try transfer.getRPCParam()["transfer"]
@@ -32,16 +32,10 @@ extension API {
         urlRequest.httpBody = json
         urlRequest.httpMethod = "POST"
         
-        let result = try urlSession.synchronousDataTask(with: urlRequest)
-        guard let _ = result.data,
-        let response = result.response else {
-            return false
-        }
-        
-        return 200..<300 ~= response.statusCode
+        let _ = try urlSession.synchronousDataTask(with: urlRequest)
     }
     
-    internal func issueV2(withAccount account: Account, issues: [Issue], assets: [Asset], transferOffer: TransferOffer? = nil, sessionData: SessionData? = nil, extraInfo: [String: Any]? = nil) throws -> Bool {
+    internal func issueV2(withAccount account: Account, issues: [Issue], assets: [Asset], transferOffer: TransferOffer? = nil, sessionData: SessionData? = nil, extraInfo: [String: Any]? = nil) throws {
         let requestURL = endpoint.apiServerURL.appendingPathComponent("/v2/issue")
         var urlRequest = URLRequest(url: requestURL)
         
@@ -80,12 +74,6 @@ extension API {
         urlRequest.httpBody = json
         urlRequest.httpMethod = "POST"
         
-        let result = try urlSession.synchronousDataTask(with: urlRequest)
-        guard let _ = result.data,
-            let response = result.response else {
-                return false
-        }
-        
-        return 200..<300 ~= response.statusCode
+        let _ = try urlSession.synchronousDataTask(with: urlRequest)
     }
 }
