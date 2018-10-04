@@ -29,14 +29,14 @@ public struct AccountNumber {
         let checksumData = keyVariantData.concating(data: pubKey).sha3(.sha256).slice(start: 0, end: Config.checksumLength)
         
         let addressData = keyVariantData + pubKey + checksumData
-        let base58Address = Base58.encode(addressData)
+        let base58Address = addressData.base58EncodedString
         self.string = base58Address
         self.prefix = keyVariantData
         self.keyType = keyType
     }
     
     public init(address: String) throws {
-        guard let addressData = Base58.decode(address) else {
+        guard let addressData = address.base58DecodedData else {
             throw(BMError("Address error: unknow address"))
         }
         

@@ -14,15 +14,9 @@
       location = "group:BitmarkSDK.playground">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/BigInt/BigInt.xcodeproj">
+      location = "container:Carthage/Checkouts/tweetnacl-swiftwrap/TweetNacl.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/tweetnacl-swiftwrap/TweetNacl.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/SipHash/SipHash.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/CryptoSwift/CryptoSwift.xcodeproj">
+      location = "container:Carthage/Checkouts/CryptoSwift/CryptoSwift.xcodeproj">
    </FileRef>
 </Workspace>

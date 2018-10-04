@@ -42,7 +42,7 @@ public struct Seed {
     }
     
     public init(fromBase58 base58String: String, version: Int = Config.SeedConfig.version) throws {
-        guard let codeBuffer = Base58.decode(base58String) else {
+        guard let codeBuffer = base58String.base58DecodedData else {
             throw(SeedError.wrongBase58)
         }
         
@@ -107,7 +107,7 @@ public struct Seed {
         // Add checksum
         let checksum = exportedSeed.sha3(.sha256).slice(start: 0, end: Config.SeedConfig.checksumLength)
         exportedSeed += checksum
-        return Base58.encode(exportedSeed)
+        return exportedSeed.base58EncodedString
     }
 }
 
