@@ -19,7 +19,7 @@ internal struct AuthKey: KeypairSignable {
     let kif: String
     
     init(fromKIF kifString: String) throws {
-        guard let kifBuffer = Base58.decode(kifString) else {
+        guard let kifBuffer = kifString.base58DecodedData else {
             throw("Can not convert base58")
         }
         self.kif = kifString
@@ -109,7 +109,7 @@ internal struct AuthKey: KeypairSignable {
         let kifData = keyVariantData + seed + checksum
         
         // Set data
-        self.kif = Base58.encode(kifData)
+        self.kif = kifData.base58EncodedString
         self.network = network
         self.type = type
         self.privateKey = keyPair.privateKey

@@ -22,7 +22,7 @@ public extension AccountNumber {
 
 internal extension AccountNumber {
     func parseAndVerifyAccountNumber() throws -> (network: Network, prefix: Data, pubkey: Data) {
-        guard let addressData = Base58.decode(self) else {
+        guard let addressData = self.base58DecodedData else {
             throw("Address error: unknow address")
         }
         
@@ -91,7 +91,7 @@ internal extension AccountNumber {
         let checksumData = keyVariantData.concating(data: pubKey).sha3(.sha256).slice(start: 0, end: Config.checksumLength)
         
         let addressData = keyVariantData + pubKey + checksumData
-        return Base58.encode(addressData)
+        return addressData.base58EncodedString
     }
     
     func pack() throws -> Data {

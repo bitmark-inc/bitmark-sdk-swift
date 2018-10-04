@@ -15,7 +15,6 @@ Pod::Spec.new do |spec|
   spec.source = { :git => 'https://github.com/bitmark-inc/bitmark-sdk-swift.git', :tag => spec.version }
   spec.source_files = 'BitmarkSDK/**/*.{h,swift}'
 
-  spec.dependency "BigInt"
   spec.dependency "CryptoSwift"
   spec.dependency "TweetNacl"
 end
