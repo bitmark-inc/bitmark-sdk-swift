@@ -11,8 +11,6 @@
 		580B61931E07C917008BEBFF /* AuthKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61921E07C917008BEBFF /* AuthKey.swift */; };
 		580B88E81E08DFBB0018F6A5 /* Ed25519.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E71E08DFBB0018F6A5 /* Ed25519.swift */; };
 		580B88EA1E090A120018F6A5 /* AccountNumber_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E91E090A120018F6A5 /* AccountNumber_Tests.swift */; };
-		580D3FAC2165FF290070A996 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580D3FAB2165FF290070A996 /* BigInt.framework */; };
-		580D3FAE2165FF2D0070A996 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580D3FAD2165FF2D0070A996 /* SipHash.framework */; };
 		580D3FB02165FF300070A996 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580D3FAF2165FF300070A996 /* CryptoSwift.framework */; };
 		580D3FB22165FF340070A996 /* TweetNacl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580D3FB12165FF340070A996 /* TweetNacl.framework */; };
 		5812655A1E0B704800D6DF32 /* RegistrationParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581265591E0B704800D6DF32 /* RegistrationParams.swift */; };
@@ -132,8 +130,6 @@
 			files = (
 				580D3FB22165FF340070A996 /* TweetNacl.framework in Frameworks */,
 				580D3FB02165FF300070A996 /* CryptoSwift.framework in Frameworks */,
-				580D3FAE2165FF2D0070A996 /* SipHash.framework in Frameworks */,
-				580D3FAC2165FF290070A996 /* BigInt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
