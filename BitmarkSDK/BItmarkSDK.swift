@@ -12,6 +12,12 @@ public struct SDKConfig {
     public let apiToken: String
     public let network: Network
     public let urlSession: URLSession
+    
+    public init(apiToken: String, network: Network, urlSession: URLSession) {
+        self.apiToken = apiToken
+        self.network = network
+        self.urlSession = urlSession
+    }
 }
 
 var globalConfig: SDKConfig = SDKConfig(apiToken: "", network: .livenet, urlSession: URLSession.shared)
