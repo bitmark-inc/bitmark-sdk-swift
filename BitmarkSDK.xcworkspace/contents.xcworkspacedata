@@ -5,15 +5,24 @@
       location = "group:BitmarkSDK.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:BitmarkSDK.podspec">
+      location = "group:Cartfile">
    </FileRef>
    <FileRef
-      location = "group:Cartfile">
+      location = "group:BitmarkSDK.podspec">
    </FileRef>
    <FileRef
       location = "group:BitmarkSDK.playground">
    </FileRef>
    <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:Carthage/Checkouts/BigInt/BigInt.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/tweetnacl-swiftwrap/TweetNacl.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/SipHash/SipHash.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/CryptoSwift/CryptoSwift.xcodeproj">
    </FileRef>
 </Workspace>
