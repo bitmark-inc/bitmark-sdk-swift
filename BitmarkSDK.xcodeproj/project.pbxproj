@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		29B4EA9C7A47BEE3DE32AC40 /* Pods_BitmarkSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD071B293BF49D93C06B860 /* Pods_BitmarkSDKTests.framework */; };
 		580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61901E077DC5008BEBFF /* Data+Extension.swift */; };
 		580B61931E07C917008BEBFF /* AuthKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61921E07C917008BEBFF /* AuthKey.swift */; };
 		580B88E81E08DFBB0018F6A5 /* Ed25519.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E71E08DFBB0018F6A5 /* Ed25519.swift */; };
 		580B88EA1E090A120018F6A5 /* AccountNumber_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E91E090A120018F6A5 /* AccountNumber_Tests.swift */; };
+		580D3FAC2165FF290070A996 /* BigInt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580D3FAB2165FF290070A996 /* BigInt.framework */; };
+		580D3FAE2165FF2D0070A996 /* SipHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580D3FAD2165FF2D0070A996 /* SipHash.framework */; };
+		580D3FB02165FF300070A996 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580D3FAF2165FF300070A996 /* CryptoSwift.framework */; };
+		580D3FB22165FF340070A996 /* TweetNacl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580D3FB12165FF340070A996 /* TweetNacl.framework */; };
 		5812655A1E0B704800D6DF32 /* RegistrationParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581265591E0B704800D6DF32 /* RegistrationParams.swift */; };
 		5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */; };
 		5812655E1E0BC1BC00D6DF32 /* Asset_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */; };
@@ -54,7 +57,6 @@
 		58E163241E0CF96C00DEED99 /* Transfer_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E163231E0CF96C00DEED99 /* Transfer_Tests.swift */; };
 		58E2D5B91E0A39AD0014F011 /* ModelEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E2D5B81E0A39AD0014F011 /* ModelEquatable.swift */; };
 		58E2D5BB1E0A60300014F011 /* AuthKey_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E2D5BA1E0A60300014F011 /* AuthKey_Tests.swift */; };
-		AD47843867526E054F11291C /* Pods_BitmarkSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6967500305FC40246009721D /* Pods_BitmarkSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,12 +70,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		38191FBAB7465CCDA5454E9D /* Pods-BitmarkSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BitmarkSDKTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BitmarkSDKTests/Pods-BitmarkSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
-		42C40B73BCF971ED9029EFE6 /* Pods-BitmarkSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BitmarkSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-BitmarkSDK/Pods-BitmarkSDK.release.xcconfig"; sourceTree = "<group>"; };
 		580B61901E077DC5008BEBFF /* Data+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		580B61921E07C917008BEBFF /* AuthKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthKey.swift; sourceTree = "<group>"; };
 		580B88E71E08DFBB0018F6A5 /* Ed25519.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ed25519.swift; sourceTree = "<group>"; };
 		580B88E91E090A120018F6A5 /* AccountNumber_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountNumber_Tests.swift; sourceTree = "<group>"; };
+		580D3FAB2165FF290070A996 /* BigInt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BigInt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		580D3FAD2165FF2D0070A996 /* SipHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SipHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		580D3FAF2165FF300070A996 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		580D3FB12165FF340070A996 /* TweetNacl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TweetNacl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		581265591E0B704800D6DF32 /* RegistrationParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationParams.swift; sourceTree = "<group>"; };
 		5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryPacking.swift; sourceTree = "<group>"; };
 		5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset_Tests.swift; sourceTree = "<group>"; };
@@ -85,15 +89,6 @@
 		5818FE371E03A840007F082D /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		5818FE391E03BDB6007F082D /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		58244CED1FA2E8BA00CFA475 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		58244D631FA7119800CFA475 /* BigInt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BigInt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		58244D641FA7119800CFA475 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		58244D651FA7119800CFA475 /* SipHash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SipHash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		58244D661FA7119800CFA475 /* TweetNacl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TweetNacl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		582BECA51E28AC0900BD511E /* TweetNaclSwift_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TweetNaclSwift_iOS.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkSDK-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/TweetNaclSwift_iOS.framework"; sourceTree = "<group>"; };
-		582BECA71E28AC0E00BD511E /* SipHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SipHash.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkSDK-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/SipHash.framework"; sourceTree = "<group>"; };
-		582BECA91E28AC1E00BD511E /* BigInt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BigInt.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkSDK-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/BigInt.framework"; sourceTree = "<group>"; };
-		582BECAB1E28AC2600BD511E /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkSDK-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/CocoaAsyncSocket.framework"; sourceTree = "<group>"; };
-		582BECAD1E28AC2A00BD511E /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = "../../../Library/Developer/Xcode/DerivedData/BitmarkSDK-aenhbkmmamshxqggwzsvbvminsxj/Build/Products/Debug-iphoneos/CryptoSwift.framework"; sourceTree = "<group>"; };
 		58300E6D215DCE450053697C /* Query_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query_Tests.swift; sourceTree = "<group>"; };
 		58582D5F2154B00700AF30E6 /* API+Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Asset.swift"; sourceTree = "<group>"; };
 		58582D622154CD3300AF30E6 /* IssuanceParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuanceParams.swift; sourceTree = "<group>"; };
@@ -128,10 +123,6 @@
 		58E163231E0CF96C00DEED99 /* Transfer_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transfer_Tests.swift; sourceTree = "<group>"; };
 		58E2D5B81E0A39AD0014F011 /* ModelEquatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelEquatable.swift; sourceTree = "<group>"; };
 		58E2D5BA1E0A60300014F011 /* AuthKey_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthKey_Tests.swift; sourceTree = "<group>"; };
-		6967500305FC40246009721D /* Pods_BitmarkSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BitmarkSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		800553812C4E6F5C64D375CA /* Pods-BitmarkSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BitmarkSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BitmarkSDK/Pods-BitmarkSDK.debug.xcconfig"; sourceTree = "<group>"; };
-		85C99D79DC5955A7563B68D2 /* Pods-BitmarkSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BitmarkSDKTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BitmarkSDKTests/Pods-BitmarkSDKTests.release.xcconfig"; sourceTree = "<group>"; };
-		DDD071B293BF49D93C06B860 /* Pods_BitmarkSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BitmarkSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,7 +130,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD47843867526E054F11291C /* Pods_BitmarkSDK.framework in Frameworks */,
+				580D3FB22165FF340070A996 /* TweetNacl.framework in Frameworks */,
+				580D3FB02165FF300070A996 /* CryptoSwift.framework in Frameworks */,
+				580D3FAE2165FF2D0070A996 /* SipHash.framework in Frameworks */,
+				580D3FAC2165FF290070A996 /* BigInt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,24 +142,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5865BD431E0250C200B25AB3 /* BitmarkSDK.framework in Frameworks */,
-				29B4EA9C7A47BEE3DE32AC40 /* Pods_BitmarkSDKTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		05100CF206E96CC68E572559 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				800553812C4E6F5C64D375CA /* Pods-BitmarkSDK.debug.xcconfig */,
-				42C40B73BCF971ED9029EFE6 /* Pods-BitmarkSDK.release.xcconfig */,
-				38191FBAB7465CCDA5454E9D /* Pods-BitmarkSDKTests.debug.xcconfig */,
-				85C99D79DC5955A7563B68D2 /* Pods-BitmarkSDKTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		580B618F1E077DB4008BEBFF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +155,17 @@
 				58E2D5B81E0A39AD0014F011 /* ModelEquatable.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		580D3FAA2165FF290070A996 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				580D3FB12165FF340070A996 /* TweetNacl.framework */,
+				580D3FAF2165FF300070A996 /* CryptoSwift.framework */,
+				580D3FAD2165FF2D0070A996 /* SipHash.framework */,
+				580D3FAB2165FF290070A996 /* BigInt.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		581265581E0B703400D6DF32 /* Records */ = {
@@ -227,8 +220,7 @@
 				5865BD3B1E0250C200B25AB3 /* BitmarkSDK */,
 				5865BD461E0250C200B25AB3 /* BitmarkSDKTests */,
 				5865BD3A1E0250C200B25AB3 /* Products */,
-				5865BD661E02762A00B25AB3 /* Frameworks */,
-				05100CF206E96CC68E572559 /* Pods */,
+				580D3FAA2165FF290070A996 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -281,24 +273,6 @@
 			path = BitmarkSDKTests;
 			sourceTree = "<group>";
 		};
-		5865BD661E02762A00B25AB3 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				58244D631FA7119800CFA475 /* BigInt.framework */,
-				58244D641FA7119800CFA475 /* CryptoSwift.framework */,
-				58244D651FA7119800CFA475 /* SipHash.framework */,
-				58244D661FA7119800CFA475 /* TweetNacl.framework */,
-				582BECAD1E28AC2A00BD511E /* CryptoSwift.framework */,
-				582BECAB1E28AC2600BD511E /* CocoaAsyncSocket.framework */,
-				582BECA91E28AC1E00BD511E /* BigInt.framework */,
-				582BECA71E28AC0E00BD511E /* SipHash.framework */,
-				582BECA51E28AC0900BD511E /* TweetNaclSwift_iOS.framework */,
-				6967500305FC40246009721D /* Pods_BitmarkSDK.framework */,
-				DDD071B293BF49D93C06B860 /* Pods_BitmarkSDKTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		5866639C212FE0470038C3C7 /* Asset */ = {
 			isa = PBXGroup;
 			children = (
@@ -339,7 +313,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5865BD4D1E0250C200B25AB3 /* Build configuration list for PBXNativeTarget "BitmarkSDK" */;
 			buildPhases = (
-				8BDA37B0129C654CFB0D6A4D /* [CP] Check Pods Manifest.lock */,
 				5865BD341E0250C200B25AB3 /* Sources */,
 				5865BD351E0250C200B25AB3 /* Frameworks */,
 				5865BD361E0250C200B25AB3 /* Headers */,
@@ -358,11 +331,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5865BD501E0250C200B25AB3 /* Build configuration list for PBXNativeTarget "BitmarkSDKTests" */;
 			buildPhases = (
-				7A1CF0D8FE1BF3A0AF1B6389 /* [CP] Check Pods Manifest.lock */,
 				5865BD3E1E0250C200B25AB3 /* Sources */,
 				5865BD3F1E0250C200B25AB3 /* Frameworks */,
 				5865BD401E0250C200B25AB3 /* Resources */,
-				D0111D64781A323C15A34506 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -431,69 +402,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		7A1CF0D8FE1BF3A0AF1B6389 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BitmarkSDKTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8BDA37B0129C654CFB0D6A4D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BitmarkSDK-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D0111D64781A323C15A34506 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-BitmarkSDKTests/Pods-BitmarkSDKTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
-				"${BUILT_PRODUCTS_DIR}/TweetNacl/TweetNacl.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TweetNacl.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BitmarkSDKTests/Pods-BitmarkSDKTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5865BD341E0250C200B25AB3 /* Sources */ = {
@@ -668,7 +576,6 @@
 		};
 		5865BD4E1E0250C200B25AB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 800553812C4E6F5C64D375CA /* Pods-BitmarkSDK.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -690,7 +597,6 @@
 		};
 		5865BD4F1E0250C200B25AB3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 42C40B73BCF971ED9029EFE6 /* Pods-BitmarkSDK.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -711,7 +617,6 @@
 		};
 		5865BD511E0250C200B25AB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 38191FBAB7465CCDA5454E9D /* Pods-BitmarkSDKTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = Z5CE7A3A7N;
@@ -725,7 +630,6 @@
 		};
 		5865BD521E0250C200B25AB3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85C99D79DC5955A7563B68D2 /* Pods-BitmarkSDKTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = Z5CE7A3A7N;
