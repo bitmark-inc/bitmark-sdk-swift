@@ -21,6 +21,5 @@ Pod::Spec.new do |spec|
 
   spec.requires_arc = true
 
-  spec.dependency "CryptoSwift"
   spec.dependency "TweetNacl"
 end
