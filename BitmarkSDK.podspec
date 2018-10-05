@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   spec.private_header_files = 'BitmarkSDK/libsodium/*.h', 'BitmarkSDK/tiny_sha3/*.h'
   spec.preserve_paths = 'BitmarkSDK/libsodium/module.modulemap', 'BitmarkSDK/tiny_sha3/module.modulemap'
   spec.pod_target_xcconfig = {
-    'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/BitmarkSDK/libsodium', '$(PODS_TARGET_SRCROOT)/BitmarkSDK/tiny_sha3'],
+    'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/BitmarkSDK/libsodium $(PODS_TARGET_SRCROOT)/BitmarkSDK/tiny_sha3',
   }
 
   spec.requires_arc = true
