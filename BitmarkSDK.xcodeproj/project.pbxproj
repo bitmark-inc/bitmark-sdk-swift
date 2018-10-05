@@ -15,6 +15,7 @@
 		5812655A1E0B704800D6DF32 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581265591E0B704800D6DF32 /* Asset.swift */; };
 		5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */; };
 		5812655E1E0BC1BC00D6DF32 /* Asset_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */; };
+		58175ED02167C501002252FD /* TweetNacl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58175ECF2167C501002252FD /* TweetNacl.framework */; };
 		58182CAE1FA728D400EB5BE4 /* API+Issuing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58182CAD1FA728D400EB5BE4 /* API+Issuing.swift */; };
 		58182CB01FA72B7200EB5BE4 /* API+Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58182CAF1FA72B7200EB5BE4 /* API+Assets.swift */; };
 		58182CB21FA81BC100EB5BE4 /* API+Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58182CB11FA81BC100EB5BE4 /* API+Transfer.swift */; };
@@ -139,6 +140,7 @@
 		581265591E0B704800D6DF32 /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryPacking.swift; sourceTree = "<group>"; };
 		5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset_Tests.swift; sourceTree = "<group>"; };
+		58175ECF2167C501002252FD /* TweetNacl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TweetNacl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58182CAD1FA728D400EB5BE4 /* API+Issuing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Issuing.swift"; sourceTree = "<group>"; };
 		58182CAF1FA72B7200EB5BE4 /* API+Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Assets.swift"; sourceTree = "<group>"; };
 		58182CB11FA81BC100EB5BE4 /* API+Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Transfer.swift"; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58175ED02167C501002252FD /* TweetNacl.framework in Frameworks */,
 				589D99A1203D16A200085D96 /* libsodium-ios.a in Frameworks */,
 				589D9982203D16A200085D96 /* libsodium-osx.a in Frameworks */,
 			);
@@ -290,6 +293,14 @@
 			path = Records;
 			sourceTree = "<group>";
 		};
+		58175ECE2167C501002252FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				58175ECF2167C501002252FD /* TweetNacl.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5818FE291E0391C0007F082D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -314,6 +325,7 @@
 				5865BD3B1E0250C200B25AB3 /* BitmarkSDK */,
 				5865BD461E0250C200B25AB3 /* BitmarkSDKTests */,
 				5865BD3A1E0250C200B25AB3 /* Products */,
+				58175ECE2167C501002252FD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
