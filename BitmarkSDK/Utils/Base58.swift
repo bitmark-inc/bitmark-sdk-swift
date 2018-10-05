@@ -123,7 +123,7 @@ extension Data {
     
     public var base58CheckEncodedString: String {
         var bytes = self
-        let checksum = [UInt8](bytes.sha3(length: 256).sha3(length: 256)[0..<4])
+        let checksum = [UInt8](bytes.sha3Compute(length: 256).sha3Compute(length: 256)[0..<4])
         
         bytes.append(contentsOf: checksum)
         
