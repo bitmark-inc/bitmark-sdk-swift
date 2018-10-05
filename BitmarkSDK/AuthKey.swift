@@ -61,7 +61,7 @@ internal struct AuthKey: KeypairSignable {
         
         // check checksum
         let checksumData = kifBuffer.slice(start: 0, end: kifLength - Config.checksumLength)
-        let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
+        let checksum = checksumData.sha3(length: 256).slice(start: 0, end: Config.checksumLength)
         
         if checksum != kifBuffer.slice(start: kifLength - Config.checksumLength, end: kifLength) {
             throw("Private key error: checksum mismatch")
@@ -104,7 +104,7 @@ internal struct AuthKey: KeypairSignable {
         keyVariantVal = keyVariantVal << 1 | keyPartVal
         let keyVariantData = Data(bytes: [keyVariantVal])
         
-        var checksum = keyVariantData.concating(data: seed).sha3(.sha256)
+        var checksum = keyVariantData.concating(data: seed).sha3(length: 256)
         checksum = checksum.slice(start: 0, end: Config.checksumLength)
         let kifData = keyVariantData + seed + checksum
         

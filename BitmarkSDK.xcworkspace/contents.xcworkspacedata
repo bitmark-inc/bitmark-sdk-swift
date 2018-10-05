@@ -16,7 +16,4 @@
    <FileRef
       location = "container:Carthage/Checkouts/tweetnacl-swiftwrap/TweetNacl.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "container:Carthage/Checkouts/CryptoSwift/CryptoSwift.xcodeproj">
-   </FileRef>
 </Workspace>

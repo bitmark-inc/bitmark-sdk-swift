@@ -74,7 +74,7 @@ extension IssueRequest: Parameterizable {
         self.signature = try signable.sign(message: recordPacked)
         
         recordPacked = BinaryPacking.append(toData: recordPacked, withData: self.signature)
-        self.txId = recordPacked.sha3(.sha256).hexEncodedString
+        self.txId = recordPacked.sha3(length: 256).hexEncodedString
         self.isSigned = true
     }
     

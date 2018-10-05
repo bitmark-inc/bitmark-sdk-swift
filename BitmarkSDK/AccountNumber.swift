@@ -69,7 +69,7 @@ internal extension AccountNumber {
         
         // check checksum
         let checksumData = addressData.slice(start: 0, end: keyVariantLength + keyType.publicLength)
-        let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
+        let checksum = checksumData.sha3(length: 256).slice(start: 0, end: Config.checksumLength)
         let checksumFromAddress = addressData.slice(start: addressLength - Config.checksumLength, end: addressLength)
         
         if checksum != checksumFromAddress {
@@ -88,7 +88,7 @@ internal extension AccountNumber {
         keyVariantVal |= (network.rawValue << 1) // second bit indicates net
         let keyVariantData = Data.varintFrom(keyVariantVal)
         
-        let checksumData = keyVariantData.concating(data: pubKey).sha3(.sha256).slice(start: 0, end: Config.checksumLength)
+        let checksumData = keyVariantData.concating(data: pubKey).sha3(length: 256).slice(start: 0, end: Config.checksumLength)
         
         let addressData = keyVariantData + pubKey + checksumData
         return addressData.base58EncodedString
@@ -119,7 +119,7 @@ internal extension AccountNumber {
 //        keyVariantVal |= (network.rawValue << 1) // second bit indicates net
 //        let keyVariantData = Data.varintFrom(keyVariantVal)
 //
-//        let checksumData = keyVariantData.concating(data: pubKey).sha3(.sha256).slice(start: 0, end: Config.checksumLength)
+//        let checksumData = keyVariantData.concating(data: pubKey).sha3(length: 256).slice(start: 0, end: Config.checksumLength)
 //
 //        let addressData = keyVariantData + pubKey + checksumData
 //        let base58Address = Base58.encode(addressData)
@@ -177,7 +177,7 @@ internal extension AccountNumber {
 //
 //        // check checksum
 //        let checksumData = addressData.slice(start: 0, end: keyVariantLength + keyType.publicLength)
-//        let checksum = checksumData.sha3(.sha256).slice(start: 0, end: Config.checksumLength)
+//        let checksum = checksumData.sha3(length: 256).slice(start: 0, end: Config.checksumLength)
 //        let checksumFromAddress = addressData.slice(start: addressLength - Config.checksumLength, end: addressLength)
 //
 //        if checksum != checksumFromAddress {
