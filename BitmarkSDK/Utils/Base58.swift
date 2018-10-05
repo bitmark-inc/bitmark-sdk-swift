@@ -123,7 +123,7 @@ extension Data {
     
     public var base58CheckEncodedString: String {
         var bytes = self
-        let checksum = [UInt8](bytes.sha256().sha256()[0..<4])
+        let checksum = [UInt8](bytes.sha3(length: 256).sha3(length: 256)[0..<4])
         
         bytes.append(contentsOf: checksum)
         
@@ -135,23 +135,5 @@ extension String {
     public var base58DecodedData: Data? {
         let bytes = Base58.bytesFromBase58(self)
         return Data(bytes)
-    }
-    
-    public var base58CheckDecodedData: Data? {
-        guard let bytes = self.base58CheckDecodedBytes else { return nil }
-        return Data(bytes)
-    }
-    
-    public var base58CheckDecodedBytes: [UInt8]? {
-        var bytes = Base58.bytesFromBase58(self)
-        guard 4 <= bytes.count else { return nil }
-        
-        let checksum = [UInt8](bytes[bytes.count-4..<bytes.count])
-        bytes = [UInt8](bytes[0..<bytes.count-4])
-        
-        let calculatedChecksum = [UInt8](bytes.sha256().sha256()[0...3])
-        if checksum != calculatedChecksum { return nil }
-        
-        return bytes
     }
 }
