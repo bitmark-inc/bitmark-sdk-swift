@@ -16,7 +16,7 @@ struct SHA3Compute {
         
         output.withUnsafeMutableBytes({ (outputPointer: UnsafeMutablePointer<UInt8>) -> Void in
             return data.withUnsafeBytes({ (dataPointer: UnsafePointer<UInt8>) -> Void in
-                sha3(dataPointer, data.count, outputPointer, Int32(byteLength))
+                tinysha3.sha3(dataPointer, data.count, outputPointer, Int32(byteLength))
             })
         })
         
