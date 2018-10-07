@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
   spec.platform = :ios, "11.0"
   spec.requires_arc = true
   spec.source = { :git => 'https://github.com/bitmark-inc/bitmark-sdk-swift.git', :tag => spec.version }
-  spec.source_files = 'BitmarkSDK/**/*.{h,swift}'
+  spec.source_files = 'BitmarkSDK/**/*.{h,c,swift}'
   spec.ios.vendored_library    = 'BitmarkSDK/libsodium/libsodium-ios.a'
   spec.osx.vendored_library    = 'BitmarkSDK/libsodium/libsodium-osx.a'
   spec.private_header_files = 'BitmarkSDK/libsodium/*.h', 'BitmarkSDK/tiny_sha3/*.h'

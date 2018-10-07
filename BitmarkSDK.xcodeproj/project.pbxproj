@@ -35,7 +35,6 @@
 		5868CA762167B883002A6D33 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5868CA702167B883002A6D33 /* Makefile */; };
 		5868CA772167B883002A6D33 /* sha3.h in Headers */ = {isa = PBXBuildFile; fileRef = 5868CA712167B883002A6D33 /* sha3.h */; };
 		5868CA782167B883002A6D33 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5868CA722167B883002A6D33 /* README.md */; };
-		5868CA792167B883002A6D33 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 5868CA732167B883002A6D33 /* main.c */; };
 		5868CA7A2167B883002A6D33 /* sha3.c in Sources */ = {isa = PBXBuildFile; fileRef = 5868CA742167B883002A6D33 /* sha3.c */; };
 		5868CA7D2167B908002A6D33 /* SHA3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5868CA7C2167B908002A6D33 /* SHA3.swift */; };
 		588A9C781FA86B01004B279A /* RecoverPhrase_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588A9C771FA86B01004B279A /* RecoverPhrase_Tests.swift */; };
@@ -163,7 +162,6 @@
 		5868CA702167B883002A6D33 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		5868CA712167B883002A6D33 /* sha3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha3.h; sourceTree = "<group>"; };
 		5868CA722167B883002A6D33 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		5868CA732167B883002A6D33 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		5868CA742167B883002A6D33 /* sha3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha3.c; sourceTree = "<group>"; };
 		5868CA7B2167B8B2002A6D33 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		5868CA7C2167B908002A6D33 /* SHA3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA3.swift; sourceTree = "<group>"; };
@@ -384,7 +382,6 @@
 				5868CA702167B883002A6D33 /* Makefile */,
 				5868CA712167B883002A6D33 /* sha3.h */,
 				5868CA722167B883002A6D33 /* README.md */,
-				5868CA732167B883002A6D33 /* main.c */,
 				5868CA742167B883002A6D33 /* sha3.c */,
 				5868CA7B2167B8B2002A6D33 /* module.modulemap */,
 			);
@@ -668,7 +665,6 @@
 				5818FE2B1E0391CF007F082D /* Base58.swift in Sources */,
 				58AF84322019D99600E5B40F /* API+BItmark.swift in Sources */,
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
-				5868CA792167B883002A6D33 /* main.c in Sources */,
 				588C5BCD1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift in Sources */,
 				5812655A1E0B704800D6DF32 /* Asset.swift in Sources */,
 				588C5BCB1F9DCBA400ADB619 /* RecoverPhrase.swift in Sources */,
