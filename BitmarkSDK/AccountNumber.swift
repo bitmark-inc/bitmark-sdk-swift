@@ -81,7 +81,7 @@ internal extension AccountNumber {
         return (network, prefix, pubKey)
     }
     
-    static func build(fromPubKey pubKey: Data, network: Network = Network.livenet, keyType: KeyType = KeyType.ed25519) -> AccountNumber {
+    static func build(fromPubKey pubKey: Data, network: Network, keyType: KeyType = KeyType.ed25519) -> AccountNumber {
         let keyTypeVal = keyType.value
         var keyVariantVal = keyTypeVal << 4
         keyVariantVal |= Config.KeyPart.publicKey // first bit
@@ -109,7 +109,7 @@ internal extension AccountNumber {
 //    public let string: String
 //    public let keyType: KeyType
 //
-//    public init(fromPubKey pubKey: Data, network: Network = Network.livenet, keyType: KeyType = KeyType.ed25519) {
+//    public init(fromPubKey pubKey: Data, network: Network, keyType: KeyType = KeyType.ed25519) {
 //        self.pubKey = pubKey
 //        self.network = network
 //

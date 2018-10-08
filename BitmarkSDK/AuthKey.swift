@@ -74,7 +74,7 @@ internal struct AuthKey: KeypairSignable {
         self.address = AccountNumber.build(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
-    init(fromKeyPair keyPairData: Data, network: Network = Network.livenet, type: KeyType = KeyType.ed25519) throws {
+    init(fromKeyPair keyPairData: Data, network: Network, type: KeyType = KeyType.ed25519) throws {
         // Check length to determine the keypair
         
         var keyPair: (publicKey: Data, privateKey: Data)
@@ -117,7 +117,7 @@ internal struct AuthKey: KeypairSignable {
         self.address = AccountNumber.build(fromPubKey: keyPair.publicKey, network: network, keyType: type)
     }
     
-    init(fromKeyPairString keyPairString: String, network: Network = Network.livenet, type: KeyType = KeyType.ed25519) throws {
+    init(fromKeyPairString keyPairString: String, network: Network, type: KeyType = KeyType.ed25519) throws {
         let keyPairData = keyPairString.hexDecodedData
         try self.init(fromKeyPair: keyPairData, network: network, type: type)
     }

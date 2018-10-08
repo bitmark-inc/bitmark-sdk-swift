@@ -16,12 +16,16 @@ public struct Account {
     
     // MARK:- Basic init
     
-    public init(keyType: KeyType = KeyType.ed25519, network: Network = Network.livenet) throws {
+    public init() throws {
+        try self.init(network: globalConfig.network)
+    }
+    
+    public init(keyType: KeyType = KeyType.ed25519, network: Network) throws {
         let core = Common.randomBytes(length: keyType.seedLength)
         try self.init(core: core, network: network)
     }
     
-    public init(core: Data, network: Network = Network.livenet) throws {
+    public init(core: Data, network: Network) throws {
         self.core = core
         
         authKey = try AuthKey(fromKeyPair: try Account.deriveAuthKey(seed: core), network: network)
@@ -39,7 +43,7 @@ public struct Account {
         try self.init(core: seed.core, network: seed.network)
     }
     
-    public func toSeed(version: Int = Config.SeedConfig.version, network: Network = Network.livenet) throws -> String {
+    public func toSeed(version: Int = Config.SeedConfig.version, network: Network) throws -> String {
         let seed = try Seed(core: core, version: version, network: network)
         return seed.base58String
     }
