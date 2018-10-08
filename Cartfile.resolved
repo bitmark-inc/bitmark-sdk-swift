@@ -1,4 +1,2 @@
-github "attaswift/BigInt" "v3.1.0"
-github "attaswift/SipHash" "v1.2.2"
 github "bitmark-inc/tweetnacl-swiftwrap" "1.0.1"
 github "krzyzanowskim/CryptoSwift" "0.12.0"
