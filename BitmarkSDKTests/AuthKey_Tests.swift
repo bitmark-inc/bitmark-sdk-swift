@@ -88,7 +88,7 @@ class AuthKey_Tests: XCTestCase {
     
     func testAbleCreateFromBuffer() {
         do {
-            _ = try AuthKey(fromKeyPairString: "cbfa5516b0375ebf5a6c9401fa3933e7a95545193d11acdf161c439b480577b7")
+            _ = try AuthKey(fromKeyPairString: "cbfa5516b0375ebf5a6c9401fa3933e7a95545193d11acdf161c439b480577b7", network: .testnet)
         }
         catch {
             XCTFail()

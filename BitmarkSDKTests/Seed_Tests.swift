@@ -90,10 +90,10 @@ class Seed_Tests: XCTestCase {
     
     func testSeedInit() {
         do {
-            let seed = try Seed()
+            let seed = try Seed(network: .testnet)
             XCTAssertEqual(seed.core.count, Config.SeedConfig.length)
             
-            XCTAssertThrowsError(try Seed(version: 2))
+            XCTAssertThrowsError(try Seed(version: 2, network: .testnet))
         }
         catch {
             XCTFail()
