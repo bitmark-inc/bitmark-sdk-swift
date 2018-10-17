@@ -175,14 +175,7 @@ void *shake256(const void *in, int incount, size_t inlen, void *md, int mdlen, i
         shake_update(&sha3, in, inlen);
     }
     shake_xof(&sha3);
-    for (i = 0; i < mdcount; i ++) {
-        uint8_t buf[32];
-        shake_out(&sha3, buf, mdlen);
-        int j;
-        for (j = 0; j < 32; j++) {
-            ((uint8_t *) md)[i * 32 + j] = buf[j];
-        }
-    }
+    shake_out(&sha3, md, mdlen*mdcount);
     
     return md;
 }
