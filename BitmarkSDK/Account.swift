@@ -11,7 +11,7 @@ import TweetNacl
 
 public struct Account {
     
-    public let core: Data
+    public let seed: Seedable
     let authKey: AuthKey
     
     // MARK:- Basic init
@@ -20,15 +20,14 @@ public struct Account {
         try self.init(network: globalConfig.network)
     }
     
-    public init(keyType: KeyType = KeyType.ed25519, network: Network) throws {
-        let core = Common.randomBytes(length: keyType.seedLength)
-        try self.init(core: core, network: network)
+    public init(keyType: KeyType = KeyType.ed25519, version: SeedVersion = .v1, network: Network) throws {
+        let seed = try Seed.fromBase58(network: network, version: version)
+        try self.init(seed: seed)
     }
     
-    public init(core: Data, network: Network) throws {
-        self.core = core
-        
-        authKey = try AuthKey(fromKeyPair: try Account.deriveAuthKey(seed: core), network: network)
+    public init(seed: Seedable) throws {
+        self.seed = seed
+        authKey = try AuthKey(fromKeyPair: try seed.getAuthKeyData(), network: seed.network)
     }
     
     public var accountNumber: AccountNumber {
@@ -38,29 +37,20 @@ public struct Account {
     
     // MARK:- Seed
     
-    public init(fromSeed seedString: String, version: Int = Config.SeedConfig.version) throws {
-        let seed = try Seed(fromBase58: seedString, version: version)
-        try self.init(core: seed.core, network: seed.network)
-    }
-    
-    public func toSeed(version: Int = Config.SeedConfig.version, network: Network) throws -> String {
-        let seed = try Seed(core: core, version: version, network: network)
-        return seed.base58String
+    public init(fromSeed seedString: String, version: SeedVersion = .v1) throws {
+        let seed = try Seed.fromBase58(seedString, version: version)
+        try self.init(seed: seed)
     }
     
     public func toSeed() throws -> String {
-        let seed = try Seed(core: core, version: 1, network: globalConfig.network)
         return seed.base58String
     }
     
     // MARK:- Recover phrase
     
     public init(recoverPhrase phrases: [String]) throws {
-        let bytes = try RecoverPhrase.recoverSeed(fromPhrase: phrases)
-        let networkByte = bytes[0]
-        let network = networkByte == Network.livenet.rawValue ? Network.livenet : Network.testnet
-        let coreBytes = bytes.subdata(in: 1..<33)
-        try self.init(core: coreBytes, network: network)
+        let seed = try Seed.fromRecoveryPhrase(phrases)
+        try self.init(seed: seed)
     }
     
     public func getRecoverPhrase() throws -> [String] {
@@ -68,23 +58,7 @@ public struct Account {
     }
 
     public func getRecoverPhrase(withNetwork network: Network) throws -> [String] {
-        var data = Data(bytes: [UInt8(truncatingIfNeeded: network.rawValue)])
-        data.append(core)
-        return try RecoverPhrase.createPhrase(fromData: data)
-    }
-    
-    // MARK:- Helpers
-    private static func derive(seed: Data, indexData: Data) throws -> Data {
-        let nonce = Data(count: 24)
-        return try NaclSecretBox.secretBox(message: indexData, nonce: nonce, key: seed)
-    }
-    
-    private static func deriveAuthKey(seed: Data) throws -> Data {
-        return try derive(seed: seed, indexData: "000000000000000000000000000003e7".hexDecodedData)
-    }
-    
-    private static func deriveEncryptionKey(seed: Data) throws -> Data {
-        return try derive(seed: seed, indexData: "000000000000000000000000000003e8".hexDecodedData)
+        return seed.recoveryPhrase
     }
     
     // MARK:- Sign
