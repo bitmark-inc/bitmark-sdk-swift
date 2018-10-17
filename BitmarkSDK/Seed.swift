@@ -280,8 +280,8 @@ extension SeedV2 {
             throw("Exceed length limit")
         }
         for i in 0..<keyCount {
-            let start = i * keyCount
-            let end = start+keySize
+            let start = i * keySize
+            let end = start + keySize
             results.append(hash.subdata(in: start..<end))
         }
         
