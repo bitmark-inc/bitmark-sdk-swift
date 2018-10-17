@@ -165,7 +165,7 @@ void *sha3(const void *in, size_t inlen, void *md, int mdlen)
 
 // compute a SHA-3 hash (md) of given byte length from "in"
 
-void *sha3multi(const void *in, int incount, size_t inlen, void *md, int mdlen, int mdcount)
+void *shake256(const void *in, int incount, size_t inlen, void *md, int mdlen, int mdcount)
 {
     sha3_ctx_t sha3;
     shake256_init(&sha3);

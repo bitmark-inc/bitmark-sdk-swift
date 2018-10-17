@@ -28,7 +28,7 @@ struct SHA3Compute {
         
         output.withUnsafeMutableBytes({ (outputPointer: UnsafeMutablePointer<UInt8>) -> Void in
             return data.withUnsafeBytes({ (dataPointer: UnsafePointer<UInt8>) -> Void in
-                sha3multi(dataPointer, Int32(repeatCount), data.count, outputPointer, Int32(length), Int32(count))
+                shake256(dataPointer, Int32(repeatCount), data.count, outputPointer, Int32(length), Int32(count))
             })
         })
         
