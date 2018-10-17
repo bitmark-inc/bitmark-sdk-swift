@@ -112,7 +112,7 @@ extension TransferRequest: Parameterizable {
         let packedRecord = try packRecord()
         self.signature = try signable.sign(message: packedRecord)
         let recordWithSignature = packedRecord + self.signature!
-        self.txId = recordWithSignature.sha3(.sha256).hexEncodedString
+        self.txId = recordWithSignature.sha3(length: 256).hexEncodedString
         self.isSigned = true
     }
     

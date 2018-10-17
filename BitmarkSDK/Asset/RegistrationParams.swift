@@ -64,7 +64,7 @@ public struct RegistrationParams {
         guard let fingerprintData = fingerprint?.data(using: .utf8) else {
             return nil
         }
-        return fingerprintData.sha3(.sha512).hexEncodedString
+        return fingerprintData.sha3(length: 512).hexEncodedString
     }
     
     internal func packRecord() throws -> Data {

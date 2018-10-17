@@ -132,4 +132,6 @@ class Asset_Tests: XCTestCase {
         catch (let e){
             XCTFail(e.localizedDescription)
         }
-    }}
+    }
+    
+}

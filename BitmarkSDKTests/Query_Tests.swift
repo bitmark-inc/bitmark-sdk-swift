@@ -14,7 +14,7 @@ class Query_Tests: XCTestCase {
     override func setUp() {
         BitmarkSDK.initialize(config: SDKConfig(apiToken: "bmk-lljpzkhqdkzmblhg", network: .testnet, urlSession: URLSession.shared))
     }
-    
+
     func testQueryAsset() {
         do {
             let registrant = "e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog"
@@ -29,7 +29,7 @@ class Query_Tests: XCTestCase {
             XCTFail(e.localizedDescription)
         }
     }
-    
+
     func testQueryOffering() {
         do {
             let receiver = "e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog"
@@ -42,7 +42,7 @@ class Query_Tests: XCTestCase {
             XCTFail(e.localizedDescription)
         }
     }
-    
+
     func testQueryBitmarks() {
         do {
             let issuedBy = "ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva"
@@ -62,7 +62,7 @@ class Query_Tests: XCTestCase {
             XCTFail(e.localizedDescription)
         }
     }
-    
+
     func testQueryTransactions() {
         do {
             let ownedBy = "eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9"

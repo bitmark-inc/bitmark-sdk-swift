@@ -36,11 +36,11 @@ class Seed_Tests: XCTestCase {
     
     func testCorrectSeedTestnet() {
         do {
-            let seed = try Seed(fromBase58: seed1)
+            let seed = try Seed.fromBase58(seed1, version: .v1)
             
             XCTAssertEqual(seed.core.hexEncodedString, core1)
             XCTAssertEqual(seed.network, network1)
-            XCTAssertEqual(seed.version, version1)
+            XCTAssertEqual(seed.version, .v1)
         }
         catch {
             XCTFail()
@@ -49,11 +49,11 @@ class Seed_Tests: XCTestCase {
     
     func testCorrectSeedLivenet() {
         do {
-            let seed = try Seed(fromBase58: seed2)
+            let seed = try Seed.fromBase58(seed2, version: .v1)
             
             XCTAssertEqual(seed.core.hexEncodedString, core2)
             XCTAssertEqual(seed.network, network2)
-            XCTAssertEqual(seed.version, version2)
+            XCTAssertEqual(seed.version, .v1)
         }
         catch {
             XCTFail()
@@ -61,42 +61,14 @@ class Seed_Tests: XCTestCase {
     }
     
     func testIncorrectVersionSeed() {
-        XCTAssertThrowsError(try Seed(fromBase58: seedV2))
+        XCTAssertThrowsError(try Seed.fromBase58(seedV2, version: .v1))
     }
-    
+
     func testBadSeed() {
-        XCTAssertThrowsError(try Seed(fromBase58: badSeed))
+        XCTAssertThrowsError(try Seed.fromBase58(badSeed, version: .v1))
     }
-    
+
     func testBadSeedCoreLength() {
-        XCTAssertThrowsError(try Seed(fromBase58: badSeedCoreLength))
-    }
-    
-    func testSeedRecover() {
-        do {
-            let seed = try Seed(core: core1.hexDecodedData, version: version1, network: Network.testnet)
-            XCTAssertEqual(seed.base58String, seed1)
-        }
-        catch {
-            XCTFail()
-        }
-    }
-    
-    func testSeedRaw() {
-        let seed = Seed(rawValue: seed1)
-        XCTAssertNotNil(seed)
-        XCTAssertEqual(seed?.rawValue, seed1)
-    }
-    
-    func testSeedInit() {
-        do {
-            let seed = try Seed(network: .testnet)
-            XCTAssertEqual(seed.core.count, Config.SeedConfig.length)
-            
-            XCTAssertThrowsError(try Seed(version: 2, network: .testnet))
-        }
-        catch {
-            XCTFail()
-        }
+        XCTAssertThrowsError(try Seed.fromBase58(badSeedCoreLength, version: .v1))
     }
 }
