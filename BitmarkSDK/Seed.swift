@@ -201,8 +201,7 @@ public struct SeedV2: Seedable {
         let bytes = try RecoverPhrase.V2.recoverSeed(fromPhrase: recoveryPhrase)
         let networkByte = bytes[0]
         let network = networkByte == Network.livenet.rawValue ? Network.livenet : Network.testnet
-        let coreBytes = bytes.subdata(in: 1..<17)
-        self.core = coreBytes
+        self.core = bytes
         self.network = network
         self.version = .v2
     }
