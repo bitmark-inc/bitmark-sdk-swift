@@ -196,7 +196,7 @@ class RecoverPhrase_Tests: XCTestCase {
             for testDic in testDataV1 {
                 let data = testDic["Hex"]!.hexDecodedData
                 let phrase = testDic["Phrase"]!.split(separator: " ").map {$0.lowercased()}
-                let recoverPhrase = try RecoverPhrase.V1.createPhrase(fromData: data)
+                let recoverPhrase = try RecoverPhrase.V1.createPhrase(fromData: data, language: .english)
                 XCTAssertEqual(phrase, recoverPhrase)
             }
         }
@@ -210,7 +210,7 @@ class RecoverPhrase_Tests: XCTestCase {
             for testDic in testDataV1 {
                 let data = testDic["Hex"]!.hexDecodedData
                 let phrase = testDic["Phrase"]!.split(separator: " ").map {$0.lowercased()}
-                let recoverData = try RecoverPhrase.V1.recoverSeed(fromPhrase: phrase)
+                let recoverData = try RecoverPhrase.V1.recoverSeed(fromPhrase: phrase, language: .english)
                 XCTAssertEqual(data, recoverData)
             }
         }
@@ -222,13 +222,13 @@ class RecoverPhrase_Tests: XCTestCase {
     func testIncorrectPhrase() {
         let phraseWrong1 = ["dad", "budget", "race", "exhaust", "shine", "ordinary"]
         let phraseWrong2 = ["dad", "budget", "race", "exhaust", "shine", "ordinary", "tower", "frame", "aaaaa", "panther", "fall", "mail", "stove", "tunnel", "party", "menu", "fashion", "green", "check", "remind", "science", "domain", "humble", "power"]
-        XCTAssertThrowsError(try RecoverPhrase.V1.recoverSeed(fromPhrase: phraseWrong1))
-        XCTAssertThrowsError(try RecoverPhrase.V1.recoverSeed(fromPhrase: phraseWrong2))
+        XCTAssertThrowsError(try RecoverPhrase.V1.recoverSeed(fromPhrase: phraseWrong1, language: .english))
+        XCTAssertThrowsError(try RecoverPhrase.V1.recoverSeed(fromPhrase: phraseWrong2, language: .english))
     }
     
     func testIncorrectData() {
         let data = Common.randomBytes(length: 32)
-        XCTAssertThrowsError(try RecoverPhrase.V1.createPhrase(fromData: data))
+        XCTAssertThrowsError(try RecoverPhrase.V1.createPhrase(fromData: data, language: .english))
     }
     
     // MARK:- v2
@@ -254,7 +254,7 @@ class RecoverPhrase_Tests: XCTestCase {
         do {
             let core = hex.hexDecodedData
             let seed = try Seed.fromCore(core, version: .v2)
-            let phrase = seed.recoveryPhrase
+            let phrase = try seed.getRecoveryPhrase(language: .english)
             let phraseString = phrase.joined(separator: " ")
             let base58 = seed.base58String
             let network = seed.network
