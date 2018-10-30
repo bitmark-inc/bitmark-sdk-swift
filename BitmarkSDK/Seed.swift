@@ -233,13 +233,25 @@ public struct SeedV2: Seedable {
         // Checksum
         let checksumStart = seed.count - Config.SeedConfigV2.checksumLength
         let core = seed.subdata(in: 0..<checksumStart)
-        let checksum = core.sha3(length: 256)
-        if checksum.count != Config.SeedConfigV2.checksumLength {
+        let checksum = core.sha3(length: 256).slice(start: 0, end: Config.SeedConfigV2.checksumLength)
+        if checksum != seed.slice(start: checksumStart, end: seed.count) {
             throw SeedError.checksumFailed
         }
         
+        // Network
+        var parsedNetwork: Network
+        
+        let mode = core[0] & 0x80 | core[1] & 0x40 | core[2] & 0x20 | core[3] & 0x10
+        if mode == core[15] & 0xf0 {
+            parsedNetwork = .livenet
+        } else if mode == core[15] & 0xf0 ^ 0xf0 {
+            parsedNetwork = .testnet
+        } else {
+            throw(SeedError.wrongNetwork)
+        }
+        
         self.core = core
-        self.network = .testnet
+        self.network = parsedNetwork
         self.version = .v2
     }
     
