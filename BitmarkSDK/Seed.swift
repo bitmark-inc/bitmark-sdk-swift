@@ -28,13 +28,13 @@ public protocol Seedable {
     init(network: Network) throws
     init(core: Data) throws
     init(fromBase58 base58String: String) throws
-    init(fromRecoveryPhrase recoveryPhrase: [String]) throws
+    init(fromRecoveryPhrase recoveryPhrase: [String], language: RecoveryLanguage) throws
     var base58String: String { get }
-    var recoveryPhrase: [String] { get }
     var network: Network { get }
     var version: SeedVersion { get }
     var core: Data { get }
     func getAuthKeyData() throws -> Data
+    func getRecoveryPhrase(language: RecoveryLanguage) throws -> [String]
 }
 
 public struct SeedV1: Seedable {
@@ -113,8 +113,8 @@ public struct SeedV1: Seedable {
         self.version = .v1
     }
     
-    public init(fromRecoveryPhrase recoveryPhrase: [String]) throws {
-        let bytes = try RecoverPhrase.V1.recoverSeed(fromPhrase: recoveryPhrase)
+    public init(fromRecoveryPhrase recoveryPhrase: [String], language: RecoveryLanguage) throws {
+        let bytes = try RecoverPhrase.V1.recoverSeed(fromPhrase: recoveryPhrase, language: language)
         let networkByte = bytes[0]
         let network = networkByte == Network.livenet.rawValue ? Network.livenet : Network.testnet
         let coreBytes = bytes.subdata(in: 1..<33)
@@ -136,10 +136,10 @@ public struct SeedV1: Seedable {
         return exportedSeed.base58EncodedString
     }
     
-    public var recoveryPhrase: [String] {
+    public func getRecoveryPhrase(language: RecoveryLanguage) throws -> [String] {
         var data = Data(bytes: [UInt8(truncatingIfNeeded: network.rawValue)])
         data.append(core)
-        return try! RecoverPhrase.V1.createPhrase(fromData: data)
+        return try RecoverPhrase.V1.createPhrase(fromData: data, language: language)
     }
     
     public func getAuthKeyData() throws -> Data {
@@ -197,8 +197,8 @@ public struct SeedV2: Seedable {
         self.version = .v2
     }
     
-    public init(fromRecoveryPhrase recoveryPhrase: [String]) throws {
-        let core = try RecoverPhrase.V2.recoverSeed(fromPhrase: recoveryPhrase)
+    public init(fromRecoveryPhrase recoveryPhrase: [String], language: RecoveryLanguage) throws {
+        let core = try RecoverPhrase.V2.recoverSeed(fromPhrase: recoveryPhrase, language: language)
         var parsedNetwork: Network
         
         let mode = core[0] & 0x80 | core[1] & 0x40 | core[2] & 0x20 | core[3] & 0x10
@@ -254,8 +254,8 @@ public struct SeedV2: Seedable {
         return exportedSeed.base58EncodedString
     }
     
-    public var recoveryPhrase: [String] {
-        return try! RecoverPhrase.V2.createPhrase(fromData: core)
+    public func getRecoveryPhrase(language: RecoveryLanguage) throws -> [String] {
+        return try RecoverPhrase.V2.createPhrase(fromData: core, language: language)
     }
     
     public func getAuthKeyData() throws -> Data {
@@ -325,12 +325,12 @@ public struct Seed {
         }
     }
     
-    public static func fromRecoveryPhrase(_ recoveryPhrase: [String]) throws -> Seedable {
+    public static func fromRecoveryPhrase(_ recoveryPhrase: [String], language: RecoveryLanguage) throws -> Seedable {
         switch recoveryPhrase.count {
         case 24:
-            return try SeedV1(fromRecoveryPhrase: recoveryPhrase)
+            return try SeedV1(fromRecoveryPhrase: recoveryPhrase, language: language)
         case 12:
-            return try SeedV2(fromRecoveryPhrase: recoveryPhrase)
+            return try SeedV2(fromRecoveryPhrase: recoveryPhrase, language: language)
         default:
             throw("Invalid recovery phrase length")
         }

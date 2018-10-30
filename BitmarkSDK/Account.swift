@@ -48,17 +48,17 @@ public struct Account {
     
     // MARK:- Recover phrase
     
-    public init(recoverPhrase phrases: [String]) throws {
-        let seed = try Seed.fromRecoveryPhrase(phrases)
+    public init(recoverPhrase phrases: [String], language: RecoveryLanguage) throws {
+        let seed = try Seed.fromRecoveryPhrase(phrases, language: language)
         try self.init(seed: seed)
     }
     
-    public func getRecoverPhrase() throws -> [String] {
-        return try getRecoverPhrase(withNetwork: authKey.network)
+    public func getRecoverPhrase(language: RecoveryLanguage) throws -> [String] {
+        return try getRecoverPhrase(withNetwork: authKey.network, language: language)
     }
 
-    public func getRecoverPhrase(withNetwork network: Network) throws -> [String] {
-        return seed.recoveryPhrase
+    public func getRecoverPhrase(withNetwork network: Network, language: RecoveryLanguage) throws -> [String] {
+        return try seed.getRecoveryPhrase(language: language)
     }
     
     // MARK:- Sign
