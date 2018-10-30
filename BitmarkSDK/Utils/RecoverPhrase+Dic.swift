@@ -14,7 +14,7 @@ extension RecoverPhrase {
         switch language {
         case .english:
             return bip39ENWords[index]
-        case .chineseTranditional:
+        case .chineseTraditional:
             return bip39CNTranditionalWords[index]
         }
     }
@@ -23,7 +23,7 @@ extension RecoverPhrase {
         switch language {
         case .english:
             return bip39ENWords.firstIndex(of: word)
-        case .chineseTranditional:
+        case .chineseTraditional:
             return bip39CNTranditionalWords.firstIndex(of: word)
         }
     }

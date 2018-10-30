@@ -10,7 +10,7 @@ import Foundation
 
 public enum RecoveryLanguage {
     case english
-    case chineseTranditional
+    case chineseTraditional
 }
 
 public struct RecoverPhrase {
