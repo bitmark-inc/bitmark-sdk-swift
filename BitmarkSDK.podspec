@@ -13,8 +13,12 @@ Pod::Spec.new do |spec|
   spec.platform = :ios, "11.0"
   spec.requires_arc = true
   spec.source = { :git => 'https://github.com/bitmark-inc/bitmark-sdk-swift.git', :tag => spec.version }
-  spec.source_files = 'BitmarkSDK/**/*.{h,swift}'
+  spec.source_files = 'BitmarkSDK/**/*.{h,c,swift}'
+  spec.private_header_files = 'BitmarkSDK/tiny_sha3/*.h'
+  spec.preserve_paths = 'BitmarkSDK/tiny_sha3/module.modulemap'
+  spec.pod_target_xcconfig = {
+    'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/BitmarkSDK/tiny_sha3',
+  }
 
-  spec.dependency "CryptoSwift"
   spec.dependency "TweetNacl"
 end
