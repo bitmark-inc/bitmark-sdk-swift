@@ -56,3 +56,19 @@ extension Transaction {
         return try api.listTransaction(builder: params)
     }
 }
+
+extension Transaction: Hashable {
+    public var hashValue: Int {
+        return self.id.hashValue
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
+    }
+}
+
+extension Transaction: Equatable {
+    public static func == (lhs: Transaction, rhs: Transaction) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
