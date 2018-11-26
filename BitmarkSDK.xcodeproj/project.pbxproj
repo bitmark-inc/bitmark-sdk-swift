@@ -33,6 +33,7 @@
 		58582D6E2159D9A000AF30E6 /* BitmarkQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D6D2159D9A000AF30E6 /* BitmarkQuery.swift */; };
 		58582D71215A123100AF30E6 /* TransactionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D70215A123100AF30E6 /* TransactionQuery.swift */; };
 		58582D73215A12BA00AF30E6 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D72215A12BA00AF30E6 /* Transaction.swift */; };
+		58645FB021AB99E500C7A0F1 /* Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58645FAF21AB99E500C7A0F1 /* Migration.swift */; };
 		5865BD431E0250C200B25AB3 /* BitmarkSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5865BD391E0250C200B25AB3 /* BitmarkSDK.framework */; };
 		5865BD4A1E0250C200B25AB3 /* BitmarkSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5865BD3C1E0250C200B25AB3 /* BitmarkSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5866639B212FB5D30038C3C7 /* BItmarkSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5866639A212FB5D30038C3C7 /* BItmarkSDK.swift */; };
@@ -103,6 +104,7 @@
 		58582D6D2159D9A000AF30E6 /* BitmarkQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmarkQuery.swift; sourceTree = "<group>"; };
 		58582D70215A123100AF30E6 /* TransactionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionQuery.swift; sourceTree = "<group>"; };
 		58582D72215A12BA00AF30E6 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		58645FAF21AB99E500C7A0F1 /* Migration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Migration.swift; sourceTree = "<group>"; };
 		5865BD391E0250C200B25AB3 /* BitmarkSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BitmarkSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5865BD3C1E0250C200B25AB3 /* BitmarkSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitmarkSDK.h; sourceTree = "<group>"; };
 		5865BD3D1E0250C200B25AB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				58C0970A1F8DF5E80001EE55 /* FileUtil.swift */,
 				588C5BCA1F9DCBA400ADB619 /* RecoverPhrase.swift */,
 				588C5BCC1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift */,
+				58645FAF21AB99E500C7A0F1 /* Migration.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 			files = (
 				58582D662157C83700AF30E6 /* TransferParams.swift in Sources */,
 				58582D6E2159D9A000AF30E6 /* BitmarkQuery.swift in Sources */,
+				58645FB021AB99E500C7A0F1 /* Migration.swift in Sources */,
 				5866639E212FE1620038C3C7 /* Asset.swift in Sources */,
 				58582D6821589EAD00AF30E6 /* OfferParams.swift in Sources */,
 				58DD772E1F8CC2190024A0F6 /* Seed.swift in Sources */,
