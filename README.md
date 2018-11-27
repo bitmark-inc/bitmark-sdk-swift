@@ -71,7 +71,7 @@ import BitmarkSDK
 
 ## Documentation
 
-Reference: https://sdk-docs.test.bitmark.com/?swift
+Reference: https://sdk-docs.bitmark.com/?swift
 
 
 # License
