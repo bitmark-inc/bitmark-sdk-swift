@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Transaction: Codable {
+public struct Transaction: Codable {
     let id: String
     let bitmark_id: String
     let asset_id: String
