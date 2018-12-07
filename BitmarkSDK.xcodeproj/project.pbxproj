@@ -46,6 +46,7 @@
 		588C5BCD1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588C5BCC1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift */; };
 		58A24C0F2134F441006C5672 /* Parameterizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A24C0E2134F441006C5672 /* Parameterizable.swift */; };
 		58A24C112134F563006C5672 /* Signable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A24C102134F563006C5672 /* Signable.swift */; };
+		58A59F5421BA6F7900FB4B02 /* EncryptionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A59F5321BA6F7900FB4B02 /* EncryptionKey.swift */; };
 		58AF84322019D99600E5B40F /* API+Bitmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AF84312019D99600E5B40F /* API+Bitmark.swift */; };
 		58C097091F8DBA3D0001EE55 /* Seed_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */; };
 		58C0970B1F8DF5E80001EE55 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0970A1F8DF5E80001EE55 /* FileUtil.swift */; };
@@ -120,6 +121,7 @@
 		588C5BCC1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecoverPhrase+Dic.swift"; sourceTree = "<group>"; };
 		58A24C0E2134F441006C5672 /* Parameterizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameterizable.swift; sourceTree = "<group>"; };
 		58A24C102134F563006C5672 /* Signable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signable.swift; sourceTree = "<group>"; };
+		58A59F5321BA6F7900FB4B02 /* EncryptionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionKey.swift; sourceTree = "<group>"; };
 		58AF84312019D99600E5B40F /* API+Bitmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Bitmark.swift"; sourceTree = "<group>"; };
 		58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seed_Tests.swift; sourceTree = "<group>"; };
 		58C0970A1F8DF5E80001EE55 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				5818FE351E03A64B007F082D /* AccountNumber.swift */,
 				58DD772D1F8CC2190024A0F6 /* Seed.swift */,
 				5866639A212FB5D30038C3C7 /* BItmarkSDK.swift */,
+				58A59F5321BA6F7900FB4B02 /* EncryptionKey.swift */,
 			);
 			path = BitmarkSDK;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				58582D6C2158E2B500AF30E6 /* Queryable.swift in Sources */,
 				5818FE341E039820007F082D /* Varint.swift in Sources */,
 				580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */,
+				58A59F5421BA6F7900FB4B02 /* EncryptionKey.swift in Sources */,
 				58244CEE1FA2E8BA00CFA475 /* API.swift in Sources */,
 				58F3E65321707B3C00C2A077 /* main.c in Sources */,
 				580B61931E07C917008BEBFF /* AuthKey.swift in Sources */,
