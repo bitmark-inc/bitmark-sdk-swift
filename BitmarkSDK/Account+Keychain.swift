@@ -9,7 +9,7 @@
 import Foundation
 import KeychainAccess
 
-extension Account {
+public extension Account {
     private static let keychainAccountPrefix = "bitmark_core_"
     private static let keychainMetadataPrefix = "bitmark_account_metadata_"
     
