@@ -14,6 +14,9 @@
       location = "group:BitmarkSDK.playground">
    </FileRef>
    <FileRef
+      location = "group:Carthage/Checkouts/KeychainAccess/Lib/KeychainAccess.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "container:Carthage/Checkouts/tweetnacl-swiftwrap/TweetNacl.xcodeproj">
    </FileRef>
 </Workspace>

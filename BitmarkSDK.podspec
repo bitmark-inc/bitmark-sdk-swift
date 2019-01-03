@@ -21,4 +21,5 @@ Pod::Spec.new do |spec|
   }
 
   spec.dependency "TweetNacl"
+  spec.dependency "KeychainAccess"
 end

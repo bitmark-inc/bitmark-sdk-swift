@@ -1,1 +1,2 @@
 github "bitmark-inc/tweetnacl-swiftwrap"
+github "kishikawakatsumi/KeychainAccess"

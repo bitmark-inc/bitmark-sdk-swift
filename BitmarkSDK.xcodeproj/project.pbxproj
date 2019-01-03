@@ -15,6 +15,7 @@
 		5812655A1E0B704800D6DF32 /* RegistrationParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581265591E0B704800D6DF32 /* RegistrationParams.swift */; };
 		5812655C1E0BAB2100D6DF32 /* BinaryPacking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */; };
 		5812655E1E0BC1BC00D6DF32 /* Asset_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */; };
+		5812B77F21DDC64000B2FCC1 /* Account+Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5812B77E21DDC64000B2FCC1 /* Account+Keychain.swift */; };
 		58182CAE1FA728D400EB5BE4 /* API+Issuing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58182CAD1FA728D400EB5BE4 /* API+Issuing.swift */; };
 		58182CB21FA81BC100EB5BE4 /* API+Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58182CB11FA81BC100EB5BE4 /* API+Transfer.swift */; };
 		5818FE2B1E0391CF007F082D /* Base58.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE2A1E0391CF007F082D /* Base58.swift */; };
@@ -86,6 +87,7 @@
 		581265591E0B704800D6DF32 /* RegistrationParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationParams.swift; sourceTree = "<group>"; };
 		5812655B1E0BAB2100D6DF32 /* BinaryPacking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryPacking.swift; sourceTree = "<group>"; };
 		5812655D1E0BC1BC00D6DF32 /* Asset_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset_Tests.swift; sourceTree = "<group>"; };
+		5812B77E21DDC64000B2FCC1 /* Account+Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+Keychain.swift"; sourceTree = "<group>"; };
 		58182CAD1FA728D400EB5BE4 /* API+Issuing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Issuing.swift"; sourceTree = "<group>"; };
 		58182CB11FA81BC100EB5BE4 /* API+Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Transfer.swift"; sourceTree = "<group>"; };
 		5818FE2A1E0391CF007F082D /* Base58.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base58.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				580B61921E07C917008BEBFF /* AuthKey.swift */,
 				5818FE371E03A840007F082D /* Config.swift */,
 				588C5BC61F9DC5D400ADB619 /* Account.swift */,
+				5812B77E21DDC64000B2FCC1 /* Account+Keychain.swift */,
 				5818FE351E03A64B007F082D /* AccountNumber.swift */,
 				58DD772D1F8CC2190024A0F6 /* Seed.swift */,
 				5866639A212FB5D30038C3C7 /* BItmarkSDK.swift */,
@@ -476,6 +479,7 @@
 				58244CEE1FA2E8BA00CFA475 /* API.swift in Sources */,
 				58F3E65321707B3C00C2A077 /* main.c in Sources */,
 				580B61931E07C917008BEBFF /* AuthKey.swift in Sources */,
+				5812B77F21DDC64000B2FCC1 /* Account+Keychain.swift in Sources */,
 				58582D602154B00700AF30E6 /* API+Asset.swift in Sources */,
 				58182CAE1FA728D400EB5BE4 /* API+Issuing.swift in Sources */,
 			);
