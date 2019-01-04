@@ -13,8 +13,7 @@ public extension Account {
     private static let keychainAccountPrefix = "bitmark_core_"
     private static let keychainMetadataPrefix = "bitmark_account_metadata_"
     
-    private static func getKeychain(reason: String?) throws -> Keychain {
-        let service = "com.bitmark.sdk.ios"
+    private static func getKeychain(service: String, reason: String?) throws -> Keychain {
         if let reason = reason {
             return Keychain(service: service)
                 .accessibility(.whenPasscodeSetThisDeviceOnly, authenticationPolicy: .userPresence)
@@ -24,8 +23,8 @@ public extension Account {
         }
     }
     
-    public static func loadFromKeychain(alias: String, requireAuthenticationWithMessage message: String? = nil) throws -> Account {
-        let keychain = try Account.getKeychain(reason: message)
+    public static func loadFromKeychain(service: String, alias: String, requireAuthenticationWithMessage message: String? = nil) throws -> Account {
+        let keychain = try Account.getKeychain(service: service, reason: message)
         guard let seedCore = try keychain.getData(Account.keychainAccountPrefix + alias),
             let accountMetadata = try keychain.getData(Account.keychainMetadataPrefix + alias) else {
                 throw("Alias not found")
@@ -40,8 +39,8 @@ public extension Account {
         return try Account(seed: seed)
     }
     
-    public func saveToKeychain(alias: String? = nil, requireAuthenticationWithMessage message: String? = nil) throws {
-        let keychain = try Account.getKeychain(reason: message)
+    public func saveToKeychain(service: String, alias: String? = nil, requireAuthenticationWithMessage message: String? = nil) throws {
+        let keychain = try Account.getKeychain(service: service, reason: message)
         let accountMeta = ["version": self.seed.version.rawValue,
                         "network": self.seed.network.rawValue]
         let accountMetadata = try JSONEncoder().encode(accountMeta)
