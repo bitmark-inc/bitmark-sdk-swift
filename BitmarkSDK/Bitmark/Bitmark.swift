@@ -18,17 +18,17 @@ public struct TransferOffer: Codable {
 }
 
 public struct Bitmark: Codable {
-    let id: String
-    let asset_id: String
-    let head_id: String
-    let issuer: String
-    let owner: String
-    let status: String
-    let offer: TransferOffer?
-    let block_number: Int64
-    let offset: Int64
-    let created_at: Date?
-    let confirmed_at: Date?
+    public let id: String
+    public let asset_id: String
+    public let head_id: String
+    public let issuer: String
+    public let owner: String
+    public let status: String
+    public let offer: TransferOffer?
+    public let block_number: Int64
+    public let offset: Int64
+    public let created_at: Date?
+    public let confirmed_at: Date?
 }
 
 public extension Bitmark {
