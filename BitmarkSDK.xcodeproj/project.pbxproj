@@ -49,6 +49,7 @@
 		58A24C112134F563006C5672 /* Signable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A24C102134F563006C5672 /* Signable.swift */; };
 		58A59F5421BA6F7900FB4B02 /* EncryptionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A59F5321BA6F7900FB4B02 /* EncryptionKey.swift */; };
 		58AF84322019D99600E5B40F /* API+Bitmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AF84312019D99600E5B40F /* API+Bitmark.swift */; };
+		58B1B4E021F180300031B34C /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58B1B4DF21F180300031B34C /* KeychainAccess.framework */; };
 		58C097091F8DBA3D0001EE55 /* Seed_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */; };
 		58C0970B1F8DF5E80001EE55 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C0970A1F8DF5E80001EE55 /* FileUtil.swift */; };
 		58DD772E1F8CC2190024A0F6 /* Seed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DD772D1F8CC2190024A0F6 /* Seed.swift */; };
@@ -125,6 +126,7 @@
 		58A24C102134F563006C5672 /* Signable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signable.swift; sourceTree = "<group>"; };
 		58A59F5321BA6F7900FB4B02 /* EncryptionKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionKey.swift; sourceTree = "<group>"; };
 		58AF84312019D99600E5B40F /* API+Bitmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Bitmark.swift"; sourceTree = "<group>"; };
+		58B1B4DF21F180300031B34C /* KeychainAccess.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KeychainAccess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58C097081F8DBA3D0001EE55 /* Seed_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seed_Tests.swift; sourceTree = "<group>"; };
 		58C0970A1F8DF5E80001EE55 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
 		58DD772D1F8CC2190024A0F6 /* Seed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seed.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58B1B4E021F180300031B34C /* KeychainAccess.framework in Frameworks */,
 				580D3FB22165FF340070A996 /* TweetNacl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,6 +178,7 @@
 		580D3FAA2165FF290070A996 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58B1B4DF21F180300031B34C /* KeychainAccess.framework */,
 				580D3FB12165FF340070A996 /* TweetNacl.framework */,
 				580D3FAF2165FF300070A996 /* CryptoSwift.framework */,
 				580D3FAD2165FF2D0070A996 /* SipHash.framework */,
