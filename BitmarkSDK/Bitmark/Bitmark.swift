@@ -34,37 +34,51 @@ public struct Bitmark: Codable {
 public extension Bitmark {
     // MARK:- Issue
     public static func newIssuanceParams(assetID: String, owner: AccountNumber, quantity: Int) throws -> IssuanceParams {
+        if quantity <= 0 {
+            throw("Invalid quantity")
+        }
+        
+        
         let baseNonce = UInt64(Date().timeIntervalSince1970)
         var requests = [IssueRequest]()
-        for i in 0..<quantity {
-            var issuanceParams = IssueRequest()
-            issuanceParams.set(assetId: assetID)
-            issuanceParams.set(nonce: baseNonce + UInt64(i % 1000))
-            requests.append(issuanceParams)
+        
+        // Create first one with nonce = 0
+        requests.append(createIssueRequest(assetID: assetID, nonce: 0))
+        
+        // Create the rest with random nonce
+        for i in 1..<quantity {
+            requests.append(createIssueRequest(assetID: assetID, nonce: baseNonce + UInt64(i % 1000)))
         }
         
         let params = IssuanceParams(issuances: requests)
         return params
     }
     
-    public static func newIssuanceParams(assetID: String, owner: AccountNumber, nonces: [UInt64]) throws -> IssuanceParams {
-        var requests = [IssueRequest]()
-        for nonce in nonces {
-            var issuanceParams = IssueRequest()
-            issuanceParams.set(assetId: assetID)
-            issuanceParams.set(nonce: nonce)
-            requests.append(issuanceParams)
-        }
-        
-        let params = IssuanceParams(issuances: requests)
-        return params
-    }
+//    public static func newIssuanceParams(assetID: String, owner: AccountNumber, nonces: [UInt64]) throws -> IssuanceParams {
+//        var requests = [IssueRequest]()
+//        for nonce in nonces {
+//            var issuanceParams = IssueRequest()
+//            issuanceParams.set(assetId: assetID)
+//            issuanceParams.set(nonce: nonce)
+//            requests.append(issuanceParams)
+//        }
+//
+//        let params = IssuanceParams(issuances: requests)
+//        return params
+//    }
     
     public static func issue(_ params: IssuanceParams) throws -> [String] {
         let api = API()
         let bitmarkIDs = try api.issue(withIssueParams: params)
         
         return bitmarkIDs
+    }
+    
+    private static func createIssueRequest(assetID: String, nonce: UInt64) -> IssueRequest {
+        var issuanceRequest = IssueRequest()
+        issuanceRequest.set(assetId: assetID)
+        issuanceRequest.set(nonce: nonce)
+        return issuanceRequest
     }
 }
 
