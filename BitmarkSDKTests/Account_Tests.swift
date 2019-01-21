@@ -15,7 +15,7 @@ class Account_Tests: XCTestCase {
         do {
             let a = try Account()
             
-            XCTAssertEqual(a.seed.core.count, KeyType.ed25519.seedLength)
+            XCTAssertEqual(a.seed.core.count, Config.SeedConfigV2.seedLength)
             XCTAssertEqual(a.authKey.privateKey.count, KeyType.ed25519.privateLength)
         }
         catch {
@@ -25,10 +25,10 @@ class Account_Tests: XCTestCase {
     
     func testAccountSeed() {
         do {
-            let seedString = "5XEECsKPsXJEZRQJfeRU75tEk72WMs87jW1x9MhT6jF3UxMVaAZ7TSi"
+            let seedString = "9J87BSeH4cpWiWyUodcCZddPCaWW7uxTq"
             let a = try Account(fromSeed: seedString)
             
-            XCTAssertEqual(a.seed.core.count, KeyType.ed25519.seedLength)
+            XCTAssertEqual(a.seed.core.count, Config.SeedConfigV2.seedLength)
             XCTAssertEqual(a.authKey.privateKey.count, KeyType.ed25519.privateLength)
             
             let seed = try a.toSeed()

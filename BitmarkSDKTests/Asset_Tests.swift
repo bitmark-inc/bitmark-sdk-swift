@@ -26,10 +26,10 @@ class Asset_Tests: XCTestCase {
     }
     
     struct TestData {
-        static let accountA = try! Account(fromSeed: "5XEECttxvRBzxzAmuV4oh6T1FcQu4mBg8eWd9wKbf8hweXsfwtJ8sfH")
-        static let accountB = try! Account(fromSeed: "5XEECt6Mhj8Tanb9CDTGHhTQ7RqbS5LHD383LRK6QGDuj8mwfUU6gKs")
-        static let accountNumberA = AccountNumber("e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog")
-        static let accountNumberB = AccountNumber("f3TnfGTVgNjrWKN6QH3xqiSW6G2Afe5wGQ8WM3wWDQyHEpicDX")
+        static let accountA = try! Account(fromSeed: "9J87BXAz4khtUwYLBq8DcQn8M6d5b4j3e")
+        static let accountB = try! Account(fromSeed: "9J87Fi6ChcneynJpz5etJ43hfabrAxBx1")
+        static let accountNumberA = AccountNumber("fUa4CoUTgsZgztjvH8SVV3efHzNRv7pFmU76oGeQq86Q3snk8H")
+        static let accountNumberB = AccountNumber("fRaDcbnzYCDHofGMfUSPfGerhfRDMpJkGFwvpQtB6WtP9CbE7y")
         static let name = "this is name"
         static let metadata = ["description": "this is description"]
         static let fingerprintData = "5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c"

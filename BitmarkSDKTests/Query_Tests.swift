@@ -32,7 +32,7 @@ class Query_Tests: XCTestCase {
 
     func testQueryOffering() {
         do {
-            let receiver = "e1pFRPqPhY2gpgJTpCiwXDnVeouY9EjHY6STtKwdN6Z4bp4sog"
+            let receiver = "fRaDcbnzYCDHofGMfUSPfGerhfRDMpJkGFwvpQtB6WtP9CbE7y"
             let query = try Bitmark.newBitmarkQueryParams()
                 .limit(size: 100)
                 .offer(from: receiver)
@@ -45,14 +45,14 @@ class Query_Tests: XCTestCase {
 
     func testQueryBitmarks() {
         do {
-            let issuedBy = "ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva"
-            let referencedAssetID = "0e0b4e3bd771811d35a23707ba6197aa1dd5937439a221eaf8e7909309e7b31b6c0e06a1001c261a099abf04c560199db898bc154cf128aa9efa5efd36030c64"
+            let issuedBy = "fRaDcbnzYCDHofGMfUSPfGerhfRDMpJkGFwvpQtB6WtP9CbE7y"
+            let referencedAssetID = "0233f183bc20f8e5013ecb432e7120cf425c847d297880bea9703a026ca1bfd7a782d51e311972728b94d8ffe13ea919718a46bafe79853ee2cf9f76fb1c5c1d"
             let query = try Bitmark.newBitmarkQueryParams()
                 .limit(size: 100)
                 .issued(by: issuedBy)
                 .referenced(toAssetID: referencedAssetID)
-                .offer(from: "ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
-                .offer(to: "ec6yMcJATX6gjNwvqp8rbc4jNEasoUgbfBBGGyV5NvoJ54NXva")
+                .offer(from: "fRaDcbnzYCDHofGMfUSPfGerhfRDMpJkGFwvpQtB6WtP9CbE7y")
+                .offer(to: "fUa4CoUTgsZgztjvH8SVV3efHzNRv7pFmU76oGeQq86Q3snk8H")
                 .loadAsset(true)
             let (bitmarks, assets) = try Bitmark.list(params: query)
             XCTAssertNotNil(assets)
@@ -65,9 +65,9 @@ class Query_Tests: XCTestCase {
 
     func testQueryTransactions() {
         do {
-            let ownedBy = "eZpG6Wi9SQvpDatEP7QGrx6nvzwd6s6R8DgMKgDbDY1R5bjzb9"
-            let referencedAssetID = "e0e27961f97b8eebbc9b83eb0f442a3ce602ad350a33955b6e522fbbc8cda589b014559d2bc0bea8824eb477883906d0c0c3f0e6d5dd40bc3c5f4463ba723520"
-            let referencedBitmarkID = "bbfdd3c3fb35b539ba78703d89c66ae3013d5c10aa1516a874564f62d95686eb"
+            let ownedBy = "fRaDcbnzYCDHofGMfUSPfGerhfRDMpJkGFwvpQtB6WtP9CbE7y"
+            let referencedAssetID = "3bf6bac6d53a30cfece9597609d1ff1f8397add2c04170895f2f00971f74cc3d81843a71fbc425412a7aecc35fddc88f1983c591f7cf103b05c5f6683c85f421"
+            let referencedBitmarkID = "96f3aba21ae69ed5fe8eb5a691f9f30a1cad3c86efc8d9ecfabea3707df4fc9d"
             let query = try Transaction.newTransactionQueryParams()
                 .limit(size: 100)
                 .owned(by: ownedBy, transient: true)
