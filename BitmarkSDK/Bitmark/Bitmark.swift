@@ -42,11 +42,20 @@ public extension Bitmark {
         let baseNonce = UInt64(Date().timeIntervalSince1970)
         var requests = [IssueRequest]()
         
-        // Create first one with nonce = 0
-        requests.append(createIssueRequest(assetID: assetID, nonce: 0))
+        // Get asset info
+        let api = API()
+        let bitmarkQuery = try Bitmark.newBitmarkQueryParams()
+            .referenced(toAssetID: assetID)
+            .includePending(true)
+            .limit(size: 1)
+        let (bitmarks, _) = try Bitmark.list(params: bitmarkQuery)
+        if bitmarks.count == 0 {
+            // Create first one with nonce = 0
+            requests.append(createIssueRequest(assetID: assetID, nonce: 0))
+        }
         
         // Create the rest with random nonce
-        for i in 1..<quantity {
+        for i in requests.count..<quantity {
             requests.append(createIssueRequest(assetID: assetID, nonce: baseNonce + UInt64(i % 1000)))
         }
         
