@@ -37,7 +37,7 @@ class Query_Tests: XCTestCase {
                 .limit(size: 100)
                 .offer(from: receiver)
             let (bitmarks, _) = try Bitmark.list(params: query)
-            XCTAssertEqual(bitmarks.first?.offer?.from, receiver)
+            XCTAssertEqual(bitmarks?.first?.offer?.from, receiver)
         } catch let e {
             XCTFail(e.localizedDescription)
         }
@@ -56,7 +56,7 @@ class Query_Tests: XCTestCase {
                 .loadAsset(true)
             let (bitmarks, assets) = try Bitmark.list(params: query)
             XCTAssertNotNil(assets)
-            XCTAssertEqual(bitmarks.first?.issuer, issuedBy)
+            XCTAssertEqual(bitmarks?.first?.issuer, issuedBy)
             XCTAssertEqual(assets?.first?.id, referencedAssetID)
         } catch let e {
             XCTFail(e.localizedDescription)
