@@ -20,18 +20,9 @@ class Transfer_Tests: XCTestCase {
 //    
 //    let transferPk = try! AuthKey(fromKIF: "ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm")
 //    
-//    override func setUp() {
-//        super.setUp()
-//        
-//        try! asset.set(name: "Test Bitmark Lib")
-//        try! asset.set(metadata: ["description": "this is description"])
-//        try! asset.set(fingerPrint: "Test Bitmark Lib 11")
-//        try! asset.sign(withPrivateKey: assetPk)
-//        
-//        issue.set(asset: asset)
-//        issue.set(nonce: 1475482198529)
-//        try! issue.sign(privateKey: issuePk)
-//    }
+    override func setUp() {
+        BitmarkSDK.initialize(config: SDKConfig(apiToken: "bmk-lljpzkhqdkzmblhg", network: .testnet, urlSession: URLSession.shared))
+    }
 //    
 //    // MARK:- Asset
 //    
@@ -50,4 +41,81 @@ class Transfer_Tests: XCTestCase {
 //            XCTFail()
 //        }
 //    }
+    func randomString(length: Int) -> String {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
+    }
+    
+    func testRekey() {
+        do {
+            let accountFrom = try Account()
+            let accountTo = try Account()
+            
+            print(try accountFrom.toSeed())
+            print(try accountTo.toSeed())
+            
+            // Issue several bitmarks from accountFrom
+            var assetParams = try Asset.newRegistrationParams(name: "SwiftSDK__rekey_test_" + randomString(length: 8),
+                                                              metadata: ["Random string": randomString(length: 20)])
+            
+            let fileContent = randomString(length: 300)
+            let fileData = fileContent.data(using: .utf8)!
+            XCTAssertNoThrow(try assetParams.setFingerprint(fromData: fileData))
+            XCTAssertNoThrow(try assetParams.sign(accountFrom))
+            
+            let assetID = try Asset.register(assetParams)
+            
+            // Issue
+            let numberOfIssuance = 20
+            var issueParams = try Bitmark.newIssuanceParams(assetID: assetID, owner: accountFrom.accountNumber, quantity: numberOfIssuance)
+            XCTAssertNoThrow(try issueParams.sign(accountFrom))
+            XCTAssertNoThrow(try Bitmark.issue(issueParams))
+            
+            // Ensure all bitmarks are confirmed
+            var shouldContinue = true
+            while shouldContinue {
+                let bitmarkAccountFromQuery = Bitmark.newBitmarkQueryParams()
+                    .owned(by: accountFrom.accountNumber)
+                    .includePending(true)
+                let (bitmarkAccountFrom, _) = try Bitmark.list(params: bitmarkAccountFromQuery)
+                guard let bitmarks = bitmarkAccountFrom else {
+                    continue
+                }
+                
+                shouldContinue = false
+                for bitmark in bitmarks {
+                    if bitmark.status != "settled" {
+                        shouldContinue = true
+                        break
+                    }
+                }
+                
+                sleep(5)
+            }
+            
+            // Rekey
+            XCTAssertNoThrow(try Migration.rekey(from: accountFrom, to: accountTo))
+            
+            // Test the result
+            let numberOfBitmarkAccountToQuery = Bitmark.newBitmarkQueryParams()
+                .owned(by: accountTo.accountNumber)
+                .includePending(true)
+            let (bitmarkAccountTo, _) = try Bitmark.list(params: numberOfBitmarkAccountToQuery)
+            XCTAssertEqual(bitmarkAccountTo?.count, numberOfIssuance)
+        }
+        catch let e {
+            XCTFail(e.localizedDescription)
+        }
+    }
 }

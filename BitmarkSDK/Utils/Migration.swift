@@ -65,4 +65,52 @@ public struct Migration {
         
         return (newAccount, bitmarkIds)
     }
+    
+    // Query and transfer all of current confirmed properties
+    public static func rekey(from accountFrom: Account, to accountTo: Account) throws {
+        // Query for current owning bitmarks
+        var lastOffset: Int64? = nil
+        var shouldContinue = true
+        
+        while shouldContinue {
+            var bitmarksQuery = Bitmark.newBitmarkQueryParams()
+                .owned(by: accountFrom.address)
+                .loadAsset(true)
+                .to(direction: .earlier)
+                .includePending(false)
+            
+            if let lastOffset = lastOffset {
+                bitmarksQuery = bitmarksQuery.at(lastOffset)
+            }
+            
+            let (bitmarks, _) = try Bitmark.list(params: bitmarksQuery)
+            
+            if bitmarks == nil || bitmarks?.count == 0 {
+                break
+            }
+            
+            if bitmarks!.count < 100 {
+                shouldContinue = false
+            }
+            
+            lastOffset = bitmarks!.last!.offset
+            
+            for bitmark in bitmarks! {
+                var transferRequest = TransferRequest()
+                transferRequest.set(fromOwner: accountFrom.accountNumber)
+                try transferRequest.set(to: accountTo.accountNumber)
+                transferRequest.set(fromTx: bitmark.id)
+                transferRequest.set(requireCountersignature: true)
+                try transferRequest.sign(accountFrom)
+                
+                var counterTransfer = CountersignedTransferRequest(link: bitmark.id,
+                                                                   owner: transferRequest.owner!,
+                                                                   signature: transferRequest.signature!.hexEncodedString)
+                try counterTransfer.sign(accountTo)
+                
+                let api = API()
+                _ = try api.transfer(withCounterTransfer: counterTransfer)
+            }
+        }
+    }
 }
