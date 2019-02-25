@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "BitmarkSDK"
-  spec.version = "2.5.0"
+  spec.version = "2.5.1"
   spec.summary = "Bitmark SDK written in Swift."
   spec.description  = <<-DESC
   The Bitmark SDK enables creation, transfer, and authentication of digital properties in the Bitmark property system. The SDK's simplified interface allows developers to easily build on the core Bitmark infrastructure by reading from and writing to the Bitmark blockchain.
