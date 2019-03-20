@@ -130,10 +130,10 @@ internal extension URLSession {
         let responseMessage = String(data: data, encoding: .utf8) ?? ""
         
         if 200..<300 ~= response.statusCode {
-            globalConfig.logger.log(level: .debug, message: "Resonpose Status:\(response.statusCode) \tBody:\(responseMessage)")
+            globalConfig.logger.log(level: .debug, message: "Response Status:\(response.statusCode) \tBody:\(responseMessage)")
             return (data: data, response: response)
         } else {
-            globalConfig.logger.log(level: .error, message: "Resonpose Status:\(response.statusCode) \tBody:\(responseMessage)")
+            globalConfig.logger.log(level: .error, message: "Response Status:\(response.statusCode) \tBody:\(responseMessage)")
             let requestMethod = request.httpMethod ?? "GET"
             throw("Request " + requestMethod + " " + request.url!.absoluteString + " returned with statuscode: " + String(response.statusCode) + " and data: " + responseMessage)
         }
