@@ -166,6 +166,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E98E43C2297D0480040FDD7 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				0E98E43D2297D6D10040FDD7 /* Key */,
+				58DD772D1F8CC2190024A0F6 /* Seed.swift */,
+				5818FE351E03A64B007F082D /* AccountNumber.swift */,
+				5812B77E21DDC64000B2FCC1 /* Account+Keychain.swift */,
+				588C5BC61F9DC5D400ADB619 /* Account.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		0E98E43D2297D6D10040FDD7 /* Key */ = {
+			isa = PBXGroup;
+			children = (
+				580B61921E07C917008BEBFF /* AuthKey.swift */,
+				5818FE371E03A840007F082D /* Config.swift */,
+				58A59F5321BA6F7900FB4B02 /* EncryptionKey.swift */,
+			);
+			path = Key;
+			sourceTree = "<group>";
+		};
 		580B618F1E077DB4008BEBFF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,6 +279,7 @@
 		5865BD3B1E0250C200B25AB3 /* BitmarkSDK */ = {
 			isa = PBXGroup;
 			children = (
+				0E98E43C2297D0480040FDD7 /* Account */,
 				5865BD3C1E0250C200B25AB3 /* BitmarkSDK.h */,
 				58F3E64321707B3C00C2A077 /* tiny_sha3 */,
 				5866639C212FE0470038C3C7 /* Asset */,
@@ -267,14 +290,7 @@
 				581265581E0B703400D6DF32 /* Records */,
 				58DD772A1F8CC0500024A0F6 /* Services */,
 				5865BD3D1E0250C200B25AB3 /* Info.plist */,
-				580B61921E07C917008BEBFF /* AuthKey.swift */,
-				5818FE371E03A840007F082D /* Config.swift */,
-				588C5BC61F9DC5D400ADB619 /* Account.swift */,
-				5812B77E21DDC64000B2FCC1 /* Account+Keychain.swift */,
-				5818FE351E03A64B007F082D /* AccountNumber.swift */,
-				58DD772D1F8CC2190024A0F6 /* Seed.swift */,
 				5866639A212FB5D30038C3C7 /* BItmarkSDK.swift */,
-				58A59F5321BA6F7900FB4B02 /* EncryptionKey.swift */,
 			);
 			path = BitmarkSDK;
 			sourceTree = "<group>";

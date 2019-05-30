@@ -44,7 +44,7 @@ public extension Account {
         let accountMeta = ["version": self.seed.version.rawValue,
                         "network": self.seed.network.rawValue]
         let accountMetadata = try JSONEncoder().encode(accountMeta)
-        try keychain.set(self.seed.core, key: Account.keychainAccountPrefix + (alias ?? self.accountNumber))
-        try keychain.set(accountMetadata, key: Account.keychainMetadataPrefix + (alias ?? self.accountNumber))
+        try keychain.set(self.seed.core, key: Account.keychainAccountPrefix + (alias ?? self.getAccountNumber()))
+        try keychain.set(accountMetadata, key: Account.keychainMetadataPrefix + (alias ?? self.getAccountNumber()))
     }
 }

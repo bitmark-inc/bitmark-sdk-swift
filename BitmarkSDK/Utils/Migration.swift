@@ -76,10 +76,10 @@ public struct Migration {
             
             while shouldContinue {
                 var bitmarksQuery = Bitmark.newBitmarkQueryParams()
-                    .owned(by: accountFrom.address)
+                    .ownedBy(accountFrom.address)
                     .loadAsset(true)
                     .to(direction: .earlier)
-                    .includePending(false)
+                    .pending(false)
                 
                 if let lastOffset = lastOffset {
                     bitmarksQuery = bitmarksQuery.at(lastOffset)
@@ -107,8 +107,8 @@ public struct Migration {
                     let bitmark = owningBitmarks[i]
 
                     var transferRequest = TransferRequest()
-                    transferRequest.set(fromOwner: accountFrom.accountNumber)
-                    try transferRequest.set(to: accountTo.accountNumber)
+                    transferRequest.set(fromOwner: accountFrom.getAccountNumber())
+                    try transferRequest.set(to: accountTo.getAccountNumber())
                     transferRequest.set(fromTx: bitmark.id)
                     transferRequest.set(requireCountersignature: true)
                     try transferRequest.sign(accountFrom)
