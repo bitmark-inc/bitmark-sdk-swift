@@ -37,8 +37,24 @@ extension Transaction {
         return try api.get(transactionID: transactionID)
     }
     
+    public static func getWithAsset(transactionID: String, completionHandler: @escaping (Transaction?, Asset?, Error?) -> Void) {
+        DispatchQueue.global().async {
+            do {
+                let (transaction, asset) = try getWithAsset(transactionID: transactionID)
+                completionHandler(transaction, asset, nil)
+            } catch let e {
+                completionHandler(nil, nil, e)
+            }
+        }
+    }
+    
+    public static func getWithAsset(transactionID: String) throws -> (Transaction, Asset) {
+        let api = API()
+        return try api.getWithAsset(transactionID: transactionID)
+    }
+    
     public static func newTransactionQueryParams() -> QueryParam {
-        return QueryParam(queryItems: [URLQueryItem]())
+        return QueryParam(queryItems: [URLQueryItem(name: "pending", value: "true")])
     }
     
     public static func list(params: QueryParam, completionHandler: @escaping ([Transaction]?, [Asset]?, Error?) -> Void) {

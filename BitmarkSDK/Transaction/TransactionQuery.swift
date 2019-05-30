@@ -23,22 +23,35 @@ extension Transaction {
             return QueryParam(queryItems: items)
         }
         
-        public func owned(by owner: String, transient: Bool = false) -> QueryParam {
+        public func ownedBy(_ owner: String) -> QueryParam {
             var items = self.queryItems
             items.append(URLQueryItem(name: "owner", value: owner))
-            items.append(URLQueryItem(name: "sent", value: String(transient)))
             return QueryParam(queryItems: items)
         }
         
-        public func referenced(toAssetID assetID: String) -> QueryParam {
+        public func ownedByWithTransient(_ owner: String) -> QueryParam {
+            var items = self.queryItems
+            items.append(URLQueryItem(name: "owner", value: owner))
+            items.append(URLQueryItem(name: "sent", value: "true"))
+            return QueryParam(queryItems: items)
+        }
+        
+        public func referencedAsset(assetID: String) -> QueryParam {
             let queryItem = URLQueryItem(name: "asset_id", value: assetID)
             var items = self.queryItems
             items.append(queryItem)
             return QueryParam(queryItems: items)
         }
         
-        public func referenced(toBitmarkID bitmarkID: String) -> QueryParam {
+        public func referencedBitmark(bitmarkID: String) -> QueryParam {
             let queryItem = URLQueryItem(name: "bitmark_id", value: bitmarkID)
+            var items = self.queryItems
+            items.append(queryItem)
+            return QueryParam(queryItems: items)
+        }
+        
+        public func referencedBlockNumber(blockNumber: Int64) -> QueryParam {
+            let queryItem = URLQueryItem(name: "block_number", value: String(blockNumber))
             var items = self.queryItems
             items.append(queryItem)
             return QueryParam(queryItems: items)
@@ -65,10 +78,16 @@ extension Transaction {
             return QueryParam(queryItems: items)
         }
         
-        public func includePending(_ pending: Bool) -> QueryParam {
-            let queryItem = URLQueryItem(name: "pending", value: String(pending))
+        public func pending(_ pending: Bool) -> QueryParam {
             var items = self.queryItems
-            items.append(queryItem)
+            
+            if let index = items.firstIndex(where: {$0.name == "pending"}) {
+                items[index].value = String(pending)
+            } else {
+                let queryItem = URLQueryItem(name: "pending", value: String(pending))
+                items.append(queryItem)
+            }
+            
             return QueryParam(queryItems: items)
         }
     }
