@@ -17,7 +17,7 @@ public struct Asset: Codable {
     public let status: String
     public let block_number: Int64
     public let offset: Int64
-    public let created_at: Date
+    public let created_at: Date?
 }
 
 public extension Asset {
@@ -57,7 +57,7 @@ public extension Asset {
     }
     
     public static func newQueryParams() -> Asset.QueryParam {
-        return Asset.QueryParam(queryItems: [URLQueryItem]())
+        return Asset.QueryParam(queryItems: [URLQueryItem(name: "pending", value: "true")])
     }
     
     public static func list(params: Asset.QueryParam, completionHandler: @escaping ([Asset]?, Error?) -> Void) {

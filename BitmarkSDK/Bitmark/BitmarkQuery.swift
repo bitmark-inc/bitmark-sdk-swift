@@ -23,35 +23,43 @@ public extension Bitmark {
             return QueryParam(queryItems: items)
         }
         
-        public func issued(by issuer: String) -> QueryParam {
+        public func issuedBy(_ issuer: String) -> QueryParam {
             let queryItem = URLQueryItem(name: "issuer", value: issuer)
             var items = self.queryItems
             items.append(queryItem)
             return QueryParam(queryItems: items)
         }
         
-        public func owned(by owner: String) -> QueryParam {
+        public func ownedBy(_ owner: String) -> QueryParam {
             let queryItem = URLQueryItem(name: "owner", value: owner)
             var items = self.queryItems
             items.append(queryItem)
             return QueryParam(queryItems: items)
         }
         
-        public func offer(from sender: String) -> QueryParam {
+        public func ownedByWithTransient(_ owner: String) -> QueryParam {
+            let queryItem = URLQueryItem(name: "owner", value: owner)
+            var items = self.queryItems
+            items.append(queryItem)
+            items.append(URLQueryItem(name: "sent", value: "true"))
+            return QueryParam(queryItems: items)
+        }
+        
+        public func offerFrom(_ sender: String) -> QueryParam {
             let queryItem = URLQueryItem(name: "offer_from", value: sender)
             var items = self.queryItems
             items.append(queryItem)
             return QueryParam(queryItems: items)
         }
         
-        public func offer(to receiver: String) -> QueryParam {
+        public func offerTo(_ receiver: String) -> QueryParam {
             let queryItem = URLQueryItem(name: "offer_to", value: receiver)
             var items = self.queryItems
             items.append(queryItem)
             return QueryParam(queryItems: items)
         }
         
-        public func referenced(toAssetID assetID: String) -> QueryParam {
+        public func referencedAsset(assetID: String) -> QueryParam {
             let queryItem = URLQueryItem(name: "asset_id", value: assetID)
             var items = self.queryItems
             items.append(queryItem)
@@ -79,10 +87,26 @@ public extension Bitmark {
             return QueryParam(queryItems: items)
         }
         
-        public func includePending(_ pending: Bool) -> QueryParam {
-            let queryItem = URLQueryItem(name: "pending", value: String(pending))
+        public func pending(_ pending: Bool) -> QueryParam {
             var items = self.queryItems
-            items.append(queryItem)
+            
+            if let index = items.firstIndex(where: {$0.name == "pending"}) {
+                items[index].value = String(pending)
+            } else {
+                let queryItem = URLQueryItem(name: "pending", value: String(pending))
+                items.append(queryItem)
+            }
+            
+            return QueryParam(queryItems: items)
+        }
+        
+        public func bitmarkIds(_ bitmarkIds: [String]) -> QueryParam {
+            var items = self.queryItems
+            bitmarkIds.forEach { bitmarkId in
+                let queryItem = URLQueryItem(name: "bitmark_ids", value: bitmarkId)
+                items.append(queryItem)
+            }
+            
             return QueryParam(queryItems: items)
         }
     }

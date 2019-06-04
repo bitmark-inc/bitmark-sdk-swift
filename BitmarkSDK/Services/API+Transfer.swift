@@ -59,7 +59,7 @@ extension API {
         _ = try urlSession.synchronousDataTask(with: urlRequest)
     }
     
-    internal func response(_ offerResponse: OfferResponseParams) throws {
+    internal func respond(_ offerResponse: OfferResponseParams) throws {
         let json = try JSONSerialization.data(withJSONObject: offerResponse.toJSON(), options: [])
         
         let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/transfer")
@@ -78,6 +78,7 @@ extension API {
 extension API {
     struct TransactionQueryResponse: Codable {
         let tx: Transaction
+        let asset: Asset?
     }
     
     struct TransactionsQueryResponse: Codable {
@@ -86,15 +87,29 @@ extension API {
     }
     
     internal func get(transactionID: String) throws -> Transaction {
+        let (tx, _) = try get(transactionID: transactionID, loadAsset: false)
+        return tx
+    }
+    
+    internal func getWithAsset(transactionID: String) throws -> (Transaction, Asset) {
+        let (tx, asset) = try get(transactionID: transactionID, loadAsset: true)
+        return (tx, asset!)
+    }
+    
+    internal func get(transactionID: String, loadAsset: Bool) throws -> (Transaction, Asset?) {
         var urlComponents = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v3/txs/" + transactionID), resolvingAgainstBaseURL: false)!
         urlComponents.queryItems = [URLQueryItem(name: "pending", value: "true")]
+        if loadAsset {
+            urlComponents.queryItems?.append(URLQueryItem(name: "asset", value: "true"))
+        }
+        
         let urlRequest = URLRequest(url: urlComponents.url!)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
         
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
         let result = try decoder.decode(TransactionQueryResponse.self, from: data)
-        return result.tx
+        return (result.tx, result.asset)
     }
     
     internal func listTransaction(builder: Transaction.QueryParam) throws -> ([Transaction], [Asset]?) {

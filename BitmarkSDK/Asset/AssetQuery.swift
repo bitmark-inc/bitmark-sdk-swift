@@ -30,6 +30,29 @@ public extension Asset {
             return QueryParam(queryItems: items)
         }
         
+        public func assetIds(_ assetIds: [String]) -> QueryParam {
+            var items = self.queryItems
+            assetIds.forEach { assetId in
+                let queryItem = URLQueryItem(name: "asset_ids", value: assetId)
+                items.append(queryItem)
+            }
+            
+            return QueryParam(queryItems: items)
+        }
+        
+        public func pending(_ pending: Bool) -> QueryParam {
+            var items = self.queryItems
+            
+            if let index = items.firstIndex(where: {$0.name == "pending"}) {
+                items[index].value = String(pending)
+            } else {
+                let queryItem = URLQueryItem(name: "pending", value: String(pending))
+                items.append(queryItem)
+            }
+            
+            return QueryParam(queryItems: items)
+        }
+        
         public func at(_ index: Int64) -> QueryParam {
             let queryItem = URLQueryItem(name: "at", value: String(index))
             var items = self.queryItems

@@ -95,7 +95,7 @@ class Asset_Tests: XCTestCase {
             }
             
             // Transfer with single signature
-            var transferParam = try Bitmark.newTransferParams(to: TestData.accountA.accountNumber)
+            var transferParam = try Bitmark.newTransferParams(to: TestData.accountA.getAccountNumber())
             XCTAssertNoThrow(try transferParam.from(bitmarkID: bitmarkId1))
             XCTAssertNoThrow(try transferParam.sign(TestData.accountB))
             let tx1 = try Bitmark.transfer(withTransferParams: transferParam)
@@ -111,7 +111,7 @@ class Asset_Tests: XCTestCase {
                 sleep(5)
             }
             
-            var offerParam = try Bitmark.newOfferParams(to: TestData.accountA.accountNumber, info: nil)
+            var offerParam = try Bitmark.newOfferParams(to: TestData.accountA.getAccountNumber(), info: nil)
             XCTAssertNoThrow(try offerParam.from(bitmarkID: bitmarkId2))
             XCTAssertNoThrow(try offerParam.sign(TestData.accountB))
             XCTAssertNoThrow(try Bitmark.offer(withOfferParams: offerParam))
@@ -121,7 +121,7 @@ class Asset_Tests: XCTestCase {
             let receivingBitmark = try Bitmark.get(bitmarkID: bitmarkId2)
             var responseParams = try Bitmark.newTransferResponseParams(withBitmark: receivingBitmark, action: .accept)
             XCTAssertNoThrow(try responseParams.sign(TestData.accountA))
-            XCTAssertNoThrow(try Bitmark.response(withResponseParams: responseParams))
+            XCTAssertNoThrow(try Bitmark.respond(withResponseParams: responseParams))
             
             // Check transfer info
             let transaction1 = try Transaction.get(transactionID: tx1)

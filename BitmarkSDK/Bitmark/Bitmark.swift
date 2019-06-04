@@ -44,8 +44,8 @@ public extension Bitmark {
         
         // Get asset info
         let bitmarkQuery = try Bitmark.newBitmarkQueryParams()
-            .referenced(toAssetID: assetID)
-            .includePending(true)
+            .referencedAsset(assetID: assetID)
+            .pending(true)
             .limit(size: 1)
         let (bitmarks, _) = try Bitmark.list(params: bitmarkQuery)
         if bitmarks == nil || bitmarks?.count == 0 {
@@ -61,19 +61,6 @@ public extension Bitmark {
         let params = IssuanceParams(issuances: requests)
         return params
     }
-    
-//    public static func newIssuanceParams(assetID: String, owner: AccountNumber, nonces: [UInt64]) throws -> IssuanceParams {
-//        var requests = [IssueRequest]()
-//        for nonce in nonces {
-//            var issuanceParams = IssueRequest()
-//            issuanceParams.set(assetId: assetID)
-//            issuanceParams.set(nonce: nonce)
-//            requests.append(issuanceParams)
-//        }
-//
-//        let params = IssuanceParams(issuances: requests)
-//        return params
-//    }
     
     public static func issue(_ params: IssuanceParams) throws -> [String] {
         let api = API()
@@ -142,9 +129,9 @@ extension Bitmark {
         return OfferResponseParams(id: offer.id, action: action, record: offer.record, counterSignature: nil, apiHeader: nil)
     }
     
-    public static func response(withResponseParams responseParam: OfferResponseParams) throws {
+    public static func respond(withResponseParams responseParam: OfferResponseParams) throws {
         let api = API()
-        return try api.response(responseParam)
+        return try api.respond(responseParam)
     }
 }
 
@@ -166,8 +153,24 @@ extension Bitmark {
         return try api.get(bitmarkID: bitmarkID)
     }
     
+    public static func getWithAsset(bitmarkID: String, completionHandler: @escaping (Bitmark?, Asset?, Error?) -> Void) {
+        DispatchQueue.global().async {
+            do {
+                let (bitmark, asset) = try getWithAsset(bitmarkID: bitmarkID)
+                completionHandler(bitmark, asset, nil)
+            } catch let e {
+                completionHandler(nil, nil, e)
+            }
+        }
+    }
+    
+    public static func getWithAsset(bitmarkID: String) throws -> (Bitmark, Asset) {
+        let api = API()
+        return try api.getWithAsset(bitmarkID: bitmarkID)
+    }
+    
     public static func newBitmarkQueryParams() -> QueryParam {
-        return QueryParam(queryItems: [URLQueryItem]())
+        return QueryParam(queryItems: [URLQueryItem(name: "pending", value: "true")])
     }
     
     public static func list(params: QueryParam, completionHandler: @escaping ([Bitmark]?, [Asset]?, Error?) -> Void) {

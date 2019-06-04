@@ -25,6 +25,7 @@ import Foundation
 extension API {
     struct BitmarkQueryResponse: Codable {
         let bitmark: Bitmark
+        let asset: Asset?
     }
     
     struct BitmarksQueryResponse: Codable {
@@ -33,15 +34,30 @@ extension API {
     }
     
     internal func get(bitmarkID: String) throws -> Bitmark {
+        let (bitmark, _) = try get(bitmarkID: bitmarkID, loadAsset: false)
+        return bitmark
+    }
+    
+    internal func getWithAsset(bitmarkID: String) throws -> (Bitmark, Asset) {
+        let (bitmark, asset) = try get(bitmarkID: bitmarkID, loadAsset: true)
+        return (bitmark, asset!)
+    }
+    
+    internal func get(bitmarkID: String, loadAsset: Bool) throws -> (Bitmark, Asset?) {
         var urlComponents = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v3/bitmarks/" + bitmarkID), resolvingAgainstBaseURL: false)!
         urlComponents.queryItems = [URLQueryItem(name: "pending", value: "true")]
+        
+        if loadAsset {
+            urlComponents.queryItems?.append(URLQueryItem(name: "asset", value: "true"))
+        }
+        
         let urlRequest = URLRequest(url: urlComponents.url!)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
         
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
         let result = try decoder.decode(BitmarkQueryResponse.self, from: data)
-        return result.bitmark
+        return (result.bitmark, result.asset)
     }
     
     internal func listBitmark(builder: Bitmark.QueryParam) throws -> ([Bitmark]?, [Asset]?) {

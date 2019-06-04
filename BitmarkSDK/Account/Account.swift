@@ -34,10 +34,13 @@ public struct Account {
         encryptionKey = try EncryptionKey(privateKey: encryptionPrivateKey)
     }
     
-    public var accountNumber: AccountNumber {
+    public func getAccountNumber() -> AccountNumber {
         return authKey.address
     }
-
+    
+    public func getNetwork() -> Network {
+        return authKey.network
+    }
     
     // MARK:- Seed
     
@@ -46,7 +49,7 @@ public struct Account {
         try self.init(seed: seed)
     }
     
-    public func toSeed() throws -> String {
+    public func getSeed() throws -> String {
         return seed.base58String
     }
     
