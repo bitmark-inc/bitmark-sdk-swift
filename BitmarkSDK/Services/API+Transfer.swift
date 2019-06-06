@@ -13,6 +13,10 @@ extension API {
         let txId: String
     }
     
+    struct ReplyResponse: Codable {
+        let txid: String
+    }
+    
     internal func transfer(_ transfer: TransferParams) throws -> String {
         let json = try JSONSerialization.data(withJSONObject: transfer.toJSON(), options: [])
         
@@ -59,7 +63,7 @@ extension API {
         _ = try urlSession.synchronousDataTask(with: urlRequest)
     }
     
-    internal func respond(_ offerResponse: OfferResponseParams) throws {
+    internal func respond(_ offerResponse: OfferResponseParams) throws -> String {
         let json = try JSONSerialization.data(withJSONObject: offerResponse.toJSON(), options: [])
         
         let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/transfer")
@@ -71,7 +75,12 @@ extension API {
             urlRequest.setValue(v, forHTTPHeaderField: k)
         }
         
-        _ = try urlSession.synchronousDataTask(with: urlRequest)
+        let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
+        let response = try decoder.decode(ReplyResponse.self, from: data)
+        return response.txid
     }
 }
 
