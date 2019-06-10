@@ -10,7 +10,7 @@ import Foundation
 
 extension API {
     struct TransferResponse: Codable {
-        let txId: String
+        let txid: String
     }
     
     internal func transfer(_ transfer: TransferParams) throws -> String {
@@ -27,7 +27,7 @@ extension API {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
         let transferResponse = try decoder.decode(TransferResponse.self, from: data)
-        return transferResponse.txId
+        return transferResponse.txid
     }
     
     internal func transfer(withCounterTransfer counterTransfer: CountersignedTransferRequest) throws -> String {
@@ -44,7 +44,7 @@ extension API {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
         let transferResponse = try decoder.decode(TransferResponse.self, from: data)
-        return transferResponse.txId
+        return transferResponse.txid
     }
     
     internal func offer(_ offer: OfferParams) throws {
