@@ -33,7 +33,7 @@ public struct Bitmark: Codable {
 
 public extension Bitmark {
     // MARK:- Issue
-    public static func newIssuanceParams(assetID: String, owner: AccountNumber, quantity: Int) throws -> IssuanceParams {
+    public static func newIssuanceParams(assetID: String, quantity: Int) throws -> IssuanceParams {
         if quantity <= 0 {
             throw("Invalid quantity")
         }
