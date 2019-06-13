@@ -12,7 +12,6 @@ import BitmarkSDK
 class BitmarkIssuanceSample {
     static func issueBitmarks(issuer: Account, assetId: String, quantity: Int) throws -> [String] {
         var issueParams = try Bitmark.newIssuanceParams(assetID: assetId,
-                                                        owner: issuer.accountNumber,
                                                         quantity: quantity)
         try issueParams.sign(issuer)
         let bitmarkIds = try Bitmark.issue(issueParams)

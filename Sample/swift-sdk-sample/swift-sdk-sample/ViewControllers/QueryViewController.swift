@@ -25,7 +25,7 @@ class QueryViewController: UIViewController {
         activityIndicator.hidesWhenStopped = true
         
         if Global.currentAccount != nil {
-            tfAccountNumber.text = Global.currentAccount?.accountNumber;
+            tfAccountNumber.text = Global.currentAccount?.getAccountNumber()
         }
     }
     
@@ -44,8 +44,8 @@ class QueryViewController: UIViewController {
         Tasker.runOnBackground {
             do {
                 let queryParams = Bitmark.newBitmarkQueryParams()
-                    .owned(by: accountNumber)
-                    .includePending(isPending)
+                    .ownedBy(accountNumber)
+                    .pending(isPending)
                     .loadAsset(false)
                 
                 let (bitmarks, _) = try QuerySample.queryBitmarks(params: queryParams)
