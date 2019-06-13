@@ -40,6 +40,6 @@ class BitmarkTransferSample {
         var responseOfferParam = try Bitmark.newTransferResponseParams(withBitmark: bitmark, action: action)
         try responseOfferParam.sign(account)
         
-        try Bitmark.response(withResponseParams: responseOfferParam)
+        try Bitmark.respond(withResponseParams: responseOfferParam)
     }
 }

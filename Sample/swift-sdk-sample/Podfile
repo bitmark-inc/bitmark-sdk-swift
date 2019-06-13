@@ -6,6 +6,6 @@ target 'swift-sdk-sample' do
   use_frameworks!
 
   # Pods for swift-sdk-sample
-  pod 'BitmarkSDK', :git => 'https://github.com/bitmark-inc/bitmark-sdk-swift.git', :branch => 'master'
+  pod 'BitmarkSDK', :path => '../../'
 
 end

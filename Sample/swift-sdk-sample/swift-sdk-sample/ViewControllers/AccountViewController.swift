@@ -74,7 +74,7 @@ class AccountViewController: UIViewController {
     }
     
     private func renderAccountInfo(account: Account) {
-        lblAccountNumber.text = account.accountNumber
+        lblAccountNumber.text = account.getAccountNumber()
         lblRecoveryPhrase.text = AccountSample.getRecoveryPhraseFromAccount(account: account)
     }
     
