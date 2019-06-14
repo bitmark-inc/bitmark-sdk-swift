@@ -19,4 +19,10 @@
    <FileRef
       location = "container:Carthage/Checkouts/tweetnacl-swiftwrap/TweetNacl.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/Starscream/Starscream.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/swift-protobuf/SwiftProtobuf.xcodeproj">
+   </FileRef>
 </Workspace>
