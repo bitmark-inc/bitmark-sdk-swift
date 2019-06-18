@@ -26,10 +26,8 @@ class Asset_Tests: XCTestCase {
     }
     
     struct TestData {
-        static let accountA = try! Account(fromSeed: "9J87BXAz4khtUwYLBq8DcQn8M6d5b4j3e")
-        static let accountB = try! Account(fromSeed: "9J87Fi6ChcneynJpz5etJ43hfabrAxBx1")
-        static let accountNumberA = AccountNumber("fUa4CoUTgsZgztjvH8SVV3efHzNRv7pFmU76oGeQq86Q3snk8H")
-        static let accountNumberB = AccountNumber("fRaDcbnzYCDHofGMfUSPfGerhfRDMpJkGFwvpQtB6WtP9CbE7y")
+        static let accountA = try! Account(version: .v2)
+        static let accountB = try! Account(version: .v2)
         static let name = "this is name"
         static let metadata = ["description": "this is description"]
         static let fingerprintData = "5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c"
@@ -69,13 +67,13 @@ class Asset_Tests: XCTestCase {
             XCTAssertNoThrow(try assetParams.sign(TestData.accountA))
             
             XCTAssert(assetParams.isSigned)
-            XCTAssertEqual(assetParams.registrant, TestData.accountNumberA)
+            XCTAssertEqual(assetParams.registrant, TestData.accountA.getAccountNumber())
             
             let assetID = try Asset.register(assetParams)
             
             // Issue
             let numberOfIssuance = 2
-            var issueParams = try Bitmark.newIssuanceParams(assetID: assetID, owner: TestData.accountNumberB, quantity: numberOfIssuance)
+            var issueParams = try Bitmark.newIssuanceParams(assetID: assetID, quantity: numberOfIssuance)
             XCTAssertNoThrow(try issueParams.sign(TestData.accountB))
             let bitmarkIDs = try Bitmark.issue(issueParams)
             
@@ -127,10 +125,11 @@ class Asset_Tests: XCTestCase {
             let transaction1 = try Transaction.get(transactionID: tx1)
             XCTAssertEqual(transaction1.asset_id, assetID)
             XCTAssertEqual(transaction1.bitmark_id, bitmarkId1)
-            XCTAssertEqual(transaction1.owner, TestData.accountNumberA)
+            XCTAssertEqual(transaction1.owner, TestData.accountA.getAccountNumber())
         }
         catch (let e){
-            XCTFail(e.localizedDescription)
+            print(e)
+            XCTFail()
         }
     }
     

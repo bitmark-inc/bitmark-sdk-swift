@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftCentrifuge
 
 public struct BitmarkChangedInfo {
     public let bitmarkId: String

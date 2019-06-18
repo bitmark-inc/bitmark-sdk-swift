@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftCentrifuge
 
 extension API {
     struct WSTokenResponse: Codable {
