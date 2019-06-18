@@ -42,9 +42,8 @@ public class EventSubscription {
         let api = API()
         let token = try api.requestWSToken(signable: signable)
         
-        guard let endpointHost = api.endpoint.apiServerURL.host else {
-            throw("Invalid api endpoint")
-        }
+         // Thus we've successfully connected to the api, api endpoint must be valid
+        let endpointHost = api.endpoint.apiServerURL.host!
         
         let wsEndpoint = "wss://subscription." + endpointHost + "/connection/websocket?format=protobuf"
         let config = CentrifugeClientConfig()
