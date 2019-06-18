@@ -129,7 +129,7 @@ extension Bitmark {
         return OfferResponseParams(id: offer.id, action: action, record: offer.record, counterSignature: nil, apiHeader: nil)
     }
     
-    public static func respond(withResponseParams responseParam: OfferResponseParams) throws {
+    public static func respond(withResponseParams responseParam: OfferResponseParams) throws -> String {
         let api = API()
         return try api.respond(responseParam)
     }
