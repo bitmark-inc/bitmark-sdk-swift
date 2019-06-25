@@ -8,12 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5801821422AA46E000F42FC5 /* API+Websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5801821322AA46E000F42FC5 /* API+Websocket.swift */; };
-		5801821D22AA716200F42FC5 /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5801821722AA716200F42FC5 /* Delegate.swift */; };
-		5801821E22AA716200F42FC5 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5801821822AA716200F42FC5 /* Helpers.swift */; };
-		5801821F22AA716200F42FC5 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5801821922AA716200F42FC5 /* Subscription.swift */; };
-		5801822022AA716200F42FC5 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5801821A22AA716200F42FC5 /* Client.swift */; };
-		5801822122AA716200F42FC5 /* client.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5801821B22AA716200F42FC5 /* client.pb.swift */; };
-		5801822222AA716200F42FC5 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5801821C22AA716200F42FC5 /* Types.swift */; };
 		580B61911E077DC5008BEBFF /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61901E077DC5008BEBFF /* Data+Extension.swift */; };
 		580B61931E07C917008BEBFF /* AuthKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B61921E07C917008BEBFF /* AuthKey.swift */; };
 		580B88E81E08DFBB0018F6A5 /* Ed25519.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B88E71E08DFBB0018F6A5 /* Ed25519.swift */; };
@@ -30,6 +24,7 @@
 		5818FE361E03A64B007F082D /* AccountNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE351E03A64B007F082D /* AccountNumber.swift */; };
 		5818FE381E03A840007F082D /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE371E03A840007F082D /* Config.swift */; };
 		5818FE3A1E03BDB6007F082D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5818FE391E03BDB6007F082D /* Common.swift */; };
+		581A890F22C2223B00F1AC9E /* SwiftCentrifuge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 581A890E22C2223B00F1AC9E /* SwiftCentrifuge.framework */; };
 		58244CEE1FA2E8BA00CFA475 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58244CED1FA2E8BA00CFA475 /* API.swift */; };
 		58300E6E215DCE450053697C /* Query_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58300E6D215DCE450053697C /* Query_Tests.swift */; };
 		58582D602154B00700AF30E6 /* API+Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58582D5F2154B00700AF30E6 /* API+Asset.swift */; };
@@ -92,12 +87,6 @@
 
 /* Begin PBXFileReference section */
 		5801821322AA46E000F42FC5 /* API+Websocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API+Websocket.swift"; sourceTree = "<group>"; };
-		5801821722AA716200F42FC5 /* Delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
-		5801821822AA716200F42FC5 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		5801821922AA716200F42FC5 /* Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
-		5801821A22AA716200F42FC5 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
-		5801821B22AA716200F42FC5 /* client.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = client.pb.swift; sourceTree = "<group>"; };
-		5801821C22AA716200F42FC5 /* Types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		580B61901E077DC5008BEBFF /* Data+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		580B61921E07C917008BEBFF /* AuthKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthKey.swift; sourceTree = "<group>"; };
 		580B88E71E08DFBB0018F6A5 /* Ed25519.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ed25519.swift; sourceTree = "<group>"; };
@@ -117,6 +106,7 @@
 		5818FE351E03A64B007F082D /* AccountNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountNumber.swift; sourceTree = "<group>"; };
 		5818FE371E03A840007F082D /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		5818FE391E03BDB6007F082D /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		581A890E22C2223B00F1AC9E /* SwiftCentrifuge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftCentrifuge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58244CED1FA2E8BA00CFA475 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		58300E6D215DCE450053697C /* Query_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query_Tests.swift; sourceTree = "<group>"; };
 		58582D5F2154B00700AF30E6 /* API+Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Asset.swift"; sourceTree = "<group>"; };
@@ -176,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				581A890F22C2223B00F1AC9E /* SwiftCentrifuge.framework in Frameworks */,
 				58D3DE9422B2040300D8F663 /* SwiftProtobuf.framework in Frameworks */,
 				58D3DE9622B2040300D8F663 /* SwiftProtobuf.framework in Frameworks */,
 				58D3DE9822B2040300D8F663 /* SwiftProtobuf.framework in Frameworks */,
@@ -222,23 +213,8 @@
 		5801821522AA714D00F42FC5 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				5801821622AA716200F42FC5 /* SwiftCentrifuge */,
 			);
 			name = Libraries;
-			sourceTree = "<group>";
-		};
-		5801821622AA716200F42FC5 /* SwiftCentrifuge */ = {
-			isa = PBXGroup;
-			children = (
-				5801821722AA716200F42FC5 /* Delegate.swift */,
-				5801821822AA716200F42FC5 /* Helpers.swift */,
-				5801821922AA716200F42FC5 /* Subscription.swift */,
-				5801821A22AA716200F42FC5 /* Client.swift */,
-				5801821B22AA716200F42FC5 /* client.pb.swift */,
-				5801821C22AA716200F42FC5 /* Types.swift */,
-			);
-			name = SwiftCentrifuge;
-			path = "Carthage/Checkouts/centrifuge-swift/Sources/SwiftCentrifuge";
 			sourceTree = "<group>";
 		};
 		580B618F1E077DB4008BEBFF /* Extensions */ = {
@@ -253,6 +229,7 @@
 		580D3FAA2165FF290070A996 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				581A890E22C2223B00F1AC9E /* SwiftCentrifuge.framework */,
 				58D3DE9322B2040300D8F663 /* SwiftProtobuf.framework */,
 				58D3DE9522B2040300D8F663 /* SwiftProtobuf.framework */,
 				58D3DE9722B2040300D8F663 /* SwiftProtobuf.framework */,
@@ -538,12 +515,9 @@
 				58582D73215A12BA00AF30E6 /* Transaction.swift in Sources */,
 				58E1631E1E0CB93400DEED99 /* Bitmark.swift in Sources */,
 				5801821422AA46E000F42FC5 /* API+Websocket.swift in Sources */,
-				5801821D22AA716200F42FC5 /* Delegate.swift in Sources */,
-				5801822022AA716200F42FC5 /* Client.swift in Sources */,
 				5818FE381E03A840007F082D /* Config.swift in Sources */,
 				58F3E65421707B3C00C2A077 /* sha3.c in Sources */,
 				588C5BC71F9DC5D400ADB619 /* Account.swift in Sources */,
-				5801821E22AA716200F42FC5 /* Helpers.swift in Sources */,
 				580B88E81E08DFBB0018F6A5 /* Ed25519.swift in Sources */,
 				5866639B212FB5D30038C3C7 /* BItmarkSDK.swift in Sources */,
 				58E2D5B91E0A39AD0014F011 /* ModelEquatable.swift in Sources */,
@@ -552,11 +526,8 @@
 				5818FE3A1E03BDB6007F082D /* Common.swift in Sources */,
 				58582D632154CD3300AF30E6 /* IssuanceParams.swift in Sources */,
 				588C5BCD1F9DCC9100ADB619 /* RecoverPhrase+Dic.swift in Sources */,
-				5801821F22AA716200F42FC5 /* Subscription.swift in Sources */,
 				5812655A1E0B704800D6DF32 /* RegistrationParams.swift in Sources */,
-				5801822222AA716200F42FC5 /* Types.swift in Sources */,
 				58A24C0F2134F441006C5672 /* Parameterizable.swift in Sources */,
-				5801822122AA716200F42FC5 /* client.pb.swift in Sources */,
 				588C5BCB1F9DCBA400ADB619 /* RecoverPhrase.swift in Sources */,
 				58582D6A2158DEE000AF30E6 /* AssetQuery.swift in Sources */,
 				58D3DE9022B1FD5300D8F663 /* EventSubscription.swift in Sources */,

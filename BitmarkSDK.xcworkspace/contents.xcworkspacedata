@@ -25,4 +25,7 @@
    <FileRef
       location = "group:Carthage/Checkouts/swift-protobuf/SwiftProtobuf.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:SwiftCentrifuge/SwiftCentrifuge.xcodeproj">
+   </FileRef>
 </Workspace>
