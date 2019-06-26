@@ -6,8 +6,8 @@ branches:
 
 env:
   matrix:
-    - DESTINATION='platform=iOS Simulator,name=iPhone 8,OS=12.0'
-    - DESTINATION='platform=iOS Simulator,name=iPhone 6,OS=11.0'
+    - NAME="iPhone 8" OS="12.0"
+    - NAME="iPhone 6" OS="11.0"
 
 before_install:
   - gem install xcpretty
@@ -15,11 +15,11 @@ before_install:
 
 install:
   - carthage update
-  - cd Sample/swift-sdk-sample && pod update
 
 script:
-  - xcodebuild -scheme BitmarkSDK -workspace BitmarkSDK.xcworkspace -sdk iphonesimulator -destination $DESTINATION -enableCodeCoverage YES ENABLE_TESTABILITY=YES build test | xcpretty
-  - xcodebuild -scheme swift-sdk-sample -workspace swift-sdk-sample.xcworkspace -sdk iphonesimulator -destination $DESTINATION build
+  - xcodebuild -scheme BitmarkSDK -workspace BitmarkSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=$NAME,OS=$OS' -enableCodeCoverage YES ENABLE_TESTABILITY=YES build test | xcpretty
+  - cd Sample/swift-sdk-sample && pod update
+  - xcodebuild -scheme swift-sdk-sample -workspace swift-sdk-sample.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=$NAME,OS=$OS' build
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
