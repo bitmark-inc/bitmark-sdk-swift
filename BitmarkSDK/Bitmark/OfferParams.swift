@@ -57,6 +57,7 @@ extension OfferParams: Parameterizable {
 public enum CountersignedTransferAction: String {
     case accept = "accept"
     case reject = "reject"
+    case cancel = "cancel"
 }
 
 public struct CountersignedTransferRequest: Codable {
