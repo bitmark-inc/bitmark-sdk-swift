@@ -1,2 +1,5 @@
 github "bitmark-inc/tweetnacl-swiftwrap"
 github "kishikawakatsumi/KeychainAccess"
+github "centrifugal/centrifuge-swift"
+github "daltoniam/Starscream" >= 3.0.2
+github "apple/swift-protobuf" ~> 1.0

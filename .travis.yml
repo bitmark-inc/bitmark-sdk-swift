@@ -3,7 +3,6 @@ osx_image: xcode10.2
 branches:
   only:
     - master
-    - v1
 
 before_install:
   - gem install xcpretty
@@ -13,8 +12,9 @@ install:
   - carthage update
 
 script:
-  - xcodebuild -scheme BitmarkSDK -workspace BitmarkSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.0.1' -enableCodeCoverage YES ENABLE_TESTABILITY=YES build test | xcpretty
   - xcodebuild -scheme BitmarkSDK -workspace BitmarkSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=12.0' -enableCodeCoverage YES ENABLE_TESTABILITY=YES build test | xcpretty
+  - cd Sample/swift-sdk-sample && pod update
+  - xcodebuild -scheme swift-sdk-sample -workspace swift-sdk-sample.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=12.0' build
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
