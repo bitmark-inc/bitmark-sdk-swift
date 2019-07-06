@@ -93,6 +93,7 @@ extension API {
     struct TransactionsQueryResponse: Codable {
         let txs: [Transaction]
         let assets: [Asset]?
+        let blocks: [Block]?
     }
     
     internal func get(transactionID: String) throws -> Transaction {
@@ -121,7 +122,7 @@ extension API {
         return (result.tx, result.asset)
     }
     
-    internal func listTransaction(builder: Transaction.QueryParam) throws -> ([Transaction], [Asset]?) {
+    internal func listTransaction(builder: Transaction.QueryParam) throws -> ([Transaction], [Asset]?, [Block]?) {
         let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v3/txs")
         let urlRequest = URLRequest(url: requestURL)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
@@ -129,6 +130,6 @@ extension API {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)
         let result = try decoder.decode(TransactionsQueryResponse.self, from: data)
-        return (result.txs, result.assets)
+        return (result.txs, result.assets, result.blocks)
     }
 }

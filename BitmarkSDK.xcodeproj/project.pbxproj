@@ -73,6 +73,7 @@
 		58F3E65321707B3C00C2A077 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 58F3E64B21707B3C00C2A077 /* main.c */; };
 		58F3E65421707B3C00C2A077 /* sha3.c in Sources */ = {isa = PBXBuildFile; fileRef = 58F3E64D21707B3C00C2A077 /* sha3.c */; };
 		58F3E65621707BD000C2A077 /* SHA3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F3E65521707BD000C2A077 /* SHA3.swift */; };
+		E22CBF1E22D09E580024E5C3 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22CBF1D22D09E580024E5C3 /* Block.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +160,7 @@
 		58F3E64C21707B3C00C2A077 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		58F3E64D21707B3C00C2A077 /* sha3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha3.c; sourceTree = "<group>"; };
 		58F3E65521707BD000C2A077 /* SHA3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA3.swift; sourceTree = "<group>"; };
+		E22CBF1D22D09E580024E5C3 /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,6 +323,7 @@
 				58F3E64321707B3C00C2A077 /* tiny_sha3 */,
 				5866639C212FE0470038C3C7 /* Asset */,
 				58582D642154D32C00AF30E6 /* Bitmark */,
+				E22CBF1C22D09E410024E5C3 /* Block */,
 				58582D6F215A121A00AF30E6 /* Transaction */,
 				580B618F1E077DB4008BEBFF /* Extensions */,
 				5818FE291E0391C0007F082D /* Utils */,
@@ -385,6 +388,14 @@
 				58F3E64D21707B3C00C2A077 /* sha3.c */,
 			);
 			path = tiny_sha3;
+			sourceTree = "<group>";
+		};
+		E22CBF1C22D09E410024E5C3 /* Block */ = {
+			isa = PBXGroup;
+			children = (
+				E22CBF1D22D09E580024E5C3 /* Block.swift */,
+			);
+			path = Block;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -518,6 +529,7 @@
 				5818FE381E03A840007F082D /* Config.swift in Sources */,
 				58F3E65421707B3C00C2A077 /* sha3.c in Sources */,
 				588C5BC71F9DC5D400ADB619 /* Account.swift in Sources */,
+				E22CBF1E22D09E580024E5C3 /* Block.swift in Sources */,
 				580B88E81E08DFBB0018F6A5 /* Ed25519.swift in Sources */,
 				5866639B212FB5D30038C3C7 /* BItmarkSDK.swift in Sources */,
 				58E2D5B91E0A39AD0014F011 /* ModelEquatable.swift in Sources */,

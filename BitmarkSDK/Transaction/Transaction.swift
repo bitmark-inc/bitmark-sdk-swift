@@ -71,18 +71,18 @@ extension Transaction {
         return QueryParam(queryItems: [URLQueryItem(name: "pending", value: "true")])
     }
     
-    public static func list(params: QueryParam, completionHandler: @escaping ([Transaction]?, [Asset]?, Error?) -> Void) {
+    public static func list(params: QueryParam, completionHandler: @escaping ([Transaction]?, [Asset]?, [Block]?, Error?) -> Void) {
         DispatchQueue.global().async {
             do {
-                let (transactions, assets) = try list(params: params)
-                completionHandler(transactions, assets, nil)
+                let (transactions, assets, blocks) = try list(params: params)
+                completionHandler(transactions, assets, blocks, nil)
             } catch let e {
-                completionHandler(nil, nil, e)
+                completionHandler(nil, nil, nil, e)
             }
         }
     }
     
-    public static func list(params: QueryParam) throws -> ([Transaction], [Asset]?) {
+    public static func list(params: QueryParam) throws -> ([Transaction], [Asset]?, [Block]?) {
         let api = API()
         return try api.listTransaction(builder: params)
     }
