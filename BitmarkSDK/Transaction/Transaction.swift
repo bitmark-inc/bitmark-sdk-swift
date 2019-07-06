@@ -17,6 +17,20 @@ public struct Transaction: Codable {
     public let block_number: Int64
     public let offset: Int64
     public let countersign: Bool
+    public let previous_owner: String?
+
+    public init(from decoder: Decoder) throws {
+      let values = try decoder.container(keyedBy: CodingKeys.self)
+      id = try values.decode(String.self, forKey: .id)
+      bitmark_id = try values.decode(String.self, forKey: .bitmark_id)
+      asset_id = try values.decode(String.self, forKey: .asset_id)
+      owner = try values.decode(String.self, forKey: .owner)
+      status = try values.decode(String.self, forKey: .status)
+      block_number = try values.decode(Int64.self, forKey: .block_number)
+      offset = try values.decode(Int64.self, forKey: .offset)
+      countersign = try values.decode(Bool.self, forKey: .countersign)
+      previous_owner = try? values.decode(String.self, forKey: .previous_owner)
+    }
 }
 
 extension Transaction {
