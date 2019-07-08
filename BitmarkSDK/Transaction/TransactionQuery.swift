@@ -63,6 +63,13 @@ extension Transaction {
             items.append(queryItem)
             return QueryParam(queryItems: items)
         }
+
+        public func loadBlock(_ loadBlock: Bool) -> QueryParam {
+            let queryItem = URLQueryItem(name: "block", value: String(loadBlock))
+            var items = self.queryItems
+            items.append(queryItem)
+            return QueryParam(queryItems: items)
+        }
         
         public func at(_ index: Int64) -> QueryParam {
             let queryItem = URLQueryItem(name: "at", value: String(index))

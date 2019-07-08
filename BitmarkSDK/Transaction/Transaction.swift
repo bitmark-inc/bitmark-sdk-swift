@@ -17,6 +17,20 @@ public struct Transaction: Codable {
     public let block_number: Int64
     public let offset: Int64
     public let countersign: Bool
+    public let previous_owner: String?
+
+    public init(from decoder: Decoder) throws {
+      let values = try decoder.container(keyedBy: CodingKeys.self)
+      id = try values.decode(String.self, forKey: .id)
+      bitmark_id = try values.decode(String.self, forKey: .bitmark_id)
+      asset_id = try values.decode(String.self, forKey: .asset_id)
+      owner = try values.decode(String.self, forKey: .owner)
+      status = try values.decode(String.self, forKey: .status)
+      block_number = try values.decode(Int64.self, forKey: .block_number)
+      offset = try values.decode(Int64.self, forKey: .offset)
+      countersign = try values.decode(Bool.self, forKey: .countersign)
+      previous_owner = try? values.decode(String.self, forKey: .previous_owner)
+    }
 }
 
 extension Transaction {
@@ -57,18 +71,18 @@ extension Transaction {
         return QueryParam(queryItems: [URLQueryItem(name: "pending", value: "true")])
     }
     
-    public static func list(params: QueryParam, completionHandler: @escaping ([Transaction]?, [Asset]?, Error?) -> Void) {
+    public static func list(params: QueryParam, completionHandler: @escaping ([Transaction]?, [Asset]?, [Block]?, Error?) -> Void) {
         DispatchQueue.global().async {
             do {
-                let (transactions, assets) = try list(params: params)
-                completionHandler(transactions, assets, nil)
+                let (transactions, assets, blocks) = try list(params: params)
+                completionHandler(transactions, assets, blocks, nil)
             } catch let e {
-                completionHandler(nil, nil, e)
+                completionHandler(nil, nil, nil, e)
             }
         }
     }
     
-    public static func list(params: QueryParam) throws -> ([Transaction], [Asset]?) {
+    public static func list(params: QueryParam) throws -> ([Transaction], [Asset]?, [Block]?) {
         let api = API()
         return try api.listTransaction(builder: params)
     }
