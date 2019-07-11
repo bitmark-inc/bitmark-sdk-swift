@@ -31,7 +31,7 @@ class QuerySample {
     }
     
     static func queryTransactions(params: Transaction.QueryParam) throws -> ([Transaction], [Asset]?) {
-        let (txs, assets) = try Transaction.list(params: params)
+        let (txs, assets, _) = try Transaction.list(params: params)
         return (txs, assets)
     }
     
