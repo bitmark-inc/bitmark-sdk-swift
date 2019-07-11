@@ -31,7 +31,29 @@ extension BitmarkChangedInfo: Decodable {
     }
 }
 
+public struct PendingTxInfo {
+    public let txId: String
+    public let owner: String
+    public let previousTxId: String
+    public let previousOwner: String
+}
 
+extension PendingTxInfo: Decodable {
+    enum CodingKeys: String, CodingKey {
+        case txId = "tx_id"
+        case owner = "owner"
+        case previousTxId = "previous_tx_id"
+        case previousOwner = "previous_owner"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        owner = try values.decode(String.self, forKey: .owner)
+        txId = try values.decode(String.self, forKey: .txId)
+        previousOwner = try values.decode(String.self, forKey: .previousOwner)
+        previousTxId = try values.decode(String.self, forKey: .previousTxId)
+    }
+}
 
 public class EventSubscription {
     public static let shared = EventSubscription()
@@ -75,6 +97,28 @@ public class EventSubscription {
         
         let sub = try client.newSubscription(channel: "bitmark_changed:\(account)",
                                              delegate: BitmarkChangedSubscription(handler: handler))
+        sub.subscribe()
+    }
+    
+    public func listenBitmarkPending(handler: @escaping (String) -> Void) throws {
+        guard let client = self.client,
+            let account = self.account else {
+                throw("Not connected")
+        }
+        
+        let sub = try client.newSubscription(channel: "bitmark_pending_change:\(account)",
+            delegate: PendingBitmarkSubscription(handler: handler))
+        sub.subscribe()
+    }
+    
+    public func listenTxPending(handler: @escaping (PendingTxInfo) -> Void) throws {
+        guard let client = self.client,
+            let account = self.account else {
+                throw("Not connected")
+        }
+        
+        let sub = try client.newSubscription(channel: "tx_pending_change:\(account)",
+            delegate: PendingTxSubscription(handler: handler))
         sub.subscribe()
     }
     
@@ -143,6 +187,45 @@ private class TransferOfferSubscription: CentrifugeSubscriptionDelegate {
                 throw("Invalid format")
             }
             self.handler(blockNumber)
+        }
+        catch let e {
+            globalConfig.logger.log(level: .error, message: e.localizedDescription)
+        }
+    }
+}
+
+private class PendingTxSubscription: CentrifugeSubscriptionDelegate {
+    typealias T = (PendingTxInfo) -> Void
+    let handler: T
+    init(handler: @escaping T) {
+        self.handler = handler
+    }
+    
+    func onPublish(_ sub: CentrifugeSubscription, _ event: CentrifugePublishEvent) {
+        do {
+            let data = try JSONDecoder().decode(PendingTxInfo.self, from: event.data)
+            self.handler(data)
+        }
+        catch let e {
+            globalConfig.logger.log(level: .error, message: e.localizedDescription)
+        }
+    }
+}
+
+private class PendingBitmarkSubscription: CentrifugeSubscriptionDelegate {
+    typealias T = (String) -> Void
+    let handler: T
+    init(handler: @escaping T) {
+        self.handler = handler
+    }
+    
+    func onPublish(_ sub: CentrifugeSubscription, _ event: CentrifugePublishEvent) {
+        do {
+            let data = try JSONDecoder().decode([String:String].self, from: event.data)
+            guard let bitmarkID = data["bitmark_id"] else {
+                throw("Invalid format")
+            }
+            self.handler(bitmarkID)
         }
         catch let e {
             globalConfig.logger.log(level: .error, message: e.localizedDescription)
