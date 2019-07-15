@@ -67,7 +67,7 @@ public struct Migration {
 //    }
     
     // Query and transfer all of current confirmed properties
-    public static func rekey(from accountFrom: Account, to accountTo: Account, handler: ((Float, Error?) -> Void)) {
+    public static func rekey(from accountFrom: Account, to accountTo: Account, handler: ((Float, Error?) -> Void)?) {
         do {
             // Query for current owning bitmarks
             var lastOffset: Int64? = nil
@@ -101,7 +101,7 @@ public struct Migration {
             }
             
             if (owningBitmarks.count == 0) {
-                handler(Float(1), nil)
+                handler?(Float(1), nil)
             } else {
                 for i in 0..<owningBitmarks.count {
                     let bitmark = owningBitmarks[i]
@@ -122,12 +122,12 @@ public struct Migration {
                     _ = try api.transfer(withCounterTransfer: counterTransfer)
 
                     // Update progress
-                    handler(Float((i + 1)) / Float(owningBitmarks.count), nil)
+                    handler?(Float((i + 1)) / Float(owningBitmarks.count), nil)
                 }
             }
         }
         catch let e {
-            handler(0, e)
+            handler?(0, e)
         }
     }
 }
