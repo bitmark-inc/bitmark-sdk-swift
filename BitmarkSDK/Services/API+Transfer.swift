@@ -14,7 +14,7 @@ extension API {
     }
     
     struct ReplyResponse: Codable {
-        let txid: String
+        let txid: String?
     }
     
     internal func transfer(_ transfer: TransferParams) throws -> String {
@@ -63,7 +63,7 @@ extension API {
         _ = try urlSession.synchronousDataTask(with: urlRequest)
     }
     
-    internal func respond(_ offerResponse: OfferResponseParams) throws -> String {
+    internal func respond(_ offerResponse: OfferResponseParams) throws -> String? {
         let json = try JSONSerialization.data(withJSONObject: offerResponse.toJSON(), options: [])
         
         let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/transfer")
