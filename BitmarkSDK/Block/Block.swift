@@ -25,6 +25,7 @@ public struct Block: Codable {
         } catch { // server returns different dateFormat in Block
             let dateFormat = DateFormatter()
             dateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+            dateFormat.timeZone = TimeZone(secondsFromGMT: 0)
             let createdAtStr = try values.decode(String.self, forKey: .created_at)
             created_at = dateFormat.date(from: createdAtStr) ?? Date()
         }
