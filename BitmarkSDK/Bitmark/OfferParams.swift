@@ -142,8 +142,12 @@ extension OfferResponseParams: Parameterizable {
     }
     
     public func toJSON() throws -> [String : Any] {
+        guard let counterSignature = counterSignature else {
+            throw("Need to sign first")
+        }
+        
         return ["id": id,
                 "action": action.rawValue,
-                "countersignature": counterSignature!]
+                "countersignature": counterSignature]
     }
 }
