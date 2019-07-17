@@ -28,4 +28,10 @@
    <FileRef
       location = "group:SwiftCentrifuge/SwiftCentrifuge.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/RxSwift/Rx.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RxBitmarkSDK.xcodeproj">
+   </FileRef>
 </Workspace>
