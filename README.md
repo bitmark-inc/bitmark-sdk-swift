@@ -33,6 +33,10 @@ use_frameworks!
 
 target '<Your Target Name>' do
     pod 'BitmarkSDK'
+
+    # or
+
+    pod 'BitmarkSDK/RxSwift'
 end
 ```
 
@@ -69,6 +73,10 @@ Comming soon....
 ```swift
 import BitmarkSDK
 ```
+
+## Extensions
+### RxSwift
+[`RxSwift` extension](https://github.com/Moya/Moya/blob/master/docs/RxSwift.md) provides extension to query records / register assets / issue / transfer in [ReactiveX](http://reactivex.io) way.
 
 ## Documentation
 
