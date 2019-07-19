@@ -11,12 +11,18 @@ import Foundation
 public typealias AccountNumber = String
 
 public extension AccountNumber {
-    public func isValid() -> Bool {
+    @available(*, deprecated, renamed: "validate")
+    func isValid() -> Bool {
         return Account.isValidAccountNumber(accontNumber: self)
     }
     
-    public func parse() throws -> (network: Network, pubkey: Data) {
+    @available(*, deprecated, message: "Will be removed soon.")
+    func parse() throws -> (network: Network, pubkey: Data) {
         return try Account.parseAccountNumber(accountNumber: self)
+    }
+    
+    func validate() throws {
+        return try Account.validateAccountNumber(accountNumber: self)
     }
 }
 
@@ -102,18 +108,28 @@ internal extension AccountNumber {
 }
 
 public extension Account {
-    public static func parseAccountNumber(accountNumber: AccountNumber) throws -> (network: Network, pubkey: Data) {
+    @available(*, deprecated, message: "Will be removed soon.")
+    static func parseAccountNumber(accountNumber: AccountNumber) throws -> (network: Network, pubkey: Data) {
         let (network, _, pubkey) = try accountNumber.parseAndVerifyAccountNumber()
         return (network, pubkey)
     }
     
-    public static func isValidAccountNumber(accontNumber: AccountNumber) -> Bool {
+    @available(*, deprecated, renamed: "validateAccountNumber")
+    static func isValidAccountNumber(accontNumber: AccountNumber) -> Bool {
         do {
             let (network, _) = try parseAccountNumber(accountNumber: accontNumber)
             return network == globalConfig.network
         } catch let e {
             print(e)
             return false
+        }
+    }
+    
+    // Validate account number format and network
+    static func validateAccountNumber(accountNumber: AccountNumber) throws {
+        let (network, _, _) = try accountNumber.parseAndVerifyAccountNumber()
+        if network != globalConfig.network {
+            throw("Invalid network")
         }
     }
 }

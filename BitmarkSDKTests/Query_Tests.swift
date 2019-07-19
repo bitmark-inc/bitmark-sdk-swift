@@ -153,7 +153,7 @@ class Query_Tests: XCTestCase {
                 .referencedAsset(assetID: referencedAssetID)
                 .referencedBitmark(bitmarkID: referencedBitmarkID)
                 .loadAsset(true)
-            let (txs, assets) = try Transaction.list(params: query)
+            let (txs, assets, _) = try Transaction.list(params: query)
             XCTAssertNotNil(assets)
             XCTAssertEqual(txs.first?.owner, ownedBy)
             XCTAssertEqual(txs.first?.bitmark_id, referencedBitmarkID)
@@ -171,7 +171,7 @@ class Query_Tests: XCTestCase {
                 .pending(true)
                 .limit(size: 10)
             
-            let (txs, _) = try Transaction.list(params: query)
+            let (txs, _, _) = try Transaction.list(params: query)
             
             for tx in txs {
                 XCTAssertTrue(tx.block_number == blockNumber)

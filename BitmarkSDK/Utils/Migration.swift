@@ -67,7 +67,7 @@ public struct Migration {
 //    }
     
     // Query and transfer all of current confirmed properties
-    public static func rekey(from accountFrom: Account, to accountTo: Account, handler: ((Float, Error?) -> Void)) {
+    public static func rekey(from accountFrom: Account, to accountTo: Account, handler: ((Float, Error?) -> Void)?) {
         do {
             // Query for current owning bitmarks
             var lastOffset: Int64? = nil
@@ -101,33 +101,39 @@ public struct Migration {
             }
             
             if (owningBitmarks.count == 0) {
-                handler(Float(1), nil)
+                handler?(Float(1), nil)
             } else {
                 for i in 0..<owningBitmarks.count {
                     let bitmark = owningBitmarks[i]
-
-                    var transferRequest = TransferRequest()
-                    transferRequest.set(fromOwner: accountFrom.getAccountNumber())
-                    try transferRequest.set(to: accountTo.getAccountNumber())
-                    transferRequest.set(fromTx: bitmark.id)
-                    transferRequest.set(requireCountersignature: true)
-                    try transferRequest.sign(accountFrom)
-
-                    var counterTransfer = CountersignedTransferRequest(link: bitmark.id,
-                                                                       owner: transferRequest.owner!,
-                                                                       signature: transferRequest.signature!.hexEncodedString)
-                    try counterTransfer.sign(accountTo)
-
-                    let api = API()
-                    _ = try api.transfer(withCounterTransfer: counterTransfer)
-
+                    
+                    var params = try Bitmark.newOfferParams(to: accountTo.getAccountNumber(), info: nil)
+                    try params.from(bitmarkID: bitmark.id)
+                    try params.sign(accountFrom)
+                    try Bitmark.offer(withOfferParams: params)
+                }
+                
+                let query = Bitmark.newBitmarkQueryParams()
+                    .offerTo(accountTo.getAccountNumber())
+                let (bs, _) = try Bitmark.list(params: query)
+                
+                guard let offeringBitmarks = bs else {
+                    handler?(0, "No bitmark found")
+                    return
+                }
+                
+                for i in 0..<offeringBitmarks.count {
+                    let bitmark = offeringBitmarks[i]
+                    var responseParams = try Bitmark.newTransferResponseParams(withBitmark: bitmark, action: .accept)
+                    try responseParams.sign(accountTo)
+                    _ = try Bitmark.respond(withResponseParams: responseParams)
+                    
                     // Update progress
-                    handler(Float((i + 1)) / Float(owningBitmarks.count), nil)
+                    handler?(Float((i + 1)) / Float(owningBitmarks.count), nil)
                 }
             }
         }
         catch let e {
-            handler(0, e)
+            handler?(0, e)
         }
     }
 }

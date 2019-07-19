@@ -103,8 +103,8 @@ extension TransferRequest: Parameterizable {
             self.preOwner = signable.address
         }
         
-        let (networkForOwner, _) = try self.owner!.parse()
-        let (networkForPreOwner, _) = try self.preOwner!.parse()
+        let (networkForOwner, _, _) = try self.owner!.parseAndVerifyAccountNumber()
+        let (networkForPreOwner, _, _) = try self.preOwner!.parseAndVerifyAccountNumber()
         if networkForOwner != networkForPreOwner {
             throw("Transfer error: trying to transfer bitmark to different network")
         }
