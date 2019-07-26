@@ -10,7 +10,7 @@ import Foundation
 import BitmarkSDK
 import RxSwift
 
-extension BitmarkSDK.Asset {
+public extension BitmarkSDK.Asset {
     static func rxGet(assetID: String) -> Single<Self> {
         return Single.create { (single) -> Disposable in
             do {

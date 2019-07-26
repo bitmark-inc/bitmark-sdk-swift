@@ -10,7 +10,7 @@ import Foundation
 import BitmarkSDK
 import RxSwift
 
-extension BitmarkSDK.Transaction {
+public extension BitmarkSDK.Transaction {
     static func rxGet(transactionID: String) -> Single<Self> {
         return Single.create { (single) -> Disposable in
             do {
