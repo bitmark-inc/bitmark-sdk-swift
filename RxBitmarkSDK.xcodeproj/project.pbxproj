@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		580D5F0422EA9EDE0043E14C /* EventSubscription+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D5F0322EA9EDE0043E14C /* EventSubscription+Rx.swift */; };
 		5816F6F522DED10B00DA26C4 /* RxBitmarkSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5816F6F322DED10B00DA26C4 /* RxBitmarkSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5816F6FC22DED27600DA26C4 /* Bitmark+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5816F6FB22DED27600DA26C4 /* Bitmark+Rx.swift */; };
 		5816F6FE22DED69200DA26C4 /* Transaction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5816F6FD22DED69200DA26C4 /* Transaction+Rx.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		580D5F0322EA9EDE0043E14C /* EventSubscription+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EventSubscription+Rx.swift"; sourceTree = "<group>"; };
 		5816F6F022DED10B00DA26C4 /* RxBitmarkSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBitmarkSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5816F6F322DED10B00DA26C4 /* RxBitmarkSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxBitmarkSDK.h; sourceTree = "<group>"; };
 		5816F6F422DED10B00DA26C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				5816F6FB22DED27600DA26C4 /* Bitmark+Rx.swift */,
 				5816F6FD22DED69200DA26C4 /* Transaction+Rx.swift */,
 				5816F6FF22DEDB9000DA26C4 /* Asset+Rx.swift */,
+				580D5F0322EA9EDE0043E14C /* EventSubscription+Rx.swift */,
 			);
 			path = RxBitmarkSDK;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5816F6FE22DED69200DA26C4 /* Transaction+Rx.swift in Sources */,
+				580D5F0422EA9EDE0043E14C /* EventSubscription+Rx.swift in Sources */,
 				5816F70022DEDB9000DA26C4 /* Asset+Rx.swift in Sources */,
 				5816F6FC22DED27600DA26C4 /* Bitmark+Rx.swift in Sources */,
 			);
