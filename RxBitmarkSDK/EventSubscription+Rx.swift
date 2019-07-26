@@ -11,12 +11,12 @@ import RxSwift
 import BitmarkSDK
 import SwiftCentrifuge
 
-public extension Reactive where Base: BitmarkSDK.EventSubscription {
-    func newBlock() -> Observable<Int> {
+public extension BitmarkSDK.EventSubscription {
+    func rxListenNewBlock() -> Observable<Int> {
         return Observable<Int>.create { (observer) -> Disposable in
             var sub: CentrifugeSubscription?
             do {
-                sub = try self.base.listenNewBlock(handler: { observer.onNext($0) })
+                sub = try self.listenNewBlock(handler: { observer.onNext($0) })
             } catch let e {
                 observer.onError(e)
             }
@@ -27,11 +27,11 @@ public extension Reactive where Base: BitmarkSDK.EventSubscription {
         }
     }
     
-    func bitmarkChanged() -> Observable<BitmarkChangedInfo> {
+    func rxListenBitmarkChanged() -> Observable<BitmarkChangedInfo> {
         return Observable<BitmarkChangedInfo>.create { (observer) -> Disposable in
             var sub: CentrifugeSubscription?
             do {
-                sub = try self.base.listenBitmarkChanged(handler: { observer.onNext($0) })
+                sub = try self.listenBitmarkChanged(handler: { observer.onNext($0) })
             } catch let e {
                 observer.onError(e)
             }
@@ -42,11 +42,11 @@ public extension Reactive where Base: BitmarkSDK.EventSubscription {
         }
     }
     
-    func bitmarkPending() -> Observable<String> {
+    func rxListenBitmarkPending() -> Observable<String> {
         return Observable<String>.create { (observer) -> Disposable in
             var sub: CentrifugeSubscription?
             do {
-                sub = try self.base.listenBitmarkPending(handler: { observer.onNext($0) })
+                sub = try self.listenBitmarkPending(handler: { observer.onNext($0) })
             } catch let e {
                 observer.onError(e)
             }
@@ -57,11 +57,11 @@ public extension Reactive where Base: BitmarkSDK.EventSubscription {
         }
     }
     
-    func txPending() -> Observable<PendingTxInfo> {
+    func rxListenTxPending() -> Observable<PendingTxInfo> {
         return Observable<PendingTxInfo>.create { (observer) -> Disposable in
             var sub: CentrifugeSubscription?
             do {
-                sub = try self.base.listenTxPending(handler: { observer.onNext($0) })
+                sub = try self.listenTxPending(handler: { observer.onNext($0) })
             } catch let e {
                 observer.onError(e)
             }
@@ -72,11 +72,11 @@ public extension Reactive where Base: BitmarkSDK.EventSubscription {
         }
     }
     
-    func transferOffer() -> Observable<String> {
+    func rxListenTransferOffer() -> Observable<String> {
         return Observable<String>.create { (observer) -> Disposable in
             var sub: CentrifugeSubscription?
             do {
-                sub = try self.base.listenTransferOffer(handler: { observer.onNext($0) })
+                sub = try self.listenTransferOffer(handler: { observer.onNext($0) })
             } catch let e {
                 observer.onError(e)
             }

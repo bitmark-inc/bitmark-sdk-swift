@@ -10,11 +10,11 @@ import Foundation
 import BitmarkSDK
 import RxSwift
 
-extension Reactive where Base == Transaction {
-    static func rxGet(transactionID: String) -> Single<Base> {
+extension BitmarkSDK.Transaction {
+    static func rxGet(transactionID: String) -> Single<Self> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Base.get(transactionID: transactionID)))
+                single(.success(try Self.get(transactionID: transactionID)))
             } catch let error {
                 single(.error(error))
             }
@@ -23,10 +23,10 @@ extension Reactive where Base == Transaction {
         }
     }
     
-    static func rxGetWithAsset(transactionID: String) -> Single<(Base, Asset)> {
+    static func rxGetWithAsset(transactionID: String) -> Single<(Self, Asset)> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Base.getWithAsset(transactionID: transactionID)))
+                single(.success(try Self.getWithAsset(transactionID: transactionID)))
             } catch let error {
                 single(.error(error))
             }
@@ -35,10 +35,10 @@ extension Reactive where Base == Transaction {
         }
     }
     
-    static func rxList(params: Base.QueryParam) -> Single<([Base]?, [Asset]?, [Block]?)> {
+    static func rxList(params: Self.QueryParam) -> Single<([Self]?, [Asset]?, [Block]?)> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Base.list(params: params)))
+                single(.success(try Self.list(params: params)))
             } catch let error {
                 single(.error(error))
             }

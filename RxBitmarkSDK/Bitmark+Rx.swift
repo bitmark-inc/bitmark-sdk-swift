@@ -10,11 +10,11 @@ import Foundation
 import RxSwift
 import BitmarkSDK
 
-public extension Reactive where Base == Bitmark {
-    static func rxGet(bitmarkID: String) -> Single<Base> {
+public extension BitmarkSDK.Bitmark {
+    static func rxGet(bitmarkID: String) -> Single<Self> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Base.get(bitmarkID: bitmarkID)))
+                single(.success(try Self.get(bitmarkID: bitmarkID)))
             } catch let error {
                 single(.error(error))
             }
@@ -23,10 +23,10 @@ public extension Reactive where Base == Bitmark {
         }
     }
     
-    static func rxGetWithAsset(bitmarkID: String) -> Single<(Base, Asset)> {
+    static func rxGetWithAsset(bitmarkID: String) -> Single<(Self, Asset)> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Base.getWithAsset(bitmarkID: bitmarkID)))
+                single(.success(try Self.getWithAsset(bitmarkID: bitmarkID)))
             } catch let error {
                 single(.error(error))
             }
@@ -35,10 +35,10 @@ public extension Reactive where Base == Bitmark {
         }
     }
     
-    static func rxList(params: Base.QueryParam) -> Single<([Base]?, [Asset]?)> {
+    static func rxList(params: Self.QueryParam) -> Single<([Self]?, [Asset]?)> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Base.list(params: params)))
+                single(.success(try Self.list(params: params)))
             } catch let error {
                 single(.error(error))
             }
@@ -50,7 +50,7 @@ public extension Reactive where Base == Bitmark {
     static func rxIssue(_ params: IssuanceParams) -> Single<[String]> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Base.issue(params)))
+                single(.success(try Self.issue(params)))
             } catch let error {
                 single(.error(error))
             }
@@ -62,7 +62,7 @@ public extension Reactive where Base == Bitmark {
     static func rxTransfer(_ params: TransferParams) -> Single<String> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Base.transfer(withTransferParams: params)))
+                single(.success(try Self.transfer(withTransferParams: params)))
             } catch let error {
                 single(.error(error))
             }
@@ -74,7 +74,7 @@ public extension Reactive where Base == Bitmark {
     static func rxOffer(_ params: OfferParams) -> Completable {
         return Completable.create { (completable) -> Disposable in
             do {
-                try Base.offer(withOfferParams: params)
+                try Self.offer(withOfferParams: params)
                 completable(.completed)
             } catch let error {
                 completable(.error(error))
@@ -87,7 +87,7 @@ public extension Reactive where Base == Bitmark {
     static func rxRespond(_ params: OfferResponseParams) -> Single<String?> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Base.respond(withResponseParams: params)))
+                single(.success(try Self.respond(withResponseParams: params)))
             } catch let error {
                 single(.error(error))
             }
