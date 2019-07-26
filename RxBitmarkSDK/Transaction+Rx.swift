@@ -35,7 +35,7 @@ public extension BitmarkSDK.Transaction {
         }
     }
     
-    static func rxList(params: Self.QueryParam) -> Single<([Self]?, [Asset]?, [Block]?)> {
+    static func rxList(params: Self.QueryParam) -> Single<([Self], [Asset]?, [Block]?)> {
         return Single.create { (single) -> Disposable in
             do {
                 single(.success(try Self.list(params: params)))
