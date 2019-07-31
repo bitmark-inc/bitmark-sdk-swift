@@ -79,7 +79,8 @@ public class EventSubscription {
         self.client?.disconnect()
     }
     
-    public func listenNewBlock(handler: @escaping (Int) -> Void) throws {
+    @discardableResult
+    public func listenNewBlock(handler: @escaping (Int) -> Void) throws -> CentrifugeSubscription {
         guard let client = self.client else {
             throw("Not connected")
         }
@@ -87,9 +88,12 @@ public class EventSubscription {
         let sub = try client.newSubscription(channel: "blockchain:new-block",
                                    delegate: NewBlockSubscription(handler: handler))
         sub.subscribe()
+        
+        return sub
     }
     
-    public func listenBitmarkChanged(handler: @escaping (BitmarkChangedInfo) -> Void) throws {
+    @discardableResult
+    public func listenBitmarkChanged(handler: @escaping (BitmarkChangedInfo) -> Void) throws -> CentrifugeSubscription {
         guard let client = self.client,
          let account = self.account else {
             throw("Not connected")
@@ -98,9 +102,12 @@ public class EventSubscription {
         let sub = try client.newSubscription(channel: "bitmark_changed:\(account)",
                                              delegate: BitmarkChangedSubscription(handler: handler))
         sub.subscribe()
+        
+        return sub
     }
     
-    public func listenBitmarkPending(handler: @escaping (String) -> Void) throws {
+    @discardableResult
+    public func listenBitmarkPending(handler: @escaping (String) -> Void) throws -> CentrifugeSubscription {
         guard let client = self.client,
             let account = self.account else {
                 throw("Not connected")
@@ -109,9 +116,12 @@ public class EventSubscription {
         let sub = try client.newSubscription(channel: "bitmark_pending_change:\(account)",
             delegate: PendingBitmarkSubscription(handler: handler))
         sub.subscribe()
+        
+        return sub
     }
     
-    public func listenTxPending(handler: @escaping (PendingTxInfo) -> Void) throws {
+    @discardableResult
+    public func listenTxPending(handler: @escaping (PendingTxInfo) -> Void) throws -> CentrifugeSubscription {
         guard let client = self.client,
             let account = self.account else {
                 throw("Not connected")
@@ -120,9 +130,12 @@ public class EventSubscription {
         let sub = try client.newSubscription(channel: "tx_pending_change:\(account)",
             delegate: PendingTxSubscription(handler: handler))
         sub.subscribe()
+        
+        return sub
     }
     
-    public func listenTransferOffer(handler: @escaping (String) -> Void) throws {
+    @discardableResult
+    public func listenTransferOffer(handler: @escaping (String) -> Void) throws -> CentrifugeSubscription {
         guard let client = self.client,
             let account = self.account else {
                 throw("Not connected")
@@ -131,6 +144,8 @@ public class EventSubscription {
         let sub = try client.newSubscription(channel: "tx_offer#\(account)",
                                              delegate: TransferOfferSubscription(handler: handler))
         sub.subscribe()
+        
+        return sub
     }
 }
 

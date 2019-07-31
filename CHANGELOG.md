@@ -7,6 +7,9 @@ Bitmark Swift SDK v2.6.0 introduces some breaking changes to align with other Bi
 - Remove `AccountNumber.parse()` in favor of `AccountNumber.validate()`
 - `Transfer.respond(withResponseParams:)` will return an optional String as txId when reponding with acceptance.
 
+### Features:
+- New subspec provides externsions supporting RxSwift.
+
 ## 2.0.0
 ### Features:
 - Account: create new account, generate Recovery Phrase, recover account from Recovery Phrase
