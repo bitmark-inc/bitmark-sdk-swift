@@ -11,10 +11,10 @@ import BitmarkSDK
 import RxSwift
 
 public extension BitmarkSDK.Transaction {
-    static func rxGet(transactionID: String) -> Single<Self> {
+    static func rxGet(transactionID: String) -> Single<Transaction> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Self.get(transactionID: transactionID)))
+                single(.success(try Transaction.get(transactionID: transactionID)))
             } catch let error {
                 single(.error(error))
             }
@@ -23,10 +23,10 @@ public extension BitmarkSDK.Transaction {
         }
     }
     
-    static func rxGetWithAsset(transactionID: String) -> Single<(Self, Asset)> {
+    static func rxGetWithAsset(transactionID: String) -> Single<(Transaction, Asset)> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Self.getWithAsset(transactionID: transactionID)))
+                single(.success(try Transaction.getWithAsset(transactionID: transactionID)))
             } catch let error {
                 single(.error(error))
             }
@@ -35,10 +35,10 @@ public extension BitmarkSDK.Transaction {
         }
     }
     
-    static func rxList(params: Self.QueryParam) -> Single<([Self], [Asset]?, [Block]?)> {
+    static func rxList(params: Transaction.QueryParam) -> Single<([Transaction], [Asset]?, [Block]?)> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Self.list(params: params)))
+                single(.success(try Transaction.list(params: params)))
             } catch let error {
                 single(.error(error))
             }

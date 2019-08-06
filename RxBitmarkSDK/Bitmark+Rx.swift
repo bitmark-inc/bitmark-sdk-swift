@@ -11,10 +11,10 @@ import RxSwift
 import BitmarkSDK
 
 public extension BitmarkSDK.Bitmark {
-    static func rxGet(bitmarkID: String) -> Single<Self> {
+    static func rxGet(bitmarkID: String) -> Single<Bitmark> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Self.get(bitmarkID: bitmarkID)))
+                single(.success(try Bitmark.get(bitmarkID: bitmarkID)))
             } catch let error {
                 single(.error(error))
             }
@@ -23,10 +23,10 @@ public extension BitmarkSDK.Bitmark {
         }
     }
     
-    static func rxGetWithAsset(bitmarkID: String) -> Single<(Self, Asset)> {
+    static func rxGetWithAsset(bitmarkID: String) -> Single<(Bitmark, Asset)> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Self.getWithAsset(bitmarkID: bitmarkID)))
+                single(.success(try Bitmark.getWithAsset(bitmarkID: bitmarkID)))
             } catch let error {
                 single(.error(error))
             }
@@ -35,10 +35,10 @@ public extension BitmarkSDK.Bitmark {
         }
     }
     
-    static func rxList(params: Self.QueryParam) -> Single<([Self]?, [Asset]?)> {
+    static func rxList(params: Bitmark.QueryParam) -> Single<([Bitmark]?, [Asset]?)> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Self.list(params: params)))
+                single(.success(try Bitmark.list(params: params)))
             } catch let error {
                 single(.error(error))
             }
@@ -50,7 +50,7 @@ public extension BitmarkSDK.Bitmark {
     static func rxIssue(_ params: IssuanceParams) -> Single<[String]> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Self.issue(params)))
+                single(.success(try Bitmark.issue(params)))
             } catch let error {
                 single(.error(error))
             }
@@ -62,7 +62,7 @@ public extension BitmarkSDK.Bitmark {
     static func rxTransfer(_ params: TransferParams) -> Single<String> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Self.transfer(withTransferParams: params)))
+                single(.success(try Bitmark.transfer(withTransferParams: params)))
             } catch let error {
                 single(.error(error))
             }
@@ -74,7 +74,7 @@ public extension BitmarkSDK.Bitmark {
     static func rxOffer(_ params: OfferParams) -> Completable {
         return Completable.create { (completable) -> Disposable in
             do {
-                try Self.offer(withOfferParams: params)
+                try Bitmark.offer(withOfferParams: params)
                 completable(.completed)
             } catch let error {
                 completable(.error(error))
@@ -87,7 +87,7 @@ public extension BitmarkSDK.Bitmark {
     static func rxRespond(_ params: OfferResponseParams) -> Single<String?> {
         return Single.create { (single) -> Disposable in
             do {
-                single(.success(try Self.respond(withResponseParams: params)))
+                single(.success(try Bitmark.respond(withResponseParams: params)))
             } catch let error {
                 single(.error(error))
             }
