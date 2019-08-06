@@ -12,6 +12,7 @@ Pod::Spec.new do |spec|
   spec.platform = :ios, "11.0"
   spec.requires_arc = true
   spec.source = { :git => 'https://github.com/bitmark-inc/bitmark-sdk-swift.git', :tag => spec.version }
+  spec.default_subspec = "Core"
   
   spec.subspec "Core" do |ss|
     ss.source_files  = 'BitmarkSDK/**/*.{h,c,swift}'
