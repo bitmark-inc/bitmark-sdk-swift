@@ -20,7 +20,7 @@ extension API {
     internal func transfer(_ transfer: TransferParams) throws -> String {
         let json = try JSONSerialization.data(withJSONObject: transfer.toJSON(), options: [])
         
-        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/transfer")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v5/transfer")
         
         var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringCacheData)
         urlRequest.httpBody = json
@@ -37,7 +37,7 @@ extension API {
     internal func transfer(withCounterTransfer counterTransfer: CountersignedTransferRequest) throws -> String {
         let json = try JSONSerialization.data(withJSONObject: ["transfer": counterTransfer.toJSON()], options: [])
         
-        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/transfer")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v5/transfer")
         
         var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringCacheData)
         urlRequest.httpBody = json
@@ -54,7 +54,7 @@ extension API {
     internal func offer(_ offer: OfferParams) throws {
         let json = try JSONSerialization.data(withJSONObject: offer.toJSON(), options: [])
         
-        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/transfer")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v5/transfer")
         
         var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringCacheData)
         urlRequest.httpBody = json
@@ -66,7 +66,7 @@ extension API {
     internal func respond(_ offerResponse: OfferResponseParams) throws -> String? {
         let json = try JSONSerialization.data(withJSONObject: offerResponse.toJSON(), options: [])
         
-        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/transfer")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v5/transfer")
         
         var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringCacheData)
         urlRequest.httpBody = json
@@ -107,7 +107,7 @@ extension API {
     }
     
     internal func get(transactionID: String, loadAsset: Bool) throws -> (Transaction, Asset?) {
-        var urlComponents = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v3/txs/" + transactionID), resolvingAgainstBaseURL: false)!
+        var urlComponents = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v5/txs/" + transactionID), resolvingAgainstBaseURL: false)!
         urlComponents.queryItems = [URLQueryItem(name: "pending", value: "true")]
         if loadAsset {
             urlComponents.queryItems?.append(URLQueryItem(name: "asset", value: "true"))
@@ -123,7 +123,7 @@ extension API {
     }
     
     internal func listTransaction(builder: Transaction.QueryParam) throws -> ([Transaction], [Asset]?, [Block]?) {
-        let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v3/txs")
+        let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v5/txs")
         let urlRequest = URLRequest(url: requestURL)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
         

@@ -28,6 +28,17 @@ public func initialize(config: SDKConfig) {
     globalConfig = config
 }
 
+/*
+ Set new API token and keep the current config
+ */
+public func setAPIToken(_ token: String) {
+    let config = SDKConfig(apiToken: token,
+                           network: globalConfig.network,
+                           urlSession: globalConfig.urlSession,
+                           logger: globalConfig.logger)
+    globalConfig = config
+}
+
 public enum SDKLogLevel: String {
     case debug = "DEBUG"
     case info = "INFO"

@@ -44,7 +44,7 @@ extension API {
     }
     
     internal func get(bitmarkID: String, loadAsset: Bool) throws -> (Bitmark, Asset?) {
-        var urlComponents = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v3/bitmarks/" + bitmarkID), resolvingAgainstBaseURL: false)!
+        var urlComponents = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v5/bitmarks/" + bitmarkID), resolvingAgainstBaseURL: false)!
         urlComponents.queryItems = [URLQueryItem(name: "pending", value: "true")]
         
         if loadAsset {
@@ -61,7 +61,7 @@ extension API {
     }
     
     internal func listBitmark(builder: Bitmark.QueryParam) throws -> ([Bitmark]?, [Asset]?) {
-        let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v3/bitmarks")
+        let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v5/bitmarks")
         let urlRequest = URLRequest(url: requestURL)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
         
