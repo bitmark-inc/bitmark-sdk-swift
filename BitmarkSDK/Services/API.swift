@@ -100,7 +100,7 @@ internal extension URLSession {
         globalConfig.logger.log(level: .debug, message: "Request:\t\(modifyRequest.httpMethod ?? "GET")\t\(request.url!.absoluteURL)")
 
         if var header = modifyRequest.allHTTPHeaderFields {
-            header["api-token"] = "***"
+            header["Authorization"] = "***"
             globalConfig.logger.log(level: .debug, message: "Request Header:\t \(header)")
         }
 
