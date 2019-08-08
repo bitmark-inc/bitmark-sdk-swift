@@ -91,7 +91,7 @@ internal extension URLSession {
         
         // Add api token
         var modifyRequest = request
-        modifyRequest.setValue(globalConfig.apiToken, forHTTPHeaderField: "api-token")
+        modifyRequest.setValue("Bearer " + globalConfig.apiToken, forHTTPHeaderField: "Authorization")
         modifyRequest.setValue("*", forHTTPHeaderField: "Accept-Encoding")
         modifyRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         modifyRequest.setValue(String(format: "%@, %@ %@", "bitmark-sdk-swift", UIDevice.current.systemName, UIDevice.current.systemVersion), forHTTPHeaderField: "User-Agent")
