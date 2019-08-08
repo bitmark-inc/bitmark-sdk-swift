@@ -125,8 +125,14 @@ internal struct AuthKey: KeypairSignable {
         let keyPairData = keyPairString.hexDecodedData
         try self.init(fromKeyPair: keyPairData, network: network, type: type)
     }
-    
+}
+
+extension AuthKey {
     func sign(message: Data) throws -> Data {
         return try NaclSign.signDetached(message: message, secretKey: privateKey)
+    }
+    
+    static func verify(message:Data, signature: Data, publicKey: Data) throws -> Bool {
+        return try NaclSign.signDetachedVerify(message: message, sig: signature, publicKey: publicKey)
     }
 }

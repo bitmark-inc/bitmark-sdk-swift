@@ -24,6 +24,23 @@ public extension AccountNumber {
     func validate() throws {
         return try Account.validateAccountNumber(accountNumber: self)
     }
+    
+    func verify(message: Data, signature: Data) -> Bool {
+        do {
+            let (network, _, pubkey) = try self.parseAndVerifyAccountNumber()
+            if network != globalConfig.network {
+                return false
+            }
+            
+            return try AuthKey.verify(message: message,
+                                      signature: signature,
+                                      publicKey: pubkey)
+        }
+        catch let e {
+            globalConfig.logger.log(level: .error, message: e.localizedDescription)
+            return false
+        }
+    }
 }
 
 internal extension AccountNumber {
