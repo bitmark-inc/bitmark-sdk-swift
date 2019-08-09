@@ -12,6 +12,29 @@ import BitmarkSDK
 import SwiftCentrifuge
 
 public extension BitmarkSDK.EventSubscription {
+    
+    func rxConnect(_ signable: KeypairSignable) -> Completable {
+        return Completable.create { (completable) -> Disposable in
+            do {
+                try self.connect(signable)
+                completable(.completed)
+            } catch let e {
+                completable(.error(e))
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func rxDisconnect() -> Completable {
+        return Completable.create { (completable) -> Disposable in
+            self.disconnect()
+            completable(.completed)
+            
+            return Disposables.create()
+        }
+    }
+  
     func rxListenNewBlock() -> Observable<Int> {
         return Observable<Int>.create { (observer) -> Disposable in
             var sub: CentrifugeSubscription?
