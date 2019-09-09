@@ -132,7 +132,7 @@ extension AuthKey {
         return try NaclSign.signDetached(message: message, secretKey: privateKey)
     }
     
-    static func verify(message:Data, signature: Data, publicKey: Data) throws -> Bool {
+    static func verify(message: Data, signature: Data, publicKey: Data) throws -> Bool {
         return try NaclSign.signDetachedVerify(message: message, sig: signature, publicKey: publicKey)
     }
 }
