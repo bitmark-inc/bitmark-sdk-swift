@@ -119,8 +119,8 @@ public struct RegistrationParams {
     }
     
     public mutating func setFingerprint(fromFileURL fileURL: String) throws {
-        let fileData = try Data(contentsOf: URL(fileURLWithPath: fileURL))
-        try setFingerprint(fromData: fileData)
+        let fingerprint = try FileUtil.computeFingerprint(url: URL(fileURLWithPath: fileURL))
+        try self.set(fingerPrint: fingerprint)
     }
 }
 

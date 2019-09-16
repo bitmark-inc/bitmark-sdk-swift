@@ -20,4 +20,9 @@ public struct FileUtil {
         let sha3Data = data.sha3(length: 512)
         return "01" + sha3Data.hexEncodedString
     }
+    
+    public static func computeFingerprint(url: URL) throws -> String {
+        let sha3Data = try url.sha3(length: 512)
+        return "01" + sha3Data.hexEncodedString
+    }
 }
