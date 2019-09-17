@@ -112,6 +112,10 @@ public struct RegistrationParams {
     // MARK:- Public methods
     
     public init() {}
+
+    public mutating func setFingerprint(_ fingerprint: String) throws {
+        try self.set(fingerPrint: fingerprint)
+    }
     
     public mutating func setFingerprint(fromData data: Data) throws {
         let fingerprint = FileUtil.computeFingerprint(data: data)
