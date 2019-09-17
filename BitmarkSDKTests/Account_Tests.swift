@@ -11,6 +11,12 @@ import XCTest
 
 class Account_Tests: XCTestCase {
     
+    override class func setUp() {
+        BitmarkSDK.initialize(config: SDKConfig(apiToken: "bmk-lljpzkhqdkzmblhg",
+                                                network: .testnet,
+                                                urlSession: URLSession.shared))
+    }
+    
     func testAccountCreate() {
         do {
             let a = try Account()
@@ -33,6 +39,27 @@ class Account_Tests: XCTestCase {
             
             let seed = try a.getSeed()
             XCTAssertEqual(seed, seedString)
+        }
+        catch {
+            XCTFail()
+        }
+    }
+    
+    func testSignAndVerify() {
+        do {
+            let defaultAccount = try Account()
+            let wrongNetworkAccount = try Account(network: .livenet)
+            
+            let message = "This is a sample message".data(using: .utf8)!
+            
+            let defaultSignature = try defaultAccount.sign(message: message)
+            let wrongNetworkSignature = try wrongNetworkAccount.sign(message: message)
+            
+            // Verify
+            XCTAssertTrue(defaultAccount.address.verify(message: message, signature: defaultSignature))
+            XCTAssertFalse(wrongNetworkAccount.address.verify(message: message, signature: wrongNetworkSignature))
+            XCTAssertFalse(defaultAccount.address.verify(message: message, signature: Data()))
+            XCTAssertFalse(defaultAccount.address.verify(message: Data(), signature: defaultSignature))
         }
         catch {
             XCTFail()
