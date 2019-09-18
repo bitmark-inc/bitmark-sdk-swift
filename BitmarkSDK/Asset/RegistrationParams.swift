@@ -53,20 +53,20 @@ public struct RegistrationParams {
     static func isValidLength(metadata: String) -> Bool {
         return metadata.utf8.count <= Config.AssetConfig.maxMetadata
     }
-    
-    // MARK:- Internal methods
-    
-    internal mutating func resetSignState() {
-        self.isSigned = false
-    }
-    
-    internal func computeAssetId(fingerprint: String?) -> String? {
+
+    public static func computeAssetId(fingerprint: String?) -> String? {
         guard let fingerprintData = fingerprint?.data(using: .utf8) else {
             return nil
         }
         return fingerprintData.sha3(length: 512).hexEncodedString
     }
     
+    // MARK:- Internal methods
+    
+    internal mutating func resetSignState() {
+        self.isSigned = false
+    }
+
     internal func packRecord() throws -> Data {
         var txData: Data
         txData = Data.varintFrom(Config.AssetConfig.value)
@@ -92,7 +92,7 @@ public struct RegistrationParams {
             throw("fingerprint's length must be in correct length")
         }
         self.fingerprint = fingerPrint
-        self.id = computeAssetId(fingerprint: fingerPrint)
+        self.id = RegistrationParams.computeAssetId(fingerprint: fingerPrint)
         resetSignState()
     }
     
@@ -112,6 +112,10 @@ public struct RegistrationParams {
     // MARK:- Public methods
     
     public init() {}
+
+    public mutating func setFingerprint(_ fingerprint: String) throws {
+        try self.set(fingerPrint: fingerprint)
+    }
     
     public mutating func setFingerprint(fromData data: Data) throws {
         let fingerprint = FileUtil.computeFingerprint(data: data)
@@ -134,7 +138,7 @@ extension RegistrationParams: Parameterizable {
         }
         self.registrant =  signable.address
         self.signature = try signable.sign(message: try self.packRecord())
-        guard let id = computeAssetId(fingerprint: self.fingerprint) else {
+        guard let id = RegistrationParams.computeAssetId(fingerprint: self.fingerprint) else {
             resetSignState()
             return
         }
