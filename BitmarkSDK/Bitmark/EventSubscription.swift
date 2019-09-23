@@ -165,7 +165,9 @@ private class NewBlockSubscription: CentrifugeSubscriptionDelegate {
             self.handler(blockNumber)
         }
         catch let e {
-            globalConfig.logger.log(level: .error, message: e.localizedDescription)
+            globalConfig.logger.log(level: .error, message: e.localizedDescription,
+                                    userInfo: ["module": String(describing: type(of: self)),
+                                               "channel": sub.channel])
         }
     }
 }
@@ -183,7 +185,9 @@ private class BitmarkChangedSubscription: CentrifugeSubscriptionDelegate {
             self.handler(data)
         }
         catch let e {
-            globalConfig.logger.log(level: .error, message: e.localizedDescription)
+            globalConfig.logger.log(level: .error, message: e.localizedDescription,
+                                    userInfo: ["module": String(describing: type(of: self)),
+                                               "channel": sub.channel])
         }
     }
 }
@@ -204,7 +208,9 @@ private class TransferOfferSubscription: CentrifugeSubscriptionDelegate {
             self.handler(blockNumber)
         }
         catch let e {
-            globalConfig.logger.log(level: .error, message: e.localizedDescription)
+            globalConfig.logger.log(level: .error, message: e.localizedDescription,
+                                    userInfo: ["module": String(describing: type(of: self)),
+                                               "channel": sub.channel])
         }
     }
 }
@@ -222,7 +228,9 @@ private class PendingTxSubscription: CentrifugeSubscriptionDelegate {
             self.handler(data)
         }
         catch let e {
-            globalConfig.logger.log(level: .error, message: e.localizedDescription)
+            globalConfig.logger.log(level: .error, message: e.localizedDescription,
+                                    userInfo: ["module": String(describing: type(of: self)),
+                                               "channel": sub.channel])
         }
     }
 }
@@ -243,7 +251,9 @@ private class PendingBitmarkSubscription: CentrifugeSubscriptionDelegate {
             self.handler(bitmarkID)
         }
         catch let e {
-            globalConfig.logger.log(level: .error, message: e.localizedDescription)
+            globalConfig.logger.log(level: .error, message: e.localizedDescription,
+                                    userInfo: ["module": String(describing: type(of: self)),
+                                               "channel": sub.channel])
         }
     }
 }

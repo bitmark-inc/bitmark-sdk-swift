@@ -46,11 +46,11 @@ public enum SDKLogLevel: String {
     case error = "ERROR"
 }
 public protocol SDKLogger {
-    func log(level: SDKLogLevel, message: String)
+    func log(level: SDKLogLevel, message: String, userInfo: [String: Any]?)
 }
 
 private struct DefaultSDKLogger: SDKLogger {
-    func log(level: SDKLogLevel, message: String) {
+    func log(level: SDKLogLevel, message: String, userInfo: [String: Any]?) {
         print("[\(level.rawValue)]\t\(message)")
     }
 }

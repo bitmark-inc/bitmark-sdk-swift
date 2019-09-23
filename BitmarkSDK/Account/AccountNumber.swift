@@ -37,7 +37,7 @@ public extension AccountNumber {
                                       publicKey: pubkey)
         }
         catch let e {
-            globalConfig.logger.log(level: .error, message: e.localizedDescription)
+            globalConfig.logger.log(level: .error, message: e.localizedDescription, userInfo: nil)
             return false
         }
     }

@@ -61,13 +61,13 @@ internal extension API {
 }
 
 internal extension URLRequest {
-    internal mutating func signRequest(withAccount account: KeypairSignable, action: String, resource: String) throws {
+    mutating func signRequest(withAccount account: KeypairSignable, action: String, resource: String) throws {
         let timestamp = Common.timestamp()
         let parts = [action, resource, account.address, timestamp]
         try signRequest(withAccount: account, parts: parts, timestamp: timestamp)
     }
     
-    internal mutating func signRequest(withAccount account: KeypairSignable, parts: [String], timestamp: String) throws {
+    mutating func signRequest(withAccount account: KeypairSignable, parts: [String], timestamp: String) throws {
         let messageString = parts.joined(separator: "|")
         let messageData = messageString.data(using: .utf8)!
         
@@ -96,18 +96,6 @@ internal extension URLSession {
         modifyRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         modifyRequest.setValue(String(format: "%@, %@ %@", "bitmark-sdk-swift", UIDevice.current.systemName, UIDevice.current.systemVersion), forHTTPHeaderField: "User-Agent")
         
-        
-        globalConfig.logger.log(level: .debug, message: "Request:\t\(modifyRequest.httpMethod ?? "GET")\t\(request.url!.absoluteURL)")
-
-        if var header = modifyRequest.allHTTPHeaderFields {
-            header["Authorization"] = "***"
-            globalConfig.logger.log(level: .debug, message: "Request Header:\t \(header)")
-        }
-
-        if let body = modifyRequest.httpBody {
-            globalConfig.logger.log(level: .debug, message: "Request Body:\t\(String(data: body, encoding: .utf8)!)")
-        }
-        
         dataTask(with: modifyRequest) { (data, response, error) -> Void in
             responseData = data
             theResponse = response
@@ -128,14 +116,17 @@ internal extension URLSession {
                 throw("Empty response from request: " + request.description)
         }
         
-        let responseMessage = String(data: data, encoding: .utf8) ?? ""
+        globalConfig.logger.log(level: .info,
+                                message: "Request: \(modifyRequest.httpMethod ?? "GET") \(request.url!.absoluteURL)",
+                                userInfo: ["module": "BitmarkSDK_APIRequest",
+                                           "URLRequest": modifyRequest,
+                                           "URLResponse": response])
         
-        if 200..<300 ~= response.statusCode {
-            globalConfig.logger.log(level: .debug, message: "Response Status:\(response.statusCode) \tBody:\(responseMessage)")
+        if 200..<300 ~= response.statusCode || response.statusCode == 404 {
             return (data: data, response: response)
         } else {
-            globalConfig.logger.log(level: .error, message: "Response Status:\(response.statusCode) \tBody:\(responseMessage)")
             let requestMethod = request.httpMethod ?? "GET"
+            let responseMessage = String(data: data, encoding: .utf8) ?? ""
             throw("Request " + requestMethod + " " + request.url!.absoluteString + " returned with statuscode: " + String(response.statusCode) + " and data: " + responseMessage)
         }
     }
