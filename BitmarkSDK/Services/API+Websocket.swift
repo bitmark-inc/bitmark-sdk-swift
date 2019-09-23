@@ -23,7 +23,7 @@ extension API {
         let message = parts.joined(separator: "|")
         let signature = try signable.sign(message: message.data(using: .utf8)!)
         
-        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/ws-auth")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v5/ws-auth")
         
         var urlRequest = URLRequest(url: requestURL, cachePolicy: .reloadIgnoringCacheData)
         urlRequest.httpMethod = "POST"

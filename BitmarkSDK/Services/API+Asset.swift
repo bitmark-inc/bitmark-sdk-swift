@@ -24,7 +24,7 @@ extension API {
         
         let json = try JSONSerialization.data(withJSONObject: body, options: [])
         
-        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v3/register-asset")
+        let requestURL = endpoint.apiServerURL.appendingPathComponent("/v5/register-asset")
         
         var urlRequest = URLRequest(url: requestURL)
         urlRequest.httpBody = json
@@ -35,7 +35,7 @@ extension API {
     }
     
     internal func get(assetID: String) throws -> Asset {
-        var urlComponents = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v3/assets/" + assetID), resolvingAgainstBaseURL: false)!
+        var urlComponents = URLComponents(url: endpoint.apiServerURL.appendingPathComponent("/v5/assets/" + assetID), resolvingAgainstBaseURL: false)!
         urlComponents.queryItems = [URLQueryItem(name: "pending", value: "true")]
         let urlRequest = URLRequest(url: urlComponents.url!)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
@@ -46,7 +46,7 @@ extension API {
     }
     
     internal func listAsset(builder: Asset.QueryParam) throws -> [Asset] {
-        let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v3/assets")
+        let requestURL = builder.buildURL(baseURL: endpoint.apiServerURL, path: "/v5/assets")
         let urlRequest = URLRequest(url: requestURL)
         let (data, _) = try urlSession.synchronousDataTask(with: urlRequest)
         let decoder = JSONDecoder()
