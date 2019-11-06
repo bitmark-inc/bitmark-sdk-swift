@@ -461,7 +461,7 @@
 				TargetAttributes = {
 					5865BD381E0250C200B25AB3 = {
 						CreatedOnToolsVersion = 8.2;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1120;
 						ProvisioningStyle = Automatic;
 					};
 					5865BD411E0250C200B25AB3 = {
@@ -709,7 +709,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = BitmarkSDK/tiny_sha3;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -730,7 +730,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = BitmarkSDK/tiny_sha3;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
