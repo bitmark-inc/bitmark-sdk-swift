@@ -17,6 +17,13 @@ struct APIEndpoint {
     }
 }
 
+public struct APIError: Codable {
+  public let code: Int
+  public let message: String
+}
+
+extension APIError: Error {}
+
 extension APIEndpoint {
     public static let livenetEndpoint = APIEndpoint(network: .livenet,
                                                     apiServerURL: URL(string: "https://api.bitmark.com")!)
@@ -135,8 +142,15 @@ internal extension URLSession {
             return (data: data, response: response)
         } else {
             globalConfig.logger.log(level: .error, message: "Response Status:\(response.statusCode) \tBody:\(responseMessage)")
-            let requestMethod = request.httpMethod ?? "GET"
-            throw("Request " + requestMethod + " " + request.url!.absoluteString + " returned with statuscode: " + String(response.statusCode) + " and data: " + responseMessage)
+            var error: Error
+            
+            if let e = try? JSONDecoder().decode(APIError.self, from: data) {
+                error = e
+            } else {
+                error = responseMessage
+            }
+          
+            throw(error)
         }
     }
     
