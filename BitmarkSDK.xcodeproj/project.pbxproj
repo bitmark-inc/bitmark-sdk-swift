@@ -467,7 +467,7 @@
 					5865BD411E0250C200B25AB3 = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = Z5CE7A3A7N;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1140;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -743,7 +743,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitmark.BitmarkSDKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -756,7 +756,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitmark.BitmarkSDKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
