@@ -126,6 +126,11 @@ public struct RegistrationParams {
         let fingerprint = try FileUtil.computeFingerprint(url: URL(fileURLWithPath: fileURL))
         try self.set(fingerPrint: fingerprint)
     }
+    
+    public mutating func setFingerprint(fromFileURLs fileURLs: [String]) throws {
+        let fingerprint = try FileUtil.computeFingerprint(urls: fileURLs.map { URL(fileURLWithPath: $0) } )
+        try self.set(fingerPrint: fingerprint)
+    }
 }
 
 extension RegistrationParams: Parameterizable {
