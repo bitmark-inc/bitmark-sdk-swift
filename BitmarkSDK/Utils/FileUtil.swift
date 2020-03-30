@@ -27,7 +27,7 @@ public struct FileUtil {
     }
     
     public static func computeFingerprint(urls: [URL]) throws -> String {
-        var hashes = [String](repeating: "", count: urls.count)
+        var hashes = [Data](repeating: Data(), count: urls.count)
         var errs = [Error]()
         let serialQueue = DispatchQueue(label: "com.bitmarksdk.serial")
         let group = DispatchGroup()
@@ -38,7 +38,7 @@ public struct FileUtil {
                 do {
                     let sha3Data = try url.sha3(length: 512)
                     serialQueue.sync {
-                        hashes[i] = sha3Data.base64EncodedString()
+                        hashes[i] = sha3Data
                     }
                 } catch (let e) {
                     serialQueue.sync {
@@ -55,6 +55,14 @@ public struct FileUtil {
             throw(errs.first!)
         }
         
-        return "02" + hashes.joined()
+        let merkleTree = MerkleTree.buildTree(with: hashes) { (left, right) -> Data in
+            return (left + right).sha3(length: 512)
+        }
+        
+        guard let root = merkleTree.last else {
+            throw("Cannot build merkle tree")
+        }
+        
+        return "02" + root.base64EncodedString()
     }
 }
