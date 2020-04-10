@@ -23,7 +23,7 @@ public struct Bitmark: Codable {
     public let head_id: String
     public let issuer: String
     public let owner: String
-    public let edition: Int
+    public let edition: Int?
     public let status: String
     public let offer: TransferOffer?
     public let block_number: Int64
