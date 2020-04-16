@@ -277,6 +277,11 @@ public struct SeedV2: Seedable {
         let (result, _) = try SeedV2.seedToKeys(seed: core, keyCount: 2, keySize: 32)
         return (result[0], result[1])
     }
+    
+    public func getKeyDataWithCount(_ count: Int, size: Int) throws -> [Data] {
+        let (result, _) = try SeedV2.seedToKeys(seed: core, keyCount: count, keySize: size)
+        return result
+    }
 }
 
 extension SeedV2 {
