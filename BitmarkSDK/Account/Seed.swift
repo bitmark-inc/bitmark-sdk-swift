@@ -349,7 +349,7 @@ public struct Seed {
         switch recoveryPhrase.count {
         case 24:
             return try SeedV1(fromRecoveryPhrase: recoveryPhrase, language: language)
-        case 12:
+        case 12, 13:
             return try SeedV2(fromRecoveryPhrase: recoveryPhrase, language: language)
         default:
             throw("Invalid recovery phrase length")

@@ -17,6 +17,9 @@
       location = "group:Carthage/Checkouts/KeychainAccess/Lib/KeychainAccess.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Carthage/Checkouts/bip39-swift/BIP39.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "container:Carthage/Checkouts/tweetnacl-swiftwrap/TweetNacl.xcodeproj">
    </FileRef>
    <FileRef
