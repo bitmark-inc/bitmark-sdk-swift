@@ -9,7 +9,7 @@ before_install:
   - brew install carthage
 
 install:
-  - travis_wait 90 carthage update
+  - travis_wait 30 carthage update --no-build
 
 script:
   - xcodebuild -scheme BitmarkSDK -workspace BitmarkSDK.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=12.0' -enableCodeCoverage YES ENABLE_TESTABILITY=YES build test | xcpretty
