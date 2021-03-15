@@ -45,7 +45,7 @@ struct SHA3Compute {
         }
         
         var ctx = sha3_ctx_t()
-        withUnsafeMutablePointer(to: &ctx) { (ctxPointer) -> Void in
+        withUnsafeMutablePointer(to: &ctx) { (ctxPointer) in
             return sha3_init(ctxPointer, Int32(byteLength))
         }
         
@@ -68,7 +68,7 @@ struct SHA3Compute {
             let dataBlock = Data(bytes: inputBuffer, count: length)
             
             dataBlock.withUnsafeBytes { (dataPointer) -> Void in
-                withUnsafeMutablePointer(to: &ctx) { (ctxPointer) -> Void in
+                withUnsafeMutablePointer(to: &ctx) { (ctxPointer) in
                   return sha3_update(ctxPointer, dataPointer, dataBlock.count)
                 }
             }
