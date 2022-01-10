@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "BIP39",
+        "repositoryURL": "https://github.com/bitmark-inc/bip39-swift",
+        "state": {
+          "branch": "master",
+          "revision": "55e842d8cf7c307644738e4f53ef85c657a18e4b",
+          "version": null
+        }
+      },
+      {
+        "package": "TweetNacl",
+        "repositoryURL": "https://github.com/bitmark-inc/tweetnacl-swiftwrap",
+        "state": {
+          "branch": "master",
+          "revision": "0433254285de5d89031eb6637cb77b5a00718973",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

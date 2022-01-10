@@ -101,7 +101,6 @@ internal extension URLSession {
         modifyRequest.setValue("Bearer " + globalConfig.apiToken, forHTTPHeaderField: "Authorization")
         modifyRequest.setValue("*", forHTTPHeaderField: "Accept-Encoding")
         modifyRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        modifyRequest.setValue(String(format: "%@, %@ %@", "bitmark-sdk-swift", UIDevice.current.systemName, UIDevice.current.systemVersion), forHTTPHeaderField: "User-Agent")
         
         
         globalConfig.logger.log(level: .debug, message: "Request:\t\(modifyRequest.httpMethod ?? "GET")\t\(request.url!.absoluteURL)")
