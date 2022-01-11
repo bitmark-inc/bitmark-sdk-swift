@@ -65,4 +65,14 @@ class Account_Tests: XCTestCase {
             XCTFail()
         }
     }
+    
+    func testOrphanedSeedAccount() {
+        do {
+            let a = try Account(withSeedOrphanedPrivateKey: Data(base64Encoded: "feFdrBVHc4j4wJPZfc3XHOJoov7e1pb/U6nkvEuHPC4=")!, network: .livenet)
+            XCTAssertEqual(a.address, "a8CEoztw62ockgt8TcXjt1Davw8HTEkJ2k1247qagDVp1RqLyT")
+        }
+        catch {
+            XCTFail()
+        }
+    }
 }

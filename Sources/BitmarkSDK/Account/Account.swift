@@ -92,9 +92,9 @@ extension Account: KeypairSignable {
         try self.init(seed: seed)
     }
     
-    public init(withSeedOrphanedPrivateKey privateKey: Data) throws {
+    public init(withSeedOrphanedPrivateKey privateKey: Data, network: Network = .livenet) throws {
         self.seed = nil
-        authKey = try AuthKey(fromKeyPair: privateKey, network: .livenet)
+        authKey = try AuthKey(fromKeyPair: privateKey, network: network)
         encryptionKey = nil
     }
     
