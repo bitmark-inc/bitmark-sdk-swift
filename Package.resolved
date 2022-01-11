@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "tinysha3",
+        "repositoryURL": "https://github.com/autonomy-system/tinysha3-spm.git",
+        "state": {
+          "branch": "main",
+          "revision": "75cb92aa65800ff0f41a61c5692bd7879f0da841",
+          "version": null
+        }
+      },
+      {
         "package": "TweetNacl",
         "repositoryURL": "https://github.com/bitmark-inc/tweetnacl-swiftwrap",
         "state": {

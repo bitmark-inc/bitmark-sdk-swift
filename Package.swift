@@ -14,15 +14,10 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "TweetNacl", url: "https://github.com/bitmark-inc/tweetnacl-swiftwrap", branch: "master"),
-        .package(name: "BIP39", url: "https://github.com/bitmark-inc/bip39-swift", branch: "master")
+        .package(name: "BIP39", url: "https://github.com/bitmark-inc/bip39-swift", branch: "master"),
+        .package(name: "tinysha3", url: "https://github.com/autonomy-system/tinysha3-spm.git", branch: "main")
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
-        .target(
-            name: "tinysha3",
-            exclude: ["Makefile", "LICENSE", "main.c", "sha3.h", "module.modulemap"],
-            publicHeadersPath: "./"),
         .target(
             name: "BitmarkSDK",
             dependencies: ["tinysha3", "TweetNacl", "BIP39"],
