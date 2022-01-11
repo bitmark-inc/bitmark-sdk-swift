@@ -11,9 +11,9 @@ import TweetNacl
 
 public struct Account {
     
-    public let seed: Seedable
+    public let seed: Seedable?
     let authKey: AuthKey
-    public let encryptionKey: EncryptionKey
+    public let encryptionKey: EncryptionKey?
     
     // MARK:- Basic init
     
@@ -50,6 +50,10 @@ public struct Account {
     }
     
     public func getSeed() throws -> String {
+        guard let seed = seed else {
+            throw SeedError.nullSeed
+        }
+        
         return seed.base58String
     }
     
@@ -69,6 +73,10 @@ public struct Account {
     }
 
     public func getRecoverPhrase(withNetwork network: Network, language: RecoveryLanguage) throws -> [String] {
+        guard let seed = seed else {
+            throw SeedError.nullSeed
+        }
+        
         return try seed.getRecoveryPhrase(language: language)
     }
     
@@ -82,6 +90,12 @@ extension Account: KeypairSignable {
     public init(privateKey: Data) throws {
         let seed = try Seed.fromCore(privateKey, version: .v2)
         try self.init(seed: seed)
+    }
+    
+    public init(withSeedOrphanedPrivateKey privateKey: Data) throws {
+        self.seed = nil
+        authKey = try AuthKey(fromKeyPair: privateKey, network: .livenet)
+        encryptionKey = nil
     }
     
     public func sign(message: Data) throws -> Data {

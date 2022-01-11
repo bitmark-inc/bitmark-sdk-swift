@@ -17,6 +17,7 @@ public enum SeedError: Error {
     case wrongVersion
     case wrongSeedLength
     case wrongNetwork
+    case nullSeed
 }
 
 public enum SeedVersion: Int {
