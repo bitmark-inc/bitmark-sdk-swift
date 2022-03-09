@@ -15,12 +15,12 @@ let package = Package(
     dependencies: [
         .package(name: "TweetNacl", url: "https://github.com/bitmark-inc/tweetnacl-swiftwrap", branch: "master"),
         .package(name: "BIP39", url: "https://github.com/bitmark-inc/bip39-swift", branch: "master"),
-        .package(name: "tinysha3", url: "https://github.com/autonomy-system/tinysha3-spm.git", branch: "main")
+        .package(name: "tinysha3-spm", url: "https://github.com/autonomy-system/tinysha3-spm.git", branch: "update-name")
     ],
     targets: [
         .target(
             name: "BitmarkSDK",
-            dependencies: ["tinysha3", "TweetNacl", "BIP39"],
+            dependencies: ["tinysha3-spm", "TweetNacl", "BIP39"],
             exclude: ["Info.plist", "Bitmark/EventSubscription.swift"]),
         .testTarget(
             name: "BitmarkSDKTests",

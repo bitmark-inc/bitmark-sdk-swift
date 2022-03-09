@@ -11,11 +11,11 @@
         }
       },
       {
-        "package": "tinysha3",
+        "package": "tinysha3-spm",
         "repositoryURL": "https://github.com/autonomy-system/tinysha3-spm.git",
         "state": {
-          "branch": "main",
-          "revision": "75cb92aa65800ff0f41a61c5692bd7879f0da841",
+          "branch": "update-name",
+          "revision": "4e543257bca5f51cd62057801697bd47283927bf",
           "version": null
         }
       },
